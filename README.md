@@ -6,7 +6,7 @@
 
 * IntelliJ IDEA 2017.3.4 or later (or your favorite editor)
 * JDK 1.8 (1.8.0_162 or later, but not Java 9)
-* PostgreSQL 10.3 or later
+* PostgreSQL 10.3 or later - It would be great if you could set a listen port to 5433
 
 ##### Steps:
 
@@ -16,4 +16,5 @@
     * Expand a model folder and right click mouse on the 'java' folder
     * In the context menu, select 'Mark Directory as' -> 'Sources root'
     * Right click on `pom.xml` and select 'Add as Maven project' from the context menu
-4. Now you should be able to run every microservice clicking on the green run icon next to the application class name
+4. If your PostgreSQL server instance have set a listen port to 5432, then you should change `application.properties` to update `server.port` variable to 5432 for every module
+5. Now you should be able to run every microservice clicking on the green run icon next to the application class name
