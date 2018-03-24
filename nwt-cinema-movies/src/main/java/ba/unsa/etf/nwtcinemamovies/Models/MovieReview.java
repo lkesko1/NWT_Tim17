@@ -2,9 +2,11 @@ package ba.unsa.etf.nwtcinemamovies.Models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class MovieReview {
@@ -14,6 +16,7 @@ public class MovieReview {
 	private Integer id;
 
 	@JoinColumn(name = "movie_id")
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Integer movieId;
 
 	@Column(name = "user_id")
