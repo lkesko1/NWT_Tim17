@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemamovies.Models;
+package ba.unsa.etf.nwtcinemamovies.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,11 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class MovieReview {
-
-	@Id
-	@GeneratedValue
-	private Integer id;
+public class MovieReview extends AbstractModel {
 
 	@JoinColumn(name = "movie_id")
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -27,6 +23,18 @@ public class MovieReview {
 
 	@Column(name = "comment")
 	private String comment;
+
+	@Id
+	@GeneratedValue
+	@Override
+	public Integer getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public Integer getMovieId() {
 		return movieId;
