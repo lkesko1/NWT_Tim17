@@ -1,16 +1,10 @@
-package ba.unsa.etf.nwtcinemamovies.Models;
+package ba.unsa.etf.nwtcinemamovies.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Entity
-public class Role {
-
-	@Id
-	@GeneratedValue
-	private Integer id;
+public class Role extends AbstractModel {
 
 	@Column(name = "role_title")
 	private String roleTitle;
