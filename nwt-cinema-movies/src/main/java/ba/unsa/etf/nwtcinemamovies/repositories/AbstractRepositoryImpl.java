@@ -31,7 +31,7 @@ public abstract class AbstractRepositoryImpl<T, ID extends Serializable> impleme
 	 */
 	@Override
 	public void save(T entity) {
-		getEntityManager().persist(entity);
+		this.entityManager.persist(entity);
 	}
 
 	/**

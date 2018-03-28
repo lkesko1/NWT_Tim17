@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 @Entity
 public class Movie extends AbstractModel {
 
+	public Movie(String imdbUrl) {
+		this.imdbUrl = imdbUrl;
+	}
+
 	private String imdbUrl;
 
 	public String getImdbUrl() {
