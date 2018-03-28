@@ -11,24 +11,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class UserRole extends AbstractModel {
 
-	@JoinColumn(name = "role_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Role.class)
 	private Integer roleId;
 
 	@Column(name = "user_id")
 	private Integer userId;
-
-	@Id
-	@GeneratedValue
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public Integer getUserId() {
 		return userId;
