@@ -10,19 +10,12 @@ import javax.persistence.ManyToOne;
 public class UserRole {
 
 	@JoinColumn(name = "role_id")
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Integer roleId;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Role.class)
+	private Role roleId;
 
 	@Column(name = "user_id")
 	private Integer userId;
 
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
 
 	public Integer getUserId() {
 		return userId;
@@ -30,5 +23,13 @@ public class UserRole {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public Role getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Role roleId) {
+		this.roleId = roleId;
 	}
 }
