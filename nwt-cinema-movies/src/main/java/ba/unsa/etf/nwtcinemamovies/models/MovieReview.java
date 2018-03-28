@@ -14,15 +14,7 @@ public class MovieReview extends AbstractModel {
 	private String comment;
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Movie.class)
-	private Integer movieId;
-
-	public Integer getMovieId() {
-		return movieId;
-	}
-
-	public void setMovieId(Integer movieId) {
-		this.movieId = movieId;
-	}
+	private Movie movie;
 
 	public Integer getUserId() {
 		return userId;
@@ -46,5 +38,13 @@ public class MovieReview extends AbstractModel {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public Movie getMovie() {
+		return movie;
+	}
+
+	public void setMovie(Movie movie) {
+		this.movie = movie;
 	}
 }

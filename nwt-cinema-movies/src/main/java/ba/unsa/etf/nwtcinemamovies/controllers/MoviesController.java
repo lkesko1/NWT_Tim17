@@ -1,7 +1,7 @@
 package ba.unsa.etf.nwtcinemamovies.controllers;
 
-import ba.unsa.etf.nwtcinemamovies.models.Role;
-import ba.unsa.etf.nwtcinemamovies.services.RoleService;
+import ba.unsa.etf.nwtcinemamovies.models.Movie;
+import ba.unsa.etf.nwtcinemamovies.services.MovieService;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,36 +12,36 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.transaction.Transactional;
 
 @RestController
-@RequestMapping(value = "nwt_cinema/movies/roles", produces = "application/json")
-public class Roles extends AbstractController<RoleService> {
+@RequestMapping(value = "movies", produces = "application/json")
+public class MoviesController extends AbstractController<MovieService> {
 
 	@Transactional
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public void create(@RequestBody final Role role) {
-		service.save(role);
+	public void create(@RequestBody final Movie movie) {
+		service.save(movie);
 	}
 
 	@Transactional
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String update(@RequestBody final Role role) {
-		return JSONConverter.toJSON(service.update(role));
+	public String update(@RequestBody final Movie movie) {
+		return JSONConverter.toJSON(service.update(movie));
 	}
 
 	@Transactional
-	@RequestMapping(value = "{roleId}", method = RequestMethod.GET)
-	public String findById(@PathVariable("roleId") final Integer roleId) {
-		return JSONConverter.toJSON(service.findById(Role.class, roleId));
+	@RequestMapping(value = "{movieId}", method = RequestMethod.GET)
+	public String findById(@PathVariable("movieId") final Integer movieId) {
+		return JSONConverter.toJSON(service.findById(Movie.class, movieId));
 	}
 
 	@Transactional
 	@RequestMapping(value = "findAll", method = RequestMethod.GET)
 	public String findAll() {
-		return JSONConverter.toJSON(service.findAll(Role.class));
+		return JSONConverter.toJSON(service.findAll(Movie.class));
 	}
 
 	@Transactional
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
-	public void delete(@RequestBody final Role role) {
-		service.delete(role);
+	public void delete(@RequestBody final Movie movie) {
+		service.delete(movie);
 	}
 }

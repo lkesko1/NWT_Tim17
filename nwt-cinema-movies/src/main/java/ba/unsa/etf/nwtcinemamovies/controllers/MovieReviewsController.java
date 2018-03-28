@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
 
 @RestController
 @RequestMapping(value = "movieReviews", produces = "application/json")
-public class MovieReviews extends AbstractController<MovieReviewService> {
+public class MovieReviewsController extends AbstractController<MovieReviewService> {
 
 	@Transactional
 	@RequestMapping(value = "create", method = RequestMethod.POST)

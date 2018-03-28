@@ -6,10 +6,8 @@ import javax.persistence.Entity;
 @Entity
 public class Role extends AbstractModel {
 
-	@Column(name = "role_title")
 	private String roleTitle;
 
-	@Column(name = "description")
 	private String description;
 
 	public String getRoleTitle() {

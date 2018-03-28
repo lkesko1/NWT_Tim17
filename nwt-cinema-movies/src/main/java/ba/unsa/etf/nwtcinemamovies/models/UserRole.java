@@ -12,9 +12,8 @@ import javax.persistence.ManyToOne;
 public class UserRole extends AbstractModel {
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Role.class)
-	private Integer roleId;
+	private Role role;
 
-	@Column(name = "user_id")
 	private Integer userId;
 
 	public Integer getUserId() {
@@ -25,11 +24,11 @@ public class UserRole extends AbstractModel {
 		this.userId = userId;
 	}
 
-	public Integer getRoleId() {
-		return roleId;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }
