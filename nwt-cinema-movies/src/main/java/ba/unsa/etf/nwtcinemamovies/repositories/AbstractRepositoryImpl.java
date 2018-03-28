@@ -4,9 +4,11 @@ import ba.unsa.etf.nwtcinemamovies.interfaces.AbstractRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 
 /**
@@ -22,6 +24,7 @@ public abstract class AbstractRepositoryImpl<T, ID extends Serializable> impleme
 	private static final String ENTITY_ID = "id";
 
 	@PersistenceContext
+	@Autowired
 	private EntityManager entityManager;
 
 	/**
@@ -30,8 +33,9 @@ public abstract class AbstractRepositoryImpl<T, ID extends Serializable> impleme
 	 * @param entity to be created
 	 */
 	@Override
+	@Transactional
 	public void save(T entity) {
-		this.entityManager.persist(entity);
+		getEntityManager().persist(entity);
 	}
 
 	/**
