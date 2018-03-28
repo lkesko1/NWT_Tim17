@@ -3,19 +3,18 @@ package ba.unsa.etf.nwtcinemaprojections.Models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class UserRole {
+public class UserRole extends AbstractModel {
 
-	@JoinColumn(name = "role_id")
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Role.class)
-	private Role roleId;
+	private Role role;
 
-	@Column(name = "user_id")
 	private Integer userId;
-
 
 	public Integer getUserId() {
 		return userId;
@@ -25,11 +24,11 @@ public class UserRole {
 		this.userId = userId;
 	}
 
-	public Role getRoleId() {
-		return roleId;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoleId(Role roleId) {
-		this.roleId = roleId;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

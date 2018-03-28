@@ -7,19 +7,14 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class MovieTimetable {
+public class MovieTimetable extends AbstractModel {
 
-	@Id
-	@GeneratedValue
-	private Integer id;
+	private Integer movieID;
 
-	@Column(name = "createdBy")
 	private Integer createdBy;
 
-	@Column(name = "date")
 	private Date date;
 
-	@Column(name = "max_tickets")
 	private Integer maxTickets;
 
 	public Integer getCreatedBy() {
@@ -44,5 +39,13 @@ public class MovieTimetable {
 
 	public void setMaxTickets(Integer maxTickets) {
 		this.maxTickets = maxTickets;
+	}
+
+	public Integer getMovieID() {
+		return movieID;
+	}
+
+	public void setMovieID(Integer movieID) {
+		this.movieID = movieID;
 	}
 }
