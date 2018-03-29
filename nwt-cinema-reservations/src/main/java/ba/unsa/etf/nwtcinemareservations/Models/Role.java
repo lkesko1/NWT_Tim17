@@ -37,5 +37,10 @@ public class Role extends AbstractModel {
 
 	public Role() {
 	}
+
+	public Role(String roleTitle, String description) {
+		this.roleTitle = roleTitle;
+		this.description = description;
+	}
 }
 

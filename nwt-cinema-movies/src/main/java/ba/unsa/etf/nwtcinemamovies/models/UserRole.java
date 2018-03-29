@@ -31,4 +31,12 @@ public class UserRole extends AbstractModel {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
+	public UserRole(Role role, Integer userId) {
+		this.role = role;
+		this.userId = userId;
+	}
+
+	public UserRole() {
+	}
 }

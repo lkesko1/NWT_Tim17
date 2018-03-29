@@ -35,4 +35,8 @@ public class UserRole extends AbstractModel {
 	public UserRole() {
 	}
 
+	public UserRole(Role role, Long userId) {
+		this.role = role;
+		this.userId = userId;
+	}
 }

@@ -51,4 +51,11 @@ public class MovieTimetable extends AbstractModel {
 
 	public MovieTimetable() {
 	}
+
+	public MovieTimetable(Long movieID, Long createdBy, Date date, Integer maxTickets) {
+		this.movieID = movieID;
+		this.createdBy = createdBy;
+		this.date = date;
+		this.maxTickets = maxTickets;
+	}
 }

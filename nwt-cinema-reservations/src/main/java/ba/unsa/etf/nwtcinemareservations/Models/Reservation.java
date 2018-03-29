@@ -51,4 +51,11 @@ public class Reservation extends AbstractModel{
 
 	public Reservation() {
 	}
+
+	public Reservation(Long userId, Long movieProjectionId, Integer numberOfTickets, Date dateCreated) {
+		this.userId = userId;
+		this.movieProjectionId = movieProjectionId;
+		this.numberOfTickets = numberOfTickets;
+		this.dateCreated = dateCreated;
+	}
 }
