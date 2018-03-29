@@ -77,7 +77,8 @@ public abstract class AbstractRepositoryImpl<T, ID extends Serializable> impleme
 	 */
 	@Override
 	public void delete(T entity) {
-		getEntityManager().remove(entity);
+		EntityManager manager = getEntityManager();
+		manager.remove(manager.contains(entity) ? entity : manager.merge(entity));
 	}
 
 	/**
