@@ -2,17 +2,19 @@ package ba.unsa.etf.nwtcinemareservations.controllers;
 
 import ba.unsa.etf.nwtcinemareservations.models.AbstractModel;
 import ba.unsa.etf.nwtcinemareservations.services.BaseService;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public abstract class BaseController<M extends AbstractModel, S extends BaseService> {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -25,7 +27,6 @@ public abstract class BaseController<M extends AbstractModel, S extends BaseServ
         return (M)service.add(model);
     }
 
-
     @Transactional
     @RequestMapping(value = "findAll", method = RequestMethod.GET)
     public Iterable findAll() {
@@ -34,8 +35,8 @@ public abstract class BaseController<M extends AbstractModel, S extends BaseServ
 
     @Transactional
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public M findById(@PathVariable("id") final Long id) {
-        return (M)service.findById(id);
+    public Optional<M> findById(@PathVariable("id") final Long id) {
+        return service.findById(id);
     }
 
     @Transactional

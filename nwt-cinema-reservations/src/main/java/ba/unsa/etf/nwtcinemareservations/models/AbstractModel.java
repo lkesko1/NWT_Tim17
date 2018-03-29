@@ -1,6 +1,7 @@
 package ba.unsa.etf.nwtcinemareservations.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * The abstract model
