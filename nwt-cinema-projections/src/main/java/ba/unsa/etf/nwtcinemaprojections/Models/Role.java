@@ -34,4 +34,7 @@ public class Role extends AbstractModel {
 	public List<UserRole> getUserRoles() {
 		return userRoles;
 	}
+
+	public Role() {
+	}
 }

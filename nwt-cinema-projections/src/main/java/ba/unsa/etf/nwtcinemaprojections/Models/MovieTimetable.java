@@ -9,19 +9,19 @@ import java.util.Date;
 @Entity
 public class MovieTimetable extends AbstractModel {
 
-	private Integer movieID;
+	private Long movieID;
 
-	private Integer createdBy;
+	private Long createdBy;
 
 	private Date date;
 
 	private Integer maxTickets;
 
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -41,11 +41,14 @@ public class MovieTimetable extends AbstractModel {
 		this.maxTickets = maxTickets;
 	}
 
-	public Integer getMovieID() {
+	public Long getMovieID() {
 		return movieID;
 	}
 
-	public void setMovieID(Integer movieID) {
+	public void setMovieID(Long movieID) {
 		this.movieID = movieID;
+	}
+
+	public MovieTimetable() {
 	}
 }

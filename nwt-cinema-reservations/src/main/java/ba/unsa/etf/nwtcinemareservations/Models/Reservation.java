@@ -7,37 +7,29 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class Reservation {
+public class Reservation extends AbstractModel{
 
-	@Id
-	@GeneratedValue
-	private Integer id;
+	private Long userId;
 
-	@Column(name = "user_id")
-	private Integer userId;
+	private Long movieProjectionId;
 
-	@Column(name = "movie_projection_id")
-	private Integer movieProjectionId;
-
-	@Column(name = "number_of_tickets")
 	private Integer numberOfTickets;
 
-	@Column(name = "date_created")
 	private Date dateCreated;
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
-	public Integer getMovieProjectionId() {
+	public Long getMovieProjectionId() {
 		return movieProjectionId;
 	}
 
-	public void setMovieProjectionId(Integer movieProjectionId) {
+	public void setMovieProjectionId(Long movieProjectionId) {
 		this.movieProjectionId = movieProjectionId;
 	}
 
@@ -55,5 +47,8 @@ public class Reservation {
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+
+	public Reservation() {
 	}
 }

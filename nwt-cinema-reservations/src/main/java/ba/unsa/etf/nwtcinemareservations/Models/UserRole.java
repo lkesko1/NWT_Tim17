@@ -3,32 +3,36 @@ package ba.unsa.etf.nwtcinemareservations.Models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class UserRole {
+public class UserRole extends AbstractModel {
 
-	@JoinColumn(name = "role_id")
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Integer roleId;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Role.class)
+	private Role role;
 
-	@Column(name = "user_id")
-	private Integer userId;
+	private Long userId;
 
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public UserRole() {
+	}
+
 }
