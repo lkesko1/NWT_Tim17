@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
  */
 @Repository
 @Transactional
-public class MovieReviewRepositoryImpl extends AbstractRepositoryImpl<MovieReview, Integer>
-		implements MovieReviewRepository<MovieReview, Integer> {
+public class MovieReviewRepositoryImpl extends AbstractRepositoryImpl<MovieReview, Long>
+		implements MovieReviewRepository<MovieReview, Long> {
 
 }

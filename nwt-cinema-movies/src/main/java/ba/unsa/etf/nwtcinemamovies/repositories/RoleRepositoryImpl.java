@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
  */
 @Repository
 @Transactional
-public class RoleRepositoryImpl extends AbstractRepositoryImpl<Role, Integer>
-		implements RoleRepository<Role, Integer>{
+public class RoleRepositoryImpl extends AbstractRepositoryImpl<Role, Long>
+		implements RoleRepository<Role, Long>{
 
 }

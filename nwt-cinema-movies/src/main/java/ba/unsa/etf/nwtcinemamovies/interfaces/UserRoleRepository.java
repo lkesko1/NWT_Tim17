@@ -7,6 +7,6 @@ import ba.unsa.etf.nwtcinemamovies.models.UserRole;
  *
  * @author eceric
  */
-public interface UserRoleRepository<U, I extends Number> extends AbstractRepository<UserRole, Integer> {
+public interface UserRoleRepository<U, I extends Number> extends AbstractRepository<UserRole, Long> {
 
 }

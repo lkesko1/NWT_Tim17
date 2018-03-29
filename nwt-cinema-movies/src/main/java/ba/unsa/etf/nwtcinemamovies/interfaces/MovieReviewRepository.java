@@ -7,6 +7,6 @@ import ba.unsa.etf.nwtcinemamovies.models.MovieReview;
  *
  * @author eceric
  */
-public interface MovieReviewRepository<M, I extends Number> extends AbstractRepository<MovieReview, Integer> {
+public interface MovieReviewRepository<M, I extends Number> extends AbstractRepository<MovieReview, Long> {
 
 }
