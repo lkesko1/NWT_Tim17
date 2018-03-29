@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemareservations.Models;
+package ba.unsa.etf.nwtcinemareservations.models;
 
 import javax.persistence.*;
 

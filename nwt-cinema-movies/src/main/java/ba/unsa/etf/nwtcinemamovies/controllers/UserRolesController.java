@@ -29,7 +29,7 @@ public class UserRolesController extends AbstractController<UserRoleService> {
 
 	@Transactional
 	@RequestMapping(value = "{roleId}", method = RequestMethod.GET)
-	public String findById(@PathVariable("roleId") final Integer roleId) {
+	public String findById(@PathVariable("roleId") final Long roleId) {
 		return JSONConverter.toJSON(service.findById(UserRole.class, roleId));
 	}
 

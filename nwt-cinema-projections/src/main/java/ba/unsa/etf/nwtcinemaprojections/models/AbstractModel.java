@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemaprojections.Models;
+package ba.unsa.etf.nwtcinemaprojections.models;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

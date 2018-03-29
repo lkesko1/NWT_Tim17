@@ -53,7 +53,7 @@ public abstract class AbstractService<AR extends AbstractRepository> {
 	 * @param id by witch the entity will be found
 	 * @return found entity
 	 */
-	public <T extends AbstractModel> T findById(Class<T> clazz, Integer id) {
+	public <T extends AbstractModel> T findById(Class<T> clazz, Long id) {
 		return (T) repository.findById(clazz, id);
 	}
 

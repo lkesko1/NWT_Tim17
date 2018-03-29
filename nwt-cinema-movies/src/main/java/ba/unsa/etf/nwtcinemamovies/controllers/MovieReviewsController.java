@@ -29,7 +29,7 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 
 	@Transactional
 	@RequestMapping(value = "{reviewId}", method = RequestMethod.GET)
-	public String findById(@PathVariable("reviewId") final Integer reviewId) {
+	public String findById(@PathVariable("reviewId") final Long reviewId) {
 		return JSONConverter.toJSON(service.findById(MovieReview.class, reviewId));
 	}
 

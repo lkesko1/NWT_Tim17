@@ -1,9 +1,6 @@
-package ba.unsa.etf.nwtcinemareservations.Models;
+package ba.unsa.etf.nwtcinemareservations.models;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
