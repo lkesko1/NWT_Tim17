@@ -13,8 +13,6 @@
 1. Connect to your local PostgreSQL server instance and execute `initialize_database.sql` from `./scripts/`
 2. Open the root folder - `NWT_Tim17` from IntelliJ start dialog
 3. For every project module (you will recognize them as they are prefixed with `nwt-cinema`) do the following:
-    * Expand a model folder and right click mouse on the 'java' folder
-    * In the context menu, select 'Mark Directory as' -> 'Sources root'
     * Right click on `pom.xml` and select 'Add as Maven project' from the context menu
 4. If your PostgreSQL server instance have set a listen port to 5432, then you should change `application.properties` to update `server.port` variable to 5432 for every module
 5. Now you should be able to run every microservice clicking on the green run icon next to the application class name
