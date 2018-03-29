@@ -3,10 +3,8 @@ package ba.unsa.etf.nwtcinemamovies.models;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "movie_review")
 public class MovieReview extends AbstractModel {
 
 	private Long userId;
