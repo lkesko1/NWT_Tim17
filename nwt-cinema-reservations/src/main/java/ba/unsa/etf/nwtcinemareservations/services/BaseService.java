@@ -4,6 +4,7 @@ import ba.unsa.etf.nwtcinemareservations.models.AbstractModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+
 public abstract class BaseService<M extends AbstractModel, R extends JpaRepository<M, Long>> {
 
     @Autowired
@@ -21,4 +22,5 @@ public abstract class BaseService<M extends AbstractModel, R extends JpaReposito
     public M update(M m) {
         return repository.save(m);
     }
+    public void delete(M m) { repository.delete(m); }
 }
