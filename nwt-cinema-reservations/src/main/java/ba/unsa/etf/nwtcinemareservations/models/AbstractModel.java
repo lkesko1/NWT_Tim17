@@ -13,6 +13,12 @@ public abstract class AbstractModel {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
+    public AbstractModel() {
+    }
+
+    public AbstractModel(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

@@ -2,8 +2,8 @@ package ba.unsa.etf.nwtcinemareservations.services;
 
 import ba.unsa.etf.nwtcinemareservations.models.AbstractModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 
 public abstract class BaseService<M extends AbstractModel, R extends JpaRepository<M, Long>> {
 
