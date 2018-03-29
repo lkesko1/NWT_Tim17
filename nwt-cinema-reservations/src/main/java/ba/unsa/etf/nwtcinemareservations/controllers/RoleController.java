@@ -1,5 +1,6 @@
 package ba.unsa.etf.nwtcinemareservations.controllers;
 
+import ba.unsa.etf.nwtcinemareservations.models.Role;
 import ba.unsa.etf.nwtcinemareservations.services.RoleService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "roles", produces = "application/json")
-public class RoleController extends BaseController<RoleService> {
+public class RoleController extends BaseController<Role, RoleService> {
 }
