@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "nwt_cinema/movies/roles", produces = "application/json")
+@RequestMapping(value = "roles", produces = "application/json")
 public class RolesController extends AbstractController<RoleService> {
 
 	@Transactional
