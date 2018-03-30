@@ -1,17 +1,29 @@
 package ba.unsa.etf.nwtcinemareservations.models;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.util.Date;
 
 @Entity
 public class Reservation extends AbstractModel{
 
+	@NotNull
+	@Min(1)
 	private Long userId;
 
+	@NotNull
+	@Min(1)
 	private Long movieProjectionId;
 
+	@NotNull
+	@Min(1)
+	@Max(10)
 	private Integer numberOfTickets;
 
+	@NotNull
 	private Date dateCreated;
 
 	public Long getUserId() {

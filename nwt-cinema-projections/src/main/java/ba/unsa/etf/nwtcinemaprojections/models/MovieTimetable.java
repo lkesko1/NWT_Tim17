@@ -1,17 +1,30 @@
 package ba.unsa.etf.nwtcinemaprojections.models;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.util.Date;
 
 @Entity
 public class MovieTimetable extends AbstractModel {
 
+	@NotNull
+	@Min(1)
 	private Long movieID;
 
+	@NotNull
+	@Min(1)
 	private Long createdBy;
 
+	@NotNull
+	@Past
 	private Date date;
 
+	@NotNull
+	@Min(0)
+	@Max(40)
 	private Integer maxTickets;
 
 	public Long getCreatedBy() {
