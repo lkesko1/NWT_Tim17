@@ -1,36 +1,31 @@
 package ba.unsa.etf.nwtcinemaprojections.controllers;
 
-
 import ba.unsa.etf.nwtcinemaprojections.models.AbstractModel;
 import ba.unsa.etf.nwtcinemaprojections.services.BaseService;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.Optional;
 
-public abstract class BaseController<S extends BaseService> {
+@JsonIgnoreProperties(ignoreUnknown=true)
+public abstract class BaseController<M extends AbstractModel, S extends BaseService> {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected S service;
-
     @Autowired
-    public void setService(S service) {
-        this.service = service;
-    }
+    private S service;
 
     @Transactional
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public void create(@RequestBody final AbstractModel model) {
-        service.add(model);
+    public M create(@RequestBody final M model) {
+        return (M)service.add(model);
     }
-
 
     @Transactional
     @RequestMapping(value = "findAll", method = RequestMethod.GET)
@@ -39,17 +34,15 @@ public abstract class BaseController<S extends BaseService> {
     }
 
     @Transactional
-    @RequestMapping(value = "{reviewId}", method = RequestMethod.GET)
-    public AbstractModel findById(@PathVariable("id") final Long id) {
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public Optional<M> findById(@PathVariable("id") final Long id) {
         return service.findById(id);
     }
 
     @Transactional
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public void delete(@RequestBody final AbstractModel model) {
+    public void delete(@RequestBody final M model) {
         service.delete(model);
     }
-
-
 
 }
