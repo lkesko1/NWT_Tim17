@@ -47,7 +47,7 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
 	public void delete(@RequestBody @Valid @ModelAttribute("MovieReview") final MovieReview movieReview, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return; //TODO
+			return; 
 		}
 		service.delete(movieReview);
 	}
