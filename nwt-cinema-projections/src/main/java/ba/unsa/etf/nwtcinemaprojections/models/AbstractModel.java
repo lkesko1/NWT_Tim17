@@ -3,6 +3,8 @@ package ba.unsa.etf.nwtcinemaprojections.models;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * The abstract model
@@ -11,14 +13,22 @@ import javax.persistence.MappedSuperclass;
 public abstract class AbstractModel {
 
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
 
-    public Integer getId() {
+    public AbstractModel() {
+    }
+
+    public AbstractModel(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }
