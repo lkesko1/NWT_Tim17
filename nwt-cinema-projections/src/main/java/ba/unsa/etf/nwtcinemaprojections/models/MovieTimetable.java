@@ -55,4 +55,6 @@ public class MovieTimetable extends AbstractModel {
 		this.date = date;
 		this.maxTickets = maxTickets;
 	}
+
+
 }
