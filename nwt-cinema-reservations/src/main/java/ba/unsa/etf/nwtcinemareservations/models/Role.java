@@ -1,14 +1,18 @@
 package ba.unsa.etf.nwtcinemareservations.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Role extends AbstractModel {
 
+	@NotNull
 	private String roleTitle;
 
+	@NotNull
 	private String description;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role", targetEntity = UserRole.class,

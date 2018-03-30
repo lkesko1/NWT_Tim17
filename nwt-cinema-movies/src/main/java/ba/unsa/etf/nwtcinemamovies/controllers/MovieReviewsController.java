@@ -3,13 +3,11 @@ package ba.unsa.etf.nwtcinemamovies.controllers;
 import ba.unsa.etf.nwtcinemamovies.models.MovieReview;
 import ba.unsa.etf.nwtcinemamovies.services.MovieReviewService;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "movieReviews", produces = "application/json")
@@ -17,13 +15,19 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 
 	@Transactional
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public void create(@RequestBody final MovieReview movieReview) {
+	public void create(@RequestBody @Valid @ModelAttribute("MovieReview") final MovieReview movieReview, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return; //TODO
+		}
 		service.save(movieReview);
 	}
 
 	@Transactional
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String update(@RequestBody final MovieReview movieReview) {
+	public String update(@RequestBody @Valid @ModelAttribute("MovieReview") final MovieReview movieReview, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "Error";
+		}
 		return JSONConverter.toJSON(service.update(movieReview));
 	}
 
@@ -41,7 +45,10 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 
 	@Transactional
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
-	public void delete(@RequestBody final MovieReview movieReview) {
+	public void delete(@RequestBody @Valid @ModelAttribute("MovieReview") final MovieReview movieReview, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return; 
+		}
 		service.delete(movieReview);
 	}
 }

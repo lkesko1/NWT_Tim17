@@ -3,17 +3,26 @@ package ba.unsa.etf.nwtcinemamovies.models;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class MovieReview extends AbstractModel {
 
+	@NotNull
+	@Min(1)
 	private Long userId;
 
+	@NotNull
+	@Min(1)
+	@Max(10)
 	private Integer rate;
 
 	private String comment;
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Movie.class)
+	@NotNull
 	private Movie movie;
 
 	public Long getUserId() {
@@ -57,4 +66,5 @@ public class MovieReview extends AbstractModel {
 
 	public MovieReview() {
 	}
+
 }

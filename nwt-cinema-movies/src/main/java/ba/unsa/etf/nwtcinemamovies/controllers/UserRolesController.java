@@ -3,13 +3,11 @@ package ba.unsa.etf.nwtcinemamovies.controllers;
 import ba.unsa.etf.nwtcinemamovies.models.UserRole;
 import ba.unsa.etf.nwtcinemamovies.services.UserRoleService;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "userRoles", produces = "application/json")
@@ -17,13 +15,19 @@ public class UserRolesController extends AbstractController<UserRoleService> {
 
 	@Transactional
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public void create(@RequestBody final UserRole role) {
+	public void create(@RequestBody @Valid @ModelAttribute("UserRole") final UserRole role, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return;
+		}
 		service.save(role);
 	}
 
 	@Transactional
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String update(@RequestBody final UserRole role) {
+	public String update(@RequestBody @Valid @ModelAttribute("UserRole") final UserRole role, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "Error";
+		}
 		return JSONConverter.toJSON(service.update(role));
 	}
 
@@ -41,7 +45,10 @@ public class UserRolesController extends AbstractController<UserRoleService> {
 
 	@Transactional
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
-	public void delete(@RequestBody final UserRole role) {
+	public void delete(@RequestBody @Valid @ModelAttribute("UserRole") final UserRole role, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ;
+		}
 		service.delete(role);
 	}
 }

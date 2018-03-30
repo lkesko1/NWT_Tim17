@@ -3,13 +3,11 @@ package ba.unsa.etf.nwtcinemamovies.controllers;
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
 import ba.unsa.etf.nwtcinemamovies.services.MovieService;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "movies", produces = "application/json")
@@ -17,13 +15,19 @@ public class MoviesController extends AbstractController<MovieService> {
 
 	@Transactional
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public void create(@RequestBody final Movie movie) {
+	public void create(@RequestBody  @Valid @ModelAttribute("Movie") final Movie movie, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return;
+		}
 		service.save(movie);
 	}
 
 	@Transactional
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String update(@RequestBody final Movie movie) {
+	public String update(@RequestBody  @Valid @ModelAttribute("Movie") final Movie movie,BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "Error";
+		}
 		return JSONConverter.toJSON(service.update(movie));
 	}
 
@@ -41,7 +45,10 @@ public class MoviesController extends AbstractController<MovieService> {
 
 	@Transactional
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
-	public void delete(@RequestBody final Movie movie) {
+	public void delete(@RequestBody  @Valid @ModelAttribute("Movie") final Movie movie, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return;
+		}
 		service.delete(movie);
 	}
 }

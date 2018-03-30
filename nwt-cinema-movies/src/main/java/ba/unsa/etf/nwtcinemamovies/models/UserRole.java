@@ -7,13 +7,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class UserRole extends AbstractModel {
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Role.class)
+	@NotNull
 	private Role role;
 
+	@NotNull
+	@Min(1)
 	private Integer userId;
 
 	public Integer getUserId() {
