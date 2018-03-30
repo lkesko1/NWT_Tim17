@@ -5,6 +5,8 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * The abstract model
@@ -13,16 +15,22 @@ import javax.validation.constraints.NotNull;
 public abstract class AbstractModel {
 
     @Id
-    @GeneratedValue
-    @NotNull
-    @Min(1)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
 
-    public Integer getId() {
+    public AbstractModel() {
+    }
+
+    public AbstractModel(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }
