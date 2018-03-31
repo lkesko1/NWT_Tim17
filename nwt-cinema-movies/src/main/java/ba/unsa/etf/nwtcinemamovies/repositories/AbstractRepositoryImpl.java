@@ -34,8 +34,9 @@ public abstract class AbstractRepositoryImpl<T, ID extends Serializable> impleme
 	 */
 	@Override
 	@Transactional
-	public void save(T entity) {
+	public T save(T entity) {
 		getEntityManager().persist(entity);
+		return entity;
 	}
 
 	/**
@@ -45,6 +46,7 @@ public abstract class AbstractRepositoryImpl<T, ID extends Serializable> impleme
 	 * @return updated entity
 	 */
 	@Override
+	@Transactional
 	public <S extends T> S update(T entity) {
 		return (S) getEntityManager().merge(entity);
 	}
@@ -56,6 +58,7 @@ public abstract class AbstractRepositoryImpl<T, ID extends Serializable> impleme
 	 * @return found entity
 	 */
 	@Override
+	@Transactional
 	public <S extends T> S findById(Class<T> clazz, ID id) {
 		return (S) getBaseCriteria(clazz).add(Restrictions.eq(ENTITY_ID, id)).uniqueResult();
 	}
@@ -66,6 +69,7 @@ public abstract class AbstractRepositoryImpl<T, ID extends Serializable> impleme
 	 * @return entities
 	 */
 	@Override
+	@Transactional
 	public Iterable<T> findAll(Class<T> clazz) {
 		return (Iterable<T>) getBaseCriteria(clazz).list();
 	}
@@ -76,8 +80,10 @@ public abstract class AbstractRepositoryImpl<T, ID extends Serializable> impleme
 	 * @param entity to be deleted
 	 */
 	@Override
+	@Transactional
 	public void delete(T entity) {
-		getEntityManager().remove(entity);
+		//TO DO: Find out why context gets lost and entity detaches
+		getEntityManager().remove(getEntityManager().contains(entity) ? entity : getEntityManager().merge(entity));
 	}
 
 	/**

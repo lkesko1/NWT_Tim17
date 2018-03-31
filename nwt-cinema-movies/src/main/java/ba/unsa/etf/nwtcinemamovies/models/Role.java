@@ -1,5 +1,7 @@
 package ba.unsa.etf.nwtcinemamovies.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +21,7 @@ public class Role extends AbstractModel {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role", targetEntity = UserRole.class,
 			cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
 	private List<UserRole> userRoles = new ArrayList<>();
 
 	public String getRoleTitle() {

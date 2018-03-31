@@ -1,8 +1,10 @@
 package ba.unsa.etf.nwtcinemamovies.models;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
  * The abstract model
@@ -13,10 +15,7 @@ public abstract class AbstractModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false, nullable = false)
-	@NotNull
-	@Min(1)
 	private Long id;
-
 
 	public Long getId() {
 		return id;

@@ -33,8 +33,8 @@ public abstract class AbstractService<AR extends AbstractRepository> {
 	 * @param entity to be created
 	 * @return created entity
 	 */
-	public <T extends AbstractModel> void save(T entity) {
-		repository.save(entity);
+	public <T extends AbstractModel> T save(T entity) {
+		return (T) repository.save(entity);
 	}
 
 	/**

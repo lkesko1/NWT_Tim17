@@ -3,8 +3,9 @@ package ba.unsa.etf.nwtcinemamovies.models;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 public class MovieReview extends AbstractModel {
@@ -12,7 +13,8 @@ public class MovieReview extends AbstractModel {
 	@NotNull(message = "User id must be defined.")
 	private Long userId;
 
-	@Size(min = 1, max = 10, message = "Movie rating must be between 1 and 10")
+	@Min(value = 1, message = "Minimum movie rate is 1.")
+	@Max(value = 10, message = "Maximum movie rate is 10.")
 	private Integer rate;
 
 	private String comment;

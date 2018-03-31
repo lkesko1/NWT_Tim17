@@ -12,7 +12,6 @@ import java.util.List;
 @Entity
 public class Movie extends AbstractModel {
 
-	@NotNull
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", targetEntity = MovieReview.class,
 			cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<MovieReview> movieReviews = new ArrayList<>();
@@ -25,13 +24,14 @@ public class Movie extends AbstractModel {
 		super();
 	}
 
-	@NotNull
 	public Movie(String imdbUrl) {
 		this.imdbUrl = imdbUrl;
 	}
+
 	public String getImdbUrl() {
 		return imdbUrl;
 	}
+
 	public void setImdbUrl(String imdbUrl) {
 		this.imdbUrl = imdbUrl;
 	}
