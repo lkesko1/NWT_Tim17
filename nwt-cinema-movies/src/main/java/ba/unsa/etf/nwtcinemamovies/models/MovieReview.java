@@ -10,13 +10,11 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class MovieReview extends AbstractModel {
 
-	@NotNull
-	@Min(1)
+	@NotNull(message = "User id must be defined.")
 	private Long userId;
 
-	@NotNull
-	@Min(1)
-	@Max(10)
+	@Min(value = 1, message = "Minimum movie rate is 1.")
+	@Max(value = 10, message = "Maximum movie rate is 10.")
 	private Integer rate;
 
 	private String comment;
