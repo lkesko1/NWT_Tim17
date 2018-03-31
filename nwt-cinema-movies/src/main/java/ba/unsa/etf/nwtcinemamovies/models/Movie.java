@@ -1,5 +1,6 @@
 package ba.unsa.etf.nwtcinemamovies.models;
 
+import org.hibernate.validator.constraints.URL;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,26 +12,26 @@ import java.util.List;
 @Entity
 public class Movie extends AbstractModel {
 
-	@NotNull
-	public Movie() {
-		super();
-	}
-
-	@NotNull
-	public Movie(String imdbUrl) {
-		this.imdbUrl = imdbUrl;
-	}
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", targetEntity = MovieReview.class,
 			cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<MovieReview> movieReviews = new ArrayList<>();
 
-	@NotNull
+	@URL(message = "The URL provided is not valid.")
+	@NotNull(message = "Movie URL must be provided.")
 	private String imdbUrl;
+
+	public Movie() {
+		super();
+	}
+
+	public Movie(String imdbUrl) {
+		this.imdbUrl = imdbUrl;
+	}
 
 	public String getImdbUrl() {
 		return imdbUrl;
 	}
+
 	public void setImdbUrl(String imdbUrl) {
 		this.imdbUrl = imdbUrl;
 	}

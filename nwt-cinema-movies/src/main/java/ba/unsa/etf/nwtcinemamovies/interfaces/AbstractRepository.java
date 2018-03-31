@@ -22,7 +22,7 @@ public interface AbstractRepository<T, ID extends Serializable> extends Reposito
 	 *
 	 * @param entity to be created
 	 */
-	void save(T entity);
+	T save(T entity);
 
 	/**
 	 * Updates entity

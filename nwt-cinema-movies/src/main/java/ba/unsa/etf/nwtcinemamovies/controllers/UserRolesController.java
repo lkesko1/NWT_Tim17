@@ -3,11 +3,15 @@ package ba.unsa.etf.nwtcinemamovies.controllers;
 import ba.unsa.etf.nwtcinemamovies.models.UserRole;
 import ba.unsa.etf.nwtcinemamovies.services.UserRoleService;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "userRoles", produces = "application/json")
@@ -15,20 +19,24 @@ public class UserRolesController extends AbstractController<UserRoleService> {
 
 	@Transactional
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public void create(@RequestBody @Valid @ModelAttribute("UserRole") final UserRole role, BindingResult bindingResult) {
+	public ResponseEntity create(@RequestBody final UserRole role, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return;
+			return ResponseEntity.badRequest().body(
+					JSONConverter.toJSON("Failed to create user-role relation for role with title "
+							+ role.getRole().getRoleTitle()));
 		}
-		service.save(role);
+		return ResponseEntity.ok(service.save(role));
 	}
 
 	@Transactional
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String update(@RequestBody @Valid @ModelAttribute("UserRole") final UserRole role, BindingResult bindingResult) {
+	public ResponseEntity update(@RequestBody UserRole role, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return "Error";
+			return ResponseEntity.badRequest().body(
+					JSONConverter.toJSON("Failed to update user-role relation for role with title "
+							+ role.getRole().getRoleTitle()));
 		}
-		return JSONConverter.toJSON(service.update(role));
+		return ResponseEntity.ok(service.update(role));
 	}
 
 	@Transactional
@@ -45,10 +53,13 @@ public class UserRolesController extends AbstractController<UserRoleService> {
 
 	@Transactional
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
-	public void delete(@RequestBody @Valid @ModelAttribute("UserRole") final UserRole role, BindingResult bindingResult) {
+	public ResponseEntity delete(@RequestBody final UserRole role, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return ;
+			return ResponseEntity.badRequest()
+					.body("Failed to delete user-role relation for role with title " + role.getRole().getRoleTitle());
 		}
 		service.delete(role);
+		return ResponseEntity.ok(JSONConverter.toJSON("Successfully deleted user-role relation with role title "
+				+ role.getRole().getRoleTitle()));
 	}
 }

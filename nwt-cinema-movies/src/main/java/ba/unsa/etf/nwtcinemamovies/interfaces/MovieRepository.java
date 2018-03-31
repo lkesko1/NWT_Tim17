@@ -8,5 +8,4 @@ import ba.unsa.etf.nwtcinemamovies.models.Movie;
  * @author eceric
  */
 public interface MovieRepository<M, I extends Number> extends AbstractRepository<Movie, Long> {
-
 }
