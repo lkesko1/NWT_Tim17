@@ -3,6 +3,8 @@ package ba.unsa.etf.nwtcinemamovies.controllers;
 import ba.unsa.etf.nwtcinemamovies.models.MovieReview;
 import ba.unsa.etf.nwtcinemamovies.services.MovieReviewService;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,14 +19,24 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 
 	@Transactional
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public void create(@RequestBody final MovieReview movieReview) {
-		service.save(movieReview);
+	public ResponseEntity create(@RequestBody final MovieReview movieReview, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ResponseEntity.badRequest().body(
+					JSONConverter.toJSON("Failed to create movie review for movie "
+							+ movieReview.getMovie().getImdbUrl()));
+		}
+		return ResponseEntity.ok(service.save(movieReview));
 	}
 
 	@Transactional
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String update(@RequestBody final MovieReview movieReview) {
-		return JSONConverter.toJSON(service.update(movieReview));
+	public ResponseEntity update(@RequestBody final MovieReview movieReview, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ResponseEntity.badRequest().body(
+					JSONConverter.toJSON("Failed to update movie review for movie "
+							+ movieReview.getMovie().getImdbUrl()));
+		}
+		return ResponseEntity.ok(service.update(movieReview));
 	}
 
 	@Transactional
@@ -41,7 +53,12 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 
 	@Transactional
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
-	public void delete(@RequestBody final MovieReview movieReview) {
+	public ResponseEntity delete(@RequestBody final MovieReview movieReview, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ResponseEntity.badRequest()
+					.body("Failed to delete movie review for movie " + movieReview.getMovie().getImdbUrl());
+		}
 		service.delete(movieReview);
+		return ResponseEntity.ok("Successfully deleted movie review with url " + movieReview.getMovie().getImdbUrl());
 	}
 }

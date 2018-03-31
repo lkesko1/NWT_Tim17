@@ -3,6 +3,8 @@ package ba.unsa.etf.nwtcinemamovies.controllers;
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
 import ba.unsa.etf.nwtcinemamovies.services.MovieService;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,14 +19,22 @@ public class MoviesController extends AbstractController<MovieService> {
 
 	@Transactional
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public void create(@RequestBody final Movie movie) {
-		service.save(movie);
+	public ResponseEntity create(@RequestBody final Movie movie, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ResponseEntity.badRequest()
+					.body(JSONConverter.toJSON("Failed to create movie with url " + movie.getImdbUrl()));
+		}
+		return ResponseEntity.ok(service.save(movie));
 	}
 
 	@Transactional
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String update(@RequestBody final Movie movie) {
-		return JSONConverter.toJSON(service.update(movie));
+	public ResponseEntity update(@RequestBody final Movie movie, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ResponseEntity.badRequest().body(
+					JSONConverter.toJSON("Failed to update movie with url " + movie.getImdbUrl()));
+		}
+		return ResponseEntity.ok(service.update(movie));
 	}
 
 	@Transactional
@@ -41,7 +51,13 @@ public class MoviesController extends AbstractController<MovieService> {
 
 	@Transactional
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
-	public void delete(@RequestBody final Movie movie) {
+	public ResponseEntity delete(@RequestBody final Movie movie, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ResponseEntity.badRequest().body(
+					JSONConverter.toJSON("Failed to delete movie with url " + movie.getImdbUrl()));
+		}
 		service.delete(movie);
+		return ResponseEntity.ok(
+				JSONConverter.toJSON("Successfully deleted movie with url " + movie.getImdbUrl()));
 	}
 }

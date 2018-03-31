@@ -3,6 +3,8 @@ package ba.unsa.etf.nwtcinemaprojections.models;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 

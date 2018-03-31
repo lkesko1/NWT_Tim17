@@ -3,13 +3,19 @@ package ba.unsa.etf.nwtcinemareservations.models;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class UserRole extends AbstractModel {
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Role.class)
+	@NotNull
 	private Role role;
 
+	@NotNull
+	@Min(1)
 	private Long userId;
 
 	public Long getUserId() {

@@ -1,26 +1,25 @@
 package ba.unsa.etf.nwtcinemamovies.models;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class UserRole extends AbstractModel {
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Role.class)
+	@NotNull
 	private Role role;
 
-	private Integer userId;
+	@NotNull
+	private Long userId;
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
@@ -32,7 +31,7 @@ public class UserRole extends AbstractModel {
 		this.role = role;
 	}
 
-	public UserRole(Role role, Integer userId) {
+	public UserRole(Role role, Long userId) {
 		this.role = role;
 		this.userId = userId;
 	}

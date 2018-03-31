@@ -1,18 +1,27 @@
 package ba.unsa.etf.nwtcinemamovies.models;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Role extends AbstractModel {
 
+	@NotNull(message = "Role must have a title.")
 	private String roleTitle;
 
+	@NotNull
 	private String description;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role", targetEntity = UserRole.class,
 			cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
 	private List<UserRole> userRoles = new ArrayList<>();
 
 	public String getRoleTitle() {
