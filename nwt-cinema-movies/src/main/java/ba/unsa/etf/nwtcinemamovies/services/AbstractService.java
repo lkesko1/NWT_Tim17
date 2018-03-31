@@ -3,6 +3,7 @@ package ba.unsa.etf.nwtcinemamovies.services;
 import ba.unsa.etf.nwtcinemamovies.models.AbstractModel;
 import ba.unsa.etf.nwtcinemamovies.interfaces.AbstractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The Abstract service
@@ -33,6 +34,7 @@ public abstract class AbstractService<AR extends AbstractRepository> {
 	 * @param entity to be created
 	 * @return created entity
 	 */
+	@Transactional
 	public <T extends AbstractModel> T save(T entity) {
 		return (T) repository.save(entity);
 	}
@@ -43,6 +45,7 @@ public abstract class AbstractService<AR extends AbstractRepository> {
 	 * @param entity to be updated
 	 * @return updated entity
 	 */
+	@Transactional
 	public <T extends AbstractModel> T  update(T entity) {
 		return (T) repository.update(entity);
 	}
@@ -53,6 +56,7 @@ public abstract class AbstractService<AR extends AbstractRepository> {
 	 * @param id by witch the entity will be found
 	 * @return found entity
 	 */
+	@Transactional(readOnly = true)
 	public <T extends AbstractModel> T findById(Class<T> clazz, Long id) {
 		return (T) repository.findById(clazz, id);
 	}
@@ -62,6 +66,7 @@ public abstract class AbstractService<AR extends AbstractRepository> {
 	 *
 	 * @return entities
 	 */
+	@Transactional(readOnly = true)
 	public <T extends AbstractModel> Iterable<T> findAll(Class<T> clazz) {
 		return repository.findAll(clazz);
 	}
@@ -71,6 +76,7 @@ public abstract class AbstractService<AR extends AbstractRepository> {
 	 *
 	 * @param entity to be deleted
 	 */
+	@Transactional
 	public <T extends AbstractModel> void delete(T entity) {
 		repository.delete(entity);
 	}

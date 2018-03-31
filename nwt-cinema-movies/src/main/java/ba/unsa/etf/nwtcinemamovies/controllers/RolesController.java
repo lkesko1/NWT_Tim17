@@ -4,14 +4,13 @@ import ba.unsa.etf.nwtcinemamovies.models.Role;
 import ba.unsa.etf.nwtcinemamovies.services.RoleService;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.transaction.Transactional;
 
 @RestController
 @RequestMapping(value = "roles", produces = "application/json")
@@ -37,13 +36,13 @@ public class RolesController extends AbstractController<RoleService> {
 		return ResponseEntity.ok(service.update(role));
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@RequestMapping(value = "{roleId}", method = RequestMethod.GET)
 	public String findById(@PathVariable("roleId") final Long roleId) {
 		return JSONConverter.toJSON(service.findById(Role.class, roleId));
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@RequestMapping(value = "findAll", method = RequestMethod.GET)
 	public String findAll() {
 		return JSONConverter.toJSON(service.findAll(Role.class));

@@ -4,14 +4,13 @@ import ba.unsa.etf.nwtcinemamovies.models.Movie;
 import ba.unsa.etf.nwtcinemamovies.services.MovieService;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.transaction.Transactional;
 
 @RestController
 @RequestMapping(value = "movies", produces = "application/json")
@@ -37,13 +36,13 @@ public class MoviesController extends AbstractController<MovieService> {
 		return ResponseEntity.ok(service.update(movie));
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@RequestMapping(value = "{movieId}", method = RequestMethod.GET)
 	public String findById(@PathVariable("movieId") final Long movieId) {
 		return JSONConverter.toJSON(service.findById(Movie.class, movieId));
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@RequestMapping(value = "findAll", method = RequestMethod.GET)
 	public String findAll() {
 		return JSONConverter.toJSON(service.findAll(Movie.class));

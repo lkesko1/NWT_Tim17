@@ -3,8 +3,7 @@ package ba.unsa.etf.nwtcinemamovies.repositories;
 import ba.unsa.etf.nwtcinemamovies.interfaces.MovieRepository;
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
 import org.springframework.stereotype.Repository;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The movie repository implementation
