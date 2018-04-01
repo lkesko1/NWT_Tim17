@@ -1,5 +1,6 @@
 package ba.unsa.etf.nwtcinemareservations.services;
 
+import ba.unsa.etf.nwtcinemareservations.RabbitMQConfiguration;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.MovieProjectionsClient;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.dto.MovieProjectionDTO;
 import ba.unsa.etf.nwtcinemareservations.models.Reservation;
@@ -45,9 +46,13 @@ public class ReservationService extends BaseService<Reservation, IReservationRep
         }
 
         reservation.setDateCreated(new Date());
+        // notify projections service
+        rabbitTemplate.convertAndSend(
+                RabbitMQConfiguration.NWT_CINEMA_EXCHANGE,
+                "users.created",
+                String.format("reservations.%s", reservation.getNumberOfTickets()));
         return super.add(reservation);
 
-        // notify all
     }
 }
 
