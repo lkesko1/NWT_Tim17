@@ -46,7 +46,10 @@ public class ReservationService extends BaseService<Reservation, IReservationRep
         }
 
         reservation.setDateCreated(new Date());
-        // notify projections service
+        // todo notify projections service
+
+
+        // TEST RABBITMQ - WILL BE REMOVED
         rabbitTemplate.convertAndSend(
                 RabbitMQConfiguration.NWT_CINEMA_EXCHANGE,
                 "users.created",
