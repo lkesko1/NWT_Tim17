@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping(value = "movies", produces = "application/json")
 public class MoviesController extends AbstractController<MovieService> {
@@ -38,14 +40,25 @@ public class MoviesController extends AbstractController<MovieService> {
 
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "{movieId}", method = RequestMethod.GET)
-	public String findById(@PathVariable("movieId") final Long movieId) {
-		return JSONConverter.toJSON(service.findById(Movie.class, movieId));
+	public ResponseEntity findById(@PathVariable("movieId") final Long movieId) {
+		try {
+			JSONConverter.configure();
+			return ResponseEntity.ok(service.fetchMovie(movieId));
+		} catch (java.io.IOException e) {
+			return ResponseEntity.badRequest().body(
+					JSONConverter.toJSON("Failed to fetch movie with given id " + movieId));
+		}
 	}
 
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "findAll", method = RequestMethod.GET)
-	public String findAll() {
-		return JSONConverter.toJSON(service.findAll(Movie.class));
+	public ResponseEntity findAll() {
+		try {
+			JSONConverter.configure();
+			return ResponseEntity.ok(service.fetchAll());
+		} catch (ExecutionException | InterruptedException e) {
+			return ResponseEntity.badRequest().body(JSONConverter.toJSON("Failed to fetch movies"));
+		}
 	}
 
 	@Transactional
