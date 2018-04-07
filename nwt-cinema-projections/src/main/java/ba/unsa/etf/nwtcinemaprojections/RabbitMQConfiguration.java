@@ -1,16 +1,17 @@
-package ba.unsa.etf.nwtcinemareservations;
+package ba.unsa.etf.nwtcinemaprojections;
 
-
-import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfiguration {
-
     public final static String NWT_CINEMA_EXCHANGE = "nwt-cinema-exchange";
     public final static String QUEUE_NAME = "reservations-queue";
 

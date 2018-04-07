@@ -1,5 +1,4 @@
-package ba.unsa.etf.nwtcinemareservations;
-
+package ba.unsa.etf.nwtcinemamovies;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -49,4 +48,6 @@ public class RabbitMQConfiguration {
         container.setMessageListener(listenerAdapter);
         return container;
     }
+
+
 }
