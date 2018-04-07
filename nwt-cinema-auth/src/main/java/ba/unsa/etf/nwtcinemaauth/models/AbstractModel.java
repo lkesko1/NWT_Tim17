@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemaauth.Models;
+package ba.unsa.etf.nwtcinemaauth.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -13,8 +13,6 @@ public abstract class AbstractModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    @NotNull
-    @Min(1)
     private Long id;
 
     public Long getId() {

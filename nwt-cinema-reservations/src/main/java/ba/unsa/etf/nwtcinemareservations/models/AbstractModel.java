@@ -16,8 +16,6 @@ public abstract class AbstractModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    @NotNull
-    @Min(1)
     private Long id;
 
     public AbstractModel() {
