@@ -29,19 +29,19 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
                 new Long(1),
                 new Long(1),
                 new Date(),
-                0,
+                10,
                 100));
         movieTimetableRepository.save(new MovieTimetable(
                 new Long(2),
                 new Long(2),
                 new Date(),
-                0,
+                140,
                 200));
         movieTimetableRepository.save(new MovieTimetable(
                 new Long(3),
                 new Long(3),
                 new Date(),
-                0,
+                200,
                 300));
     }
 

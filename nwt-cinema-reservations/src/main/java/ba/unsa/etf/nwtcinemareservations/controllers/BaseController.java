@@ -22,10 +22,11 @@ public abstract class BaseController<M extends AbstractModel, S extends BaseServ
 
     @Transactional
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public M create(@RequestBody @Valid @ModelAttribute("M") final M model, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return model;
-        }
+    public M create(@RequestBody final M model) {
+        // for now disable validation, first focus on functionality
+//        if (bindingResult.hasErrors()) {
+//            return model;
+//        }
         return (M)service.add(model);
     }
 
