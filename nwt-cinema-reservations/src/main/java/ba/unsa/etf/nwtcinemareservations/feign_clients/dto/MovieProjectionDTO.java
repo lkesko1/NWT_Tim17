@@ -4,6 +4,9 @@ import java.util.Date;
 
 public class MovieProjectionDTO {
 
+
+    private Long id;
+
     private Long movieID;
 
     private Long createdBy;
@@ -49,13 +52,13 @@ public class MovieProjectionDTO {
         this.maxTickets = maxTickets;
     }
 
-    public MovieProjectionDTO(Long movieID, Long createdBy, Date date, Integer actualTickets, Integer maxTickets) {
+    public MovieProjectionDTO(Long id, Long movieID, Long createdBy, Date date, Integer actualTickets, Integer maxTickets) {
         this.movieID = movieID;
         this.createdBy = createdBy;
         this.date = date;
         this.actualTickets = actualTickets;
         this.maxTickets = maxTickets;
-
+        this.id = id;
     }
 
     public Integer getActualTickets() {
@@ -64,5 +67,13 @@ public class MovieProjectionDTO {
 
     public void setActualTickets(Integer actualTickets) {
         this.actualTickets = actualTickets;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
