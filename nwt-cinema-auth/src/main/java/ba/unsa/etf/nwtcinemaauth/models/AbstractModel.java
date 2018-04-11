@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemaauth.Models;
+package ba.unsa.etf.nwtcinemaauth.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;

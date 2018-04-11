@@ -7,6 +7,7 @@
 * IntelliJ IDEA 2017.3.4 or later (or your favorite editor)
 * JDK 1.8 (1.8.0_162 or later, but not Java 9)
 * PostgreSQL 10.3 or later - It would be great if you could set a listen port to 5433
+* RabbitMQ 3.7 Server running on its default port and being accessible using default credentials
 
 ##### Steps:
 
