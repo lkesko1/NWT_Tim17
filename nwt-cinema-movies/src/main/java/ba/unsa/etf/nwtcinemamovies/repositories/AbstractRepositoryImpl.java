@@ -5,10 +5,10 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 
 /**
@@ -58,7 +58,7 @@ public abstract class AbstractRepositoryImpl<T, ID extends Serializable> impleme
 	 * @return found entity
 	 */
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public <S extends T> S findById(Class<T> clazz, ID id) {
 		return (S) getBaseCriteria(clazz).add(Restrictions.eq(ENTITY_ID, id)).uniqueResult();
 	}
@@ -69,7 +69,7 @@ public abstract class AbstractRepositoryImpl<T, ID extends Serializable> impleme
 	 * @return entities
 	 */
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Iterable<T> findAll(Class<T> clazz) {
 		return (Iterable<T>) getBaseCriteria(clazz).list();
 	}

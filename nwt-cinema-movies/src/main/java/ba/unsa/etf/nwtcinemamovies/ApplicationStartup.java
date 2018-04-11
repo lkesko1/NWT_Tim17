@@ -63,6 +63,11 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 		final Role role = roleService.save(new Role(ROLE_TITLE, ROLE_DESCRIPTION));
 		userRoleService.save(new UserRole(role, DUMMY_UID));
 		movieReviewService.save(new MovieReview(DUMMY_UID, RATE, MOVIE_COMMENT, movie));
+
+		//seed some more movies for testing purposes
+		movieService.save(new Movie("http://www.imdb.com/title/tt2527336/"));
+		movieService.save(new Movie("http://www.imdb.com/title/tt3501632/"));
+		movieService.save(new Movie("http://www.imdb.com/title/tt2250912/"));
 	}
 
 }
