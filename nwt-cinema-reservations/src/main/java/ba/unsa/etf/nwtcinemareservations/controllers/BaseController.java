@@ -6,12 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
@@ -23,7 +22,10 @@ public abstract class BaseController<M extends AbstractModel, S extends BaseServ
 
     @Transactional
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public M create(@RequestBody final M model) {
+    public M create(@RequestBody @Valid @ModelAttribute("M") final M model, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return model;
+        }
         return (M)service.add(model);
     }
 
@@ -41,7 +43,10 @@ public abstract class BaseController<M extends AbstractModel, S extends BaseServ
 
     @Transactional
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public void delete(@RequestBody final M model) {
+    public void delete(@RequestBody @Valid @ModelAttribute("M") final M model, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return;
+        }
         service.delete(model);
     }
 

@@ -8,8 +8,6 @@ CREATE TABLE cinema_user (
     first_name CHARACTER VARYING(255) NOT NULL,
     last_name CHARACTER VARYING(255) NOT NULL,
     birthday TIMESTAMP without time zone
-
-
 );
 
 INSERT INTO cinema_user (id, email, password, user_name, first_name, last_name, birthday)
