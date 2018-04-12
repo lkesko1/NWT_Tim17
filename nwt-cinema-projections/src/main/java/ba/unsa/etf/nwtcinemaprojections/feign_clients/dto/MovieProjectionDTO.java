@@ -6,14 +6,18 @@ public class MovieProjectionDTO {
     private Long movieID;
     private Date date;
     private Integer maxTickets;
+    private Long createdBy;
 
     private Integer actualTickets;
 
     public MovieProjectionDTO() {
     }
 
-    public MovieProjectionDTO(Long movieID, Date date, Integer actualTickets, Integer maxTickets) {
+
+
+    public MovieProjectionDTO(Long movieID, Long createdBy, Date date, Integer actualTickets, Integer maxTickets) {
         this.movieID = movieID;
+        this.createdBy = createdBy;
         this.date = date;
         this.actualTickets = actualTickets;
         this.maxTickets = maxTickets;

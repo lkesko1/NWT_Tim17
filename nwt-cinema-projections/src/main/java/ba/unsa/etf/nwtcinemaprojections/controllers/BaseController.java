@@ -22,10 +22,10 @@ public abstract class BaseController<M extends AbstractModel, S extends BaseServ
 
     @Transactional
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public M create(@RequestBody @Valid @ModelAttribute("M") final M model, BindingResult bindingResult) {
+    public M create(@RequestBody final M model) {/*, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return model;
-        }
+        }*/
         return (M)service.add(model);
     }
 

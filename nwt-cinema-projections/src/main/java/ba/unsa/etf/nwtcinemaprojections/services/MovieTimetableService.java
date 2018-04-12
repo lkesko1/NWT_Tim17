@@ -9,10 +9,9 @@ import ba.unsa.etf.nwtcinemaprojections.models.MovieTimetable;
 import ba.unsa.etf.nwtcinemaprojections.repositories.IMovieTimetableRepository;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
 import java.util.Date;
 import java.util.Optional;
 
@@ -39,14 +38,17 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
     public MovieTimetable add(MovieTimetable movieProjection) {
         MovieDTO movieDTO;
         try {
-            movieDTO = moviesClient.getMovie(movieProjection.getMovieID());
+
+            Long movieId = movieProjection.getMovieID();
+            movieDTO = moviesClient.getMovie(movieId);
 
             if (movieDTO == null) {
                 throw new Exception("Movie does not exist");
             }
 
-            ResponseEntity response = moviesClient.addProjection(new MovieProjectionDTO(
+            moviesClient.addProjection(new MovieProjectionDTO(
                     movieDTO.getId(),
+                    movieProjection.getCreatedBy(),
                     new Date(),
                     movieProjection.getActualTickets(),
                     movieProjection.getMaxTickets()
