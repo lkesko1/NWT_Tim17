@@ -9,12 +9,8 @@ import ba.unsa.etf.nwtcinemaprojections.models.MovieTimetable;
 import ba.unsa.etf.nwtcinemaprojections.repositories.IMovieTimetableRepository;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.Array;
-import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -38,23 +34,23 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
 
     @Override
     public MovieTimetable add(MovieTimetable movieProjection) {
-        MovieDTO movieDTO;
         try {
 
             Long movieId = movieProjection.getMovieID();
-            movieDTO = moviesClient.getMovie(movieId);
+            MovieDTO movieDTO = moviesClient.getMovie(movieId);
 
-            if (movieDTO == null) {
+//            Ovdje ce ici movieDTO.getId() == null
+            if (movieDTO.getTitle() == null) {
                 throw new Exception("Movie does not exist");
             }
 
-            moviesClient.addProjection(new MovieProjectionDTO(
-                    movieDTO.getId(),
-                    movieProjection.getCreatedBy(),
-                    new Date(),
-                    movieProjection.getActualTickets(),
-                    movieProjection.getMaxTickets()
-            ));
+//            moviesClient.addProjection(new MovieProjectionDTO(
+//                    movieDTO.getId(),
+//                    movieProjection.getCreatedBy(),
+//                    new Date(),
+//                    movieProjection.getActualTickets(),
+//                    movieProjection.getMaxTickets()
+//            ));
 
             rabbitTemplate.convertAndSend(
                     RabbitMQConfiguration.NWT_CINEMA_EXCHANGE,
