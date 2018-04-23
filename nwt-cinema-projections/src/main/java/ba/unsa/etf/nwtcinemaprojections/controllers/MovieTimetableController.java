@@ -1,14 +1,12 @@
 package ba.unsa.etf.nwtcinemaprojections.controllers;
 
 import ba.unsa.etf.nwtcinemaprojections.controllers.dto.TicketReservationDTO;
+import ba.unsa.etf.nwtcinemaprojections.feign_clients.dto.MovieDTO;
 import ba.unsa.etf.nwtcinemaprojections.models.MovieTimetable;
 import ba.unsa.etf.nwtcinemaprojections.services.MovieTimetableService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "movietimetable", produces = "application/json")
@@ -24,4 +22,10 @@ public class MovieTimetableController extends BaseController<MovieTimetable, Mov
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
+    @RequestMapping(value = "/get-details/{movieId}", method = RequestMethod.GET)
+    public MovieDTO getMovieDetails(@PathVariable("movieId") Long movieId){
+        return service.getDetails(movieId);
+    }
+
 }

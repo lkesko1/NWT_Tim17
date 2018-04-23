@@ -1,5 +1,11 @@
 package ba.unsa.etf.nwtcinemaprojections.feign_clients.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -12,9 +18,15 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieDTO {
 
     private Long id;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private static class Rating {
 
         @JsonProperty("Source")
@@ -149,5 +161,8 @@ public class MovieDTO {
     public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
     }
-    public Long getId() {return id;}
+
+    public Long getId() {
+        return id;
+    }
 }
