@@ -6,8 +6,26 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import org.hibernate.validator.constraints.URL;
+
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieDTO {
+
+    private Long id;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     private static class Rating {
 
@@ -143,5 +161,8 @@ public class MovieDTO {
     public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
     }
-}
 
+    public Long getId() {
+        return id;
+    }
+}
