@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfiguration {
     public final static String NWT_CINEMA_EXCHANGE = "nwt-cinema-exchange";
-    public final static String QUEUE_NAME = "reservations-queue";
+    public final static String QUEUE_NAME = "projections-queue";
 
     public final static String USERS_ROUTING_KEY = "users.#";
 
