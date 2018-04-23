@@ -18,7 +18,6 @@ public class MovieTimetable extends AbstractModel {
 	@Min(1)
 	private Long createdBy;
 
-//	@Past
 	@NotNull
 	private Date date;
 
