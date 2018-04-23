@@ -1,0 +1,14 @@
+Radi:
+
+* nwt-cinema-reservations
+    -> GET http://127.0.0.1:8050/reservations/findAll
+    -> POST http://127.0.0.1:8050/reservations/create
+        {
+        	"numberOfTickets": 5,
+        	"userId": 3,
+        	"movieProjectionId": 3
+        }
+
+Ne radi:
+
+sve ostalo ho ho :D :D (sto manje stvari radi, manje bugova ;)))))
