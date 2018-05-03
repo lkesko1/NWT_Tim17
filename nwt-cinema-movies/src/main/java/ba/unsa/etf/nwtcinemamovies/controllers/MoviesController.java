@@ -6,11 +6,7 @@ import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.ExecutionException;
 
@@ -72,4 +68,10 @@ public class MoviesController extends AbstractController<MovieService> {
 		return ResponseEntity.ok(
 				JSONConverter.toJSON("Successfully deleted movie with url " + movie.getImdbUrl()));
 	}
+
+//	@RequestMapping(value = "search", method = RequestMethod.GET)
+//	public ResponseEntity search(@RequestParam String title) {
+////		this.service.fetchMovieByTitle(title);
+////		return 2;
+//	}
 }
