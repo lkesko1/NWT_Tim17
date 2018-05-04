@@ -47,6 +47,18 @@ public class MoviesController extends AbstractController<MovieService> {
 	}
 
 	@Transactional(readOnly = true)
+	@RequestMapping(value = "/get-movies/{name}", method = RequestMethod.GET)
+	public ResponseEntity fetchByName(@PathVariable("name") final String name) {
+		try {
+			JSONConverter.configure();
+			return ResponseEntity.ok(service.fetchMoviesByName(name));
+		} catch (java.io.IOException e) {
+			return ResponseEntity.badRequest().body(
+					JSONConverter.toJSON("Failed to fetch movies with given name " + name));
+		}
+	}
+
+	@Transactional(readOnly = true)
 	@RequestMapping(value = "findAll", method = RequestMethod.GET)
 	public ResponseEntity findAll() {
 		try {

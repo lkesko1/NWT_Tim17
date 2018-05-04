@@ -2,6 +2,7 @@ package ba.unsa.etf.nwtcinemamovies.services;
 
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
 import ba.unsa.etf.nwtcinemamovies.models.MovieDTO;
+import ba.unsa.etf.nwtcinemamovies.models.MovieListDTO;
 import ba.unsa.etf.nwtcinemamovies.repositories.MovieRepositoryImpl;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
 import org.apache.http.HttpResponse;
@@ -70,6 +71,20 @@ public class MovieService extends AbstractService<MovieRepositoryImpl> {
 	}
 
 	/**
+	 *
+	 * @param name of the movie
+	 * @return list of movies
+	 * @throws IOException
+	 */
+
+	public MovieListDTO fetchMoviesByName(String name) throws IOException{
+		String my_url = "http://www.omdbapi.com/?s="+name+"&apikey=2d5ee0b5";
+		HttpResponse response =  client.execute(new HttpGet(my_url));
+		MovieListDTO listOfMovies = readResponseList(response);
+		return listOfMovies;
+	}
+
+	/**
 	 * Fetches multiple movies asynchronously via futures
 	 *
 	 * @param callables list of constructed callables (get requests)
@@ -98,6 +113,18 @@ public class MovieService extends AbstractService<MovieRepositoryImpl> {
 	private MovieDTO readResponse(HttpResponse response) throws IOException {
 		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 			return JSONConverter.fromJSON(response.getEntity().getContent(), MovieDTO.class);
+		}
+		return null;
+	}
+
+	private MovieListDTO readResponseList(HttpResponse response) throws IOException {
+		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
+			return JSONConverter.fromJSON(response.getEntity().getContent(), MovieListDTO.class);
+			//return JSONConverter.fromJSON(response.getEntity().writeTo((new ArrayList<MovieDTO>()).getClass()));
+
+			//return JSONConverter.fromJSON(response.getEntity().getContent(), (new ArrayList<MovieDTO>()).getClass());
+			//return JSONConverter.fromJSON(response.getEntity().isStreaming(),Iterable<MovieDTO>().class);
 		}
 		return null;
 	}

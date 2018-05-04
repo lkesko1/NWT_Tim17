@@ -50,6 +50,8 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 		return JSONConverter.toJSON(service.findAll(MovieReview.class));
 	}
 
+
+
 	@Transactional
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
 	public ResponseEntity delete(@RequestBody final MovieReview movieReview, BindingResult bindingResult) {
