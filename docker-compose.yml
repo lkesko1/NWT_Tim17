@@ -2,7 +2,6 @@ version: '3'
 
 services:
   movies:
-    image: movies
     build: ./nwt-cinema-movies
     container_name: movies_container
     depends_on: 
@@ -14,14 +13,22 @@ services:
        - app
 
   projections:
-    image: projections
     build: ./nwt-cinema-projections
     container_name: projections_container
     depends_on:
        - database
-       - rabbit1
     ports:
        - 8040:8040
+    networks:
+       - app
+
+  reservations:
+    build: ./nwt-cinema-reservations
+    container_name: reservations_container
+    depends_on:
+       - database
+    ports:
+       - 8050:8050
     networks:
        - app
 
@@ -31,7 +38,7 @@ services:
     volumes:
        - /srv/docker/postgresql:/var/lib/postgresql
     environment:
-       - DB_NAME=nwt-cinema-movies,nwt-cinema-projections
+       - DB_NAME=nwt-cinema-movies,nwt-cinema-projections,nwt-cinema-reservations
        - DB_USER=nwt
        - DB_PASS=nwt
       # - PGDATA=/var/lib/postgresql/data/pgdata
