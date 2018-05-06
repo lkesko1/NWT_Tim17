@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  movies:
+    build: .
+    container_name: movies_microservice
+    depends_on: 
+       - database
+  database:
+    image: postgres:latest
+    container_name: pg_container
+    volumes:
+       - pgdb_movies:/var/lib/postgresql/data
+    environment:
+       - POSTGRES_PASSWORD=nwt
+       - POSTGRES_USER=nwt
+       - POSTGRES_DB=nwt-cinema-movies
+       - PGDATA=/var/lib/postgresql/data/pgdata
+       - PGPORT=5432
+    ports:
+       - 5432:5432
+
+volumes:
+  pgdb_movies: {}
+
+ 
