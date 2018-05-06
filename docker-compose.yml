@@ -13,17 +13,29 @@ services:
     networks:
        - app
 
+  projections:
+    image: projections
+    build: ./nwt-cinema-projections
+    container_name: projections_container
+    depends_on:
+       - database
+       - rabbit1
+    ports:
+       - 8040:8040
+    networks:
+       - app
+
   database:
-    image: postgres:latest
+    image: sameersbn/postgresql
     container_name: pg_container
     volumes:
-       - psql_data:/var/lib/postgresql/data
+       - /srv/docker/postgresql:/var/lib/postgresql
     environment:
-       - POSTGRES_PASSWORD=nwt
-       - POSTGRES_USER=nwt
-       - POSTGRES_DB=nwt-cinema-movies
-       - PGDATA=/var/lib/postgresql/data/pgdata
-       - PGPORT=5432
+       - DB_NAME=nwt-cinema-movies,nwt-cinema-projections
+       - DB_USER=nwt
+       - DB_PASS=nwt
+      # - PGDATA=/var/lib/postgresql/data/pgdata
+      # - PGPORT=5432
     ports:
        - 5433:5432
     networks:
@@ -44,8 +56,8 @@ services:
     networks:
        - app
 
-volumes:
-  psql_data: 
+#volumes:
+#  psql_data: 
 
 networks:
   app:
