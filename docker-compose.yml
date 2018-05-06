@@ -2,10 +2,13 @@ version: '3'
 
 services:
   movies:
-    build: .
+    build: ./nwt-cinema-movies
     container_name: movies_microservice
     depends_on: 
        - database
+       - rabbit1
+    ports:
+       - 8030:8080
   database:
     image: postgres:latest
     container_name: pg_container
@@ -18,9 +21,24 @@ services:
        - PGDATA=/var/lib/postgresql/data/pgdata
        - PGPORT=5432
     ports:
-       - 5432:5432
+       - 5433:5432
+  rabbit1:
+    image: "rabbitmq:latest"
+    hostname: "rabbit1"
+    environment:
+       - RABBITMQ_ERLANG_COOKIE=secret_cookie
+    ports:
+       - "15672:15672"
+       - "5672:5672"
+    labels:
+       NAME: "rabbitmq1"
+    volumes:
+       - rabbit1:/var/lib/rabbitmq
+       - ./conf/:/etc/rabbitmq/
 
 volumes:
   pgdb_movies: {}
+  rabbit1:
+    driver: local
 
  
