@@ -1,36 +1,49 @@
 version: '3'
 
 services:
+  eureka-server:
+    image: eureka-server:latest
+    container_name: eureka_server_container
+    build: ./nwt-eureka-server
+    ports:
+      - 8761:8761
+    networks:
+      - app
+
   movies:
     build: ./nwt-cinema-movies
     container_name: movies_container
     depends_on: 
-       - database
-       - rabbit1
+      - database
+      - eureka-server
     ports:
-       - 8030:8030
+      - 8030:8030
     networks:
-       - app
+      - app
 
   projections:
     build: ./nwt-cinema-projections
     container_name: projections_container
     depends_on:
-       - database
+      - database
+      - eureka-server
     ports:
-       - 8040:8040
+      - 8040:8040
     networks:
-       - app
+      - app
 
   reservations:
     build: ./nwt-cinema-reservations
     container_name: reservations_container
+    links:
+      - eureka-server
     depends_on:
-       - database
+      - database
+      - eureka-server
     ports:
-       - 8050:8050
+      - 8050:8050
     networks:
-       - app
+      - app
 
   database:
     image: sameersbn/postgresql
@@ -48,25 +61,26 @@ services:
     networks:
        - app
 
-  rabbit1:
-    image: "rabbitmq:latest"
-    hostname: "rabbit1"
-    environment:
-       - RABBITMQ_ERLANG_COOKIE=secret_cookie
-    ports:
-       - "15672:15672"
-       - "5672:5672"
-    labels:
-       NAME: "rabbitmq1"
-    volumes:
-       - ./rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
-    networks:
-       - app
+  # rabbit1:
+  #   image: "rabbitmq:latest"
+  #   hostname: "rabbit1"
+  #   environment:
+  #      - RABBITMQ_ERLANG_COOKIE=secret_cookie
+  #   ports:
+  #      - "15672:15672"
+  #      - "5672:5672"
+  #   labels:
+  #      NAME: "rabbitmq1"
+  #   volumes:
+  #      - ./rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
+  #   networks:
+  #      - app
 
 #volumes:
 #  psql_data: 
 
 networks:
   app:
+    driver: bridge
 
  
