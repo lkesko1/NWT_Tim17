@@ -1,14 +1,18 @@
 package ba.unsa.etf.nwtcinemamovies.services;
 
+import ba.unsa.etf.nwtcinemamovies.interfaces.MovieRepository;
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
 import ba.unsa.etf.nwtcinemamovies.models.MovieDTO;
+import ba.unsa.etf.nwtcinemamovies.models.MovieListDTO;
 import ba.unsa.etf.nwtcinemamovies.repositories.MovieRepositoryImpl;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
+import com.netflix.discovery.converters.Auto;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -28,6 +32,8 @@ public class MovieService extends AbstractService<MovieRepositoryImpl> {
 	private static final String BASE_URL = "http://www.omdbapi.com/?apikey=";
 
 	private HttpClient client = HttpClientBuilder.create().build();
+
+
 
 	/**
 	 * Fetches IMDB url from database, and than makes API call (GET) to OMDB api
@@ -70,6 +76,30 @@ public class MovieService extends AbstractService<MovieRepositoryImpl> {
 	}
 
 	/**
+	 *
+	 * @param name of the movie
+	 * @return list of movies
+	 * @throws IOException
+	 */
+
+	public MovieListDTO fetchMoviesByName(String name) throws IOException{
+		String my_url = "http://www.omdbapi.com/?s="+name+"&apikey=2d5ee0b5";
+		HttpResponse response =  client.execute(new HttpGet(my_url));
+		MovieListDTO listOfMovies = readResponseList(response);
+		return listOfMovies;
+	}
+
+	public Movie addNewMovie(String imdbID) throws IOException{
+		String my_url = "http://www.omdbapi.com/?i="+imdbID+"&apikey=2d5ee0b5";
+		HttpResponse response = client.execute((new HttpGet(my_url)));
+		MovieDTO newMovie = readResponse(response);
+		Movie mymovie = this.repository.save(new Movie( my_url, newMovie.getTitle(), newMovie.getYear(), newMovie.getGenre(), newMovie.getDirector(), newMovie.getActors(), newMovie.getAwards()));
+
+		return mymovie;
+		//Todo: rijesiti rating?!
+	}
+
+	/**
 	 * Fetches multiple movies asynchronously via futures
 	 *
 	 * @param callables list of constructed callables (get requests)
@@ -98,6 +128,18 @@ public class MovieService extends AbstractService<MovieRepositoryImpl> {
 	private MovieDTO readResponse(HttpResponse response) throws IOException {
 		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 			return JSONConverter.fromJSON(response.getEntity().getContent(), MovieDTO.class);
+		}
+		return null;
+	}
+
+	private MovieListDTO readResponseList(HttpResponse response) throws IOException {
+		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
+			return JSONConverter.fromJSON(response.getEntity().getContent(), MovieListDTO.class);
+			//return JSONConverter.fromJSON(response.getEntity().writeTo((new ArrayList<MovieDTO>()).getClass()));
+
+			//return JSONConverter.fromJSON(response.getEntity().getContent(), (new ArrayList<MovieDTO>()).getClass());
+			//return JSONConverter.fromJSON(response.getEntity().isStreaming(),Iterable<MovieDTO>().class);
 		}
 		return null;
 	}
