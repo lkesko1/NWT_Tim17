@@ -29,19 +29,17 @@ public class Movie extends AbstractModel {
 	private String director;
 	private String actors;
 	private String awards;
-	private List<Rating> ratings;
+	//private List<Rating> ratings;
 
-	public Movie(List<MovieReview> movieReviews, @URL(message = "The URL provided is not valid.") @NotNull(message = "Movie URL must be provided.") String imdbUrl, String name, String title, Integer year, String genre, String director, String actors, String awards, List<Rating> ratings) {
-		this.movieReviews = movieReviews;
+	public Movie( @URL(message = "The URL provided is not valid.") @NotNull(message = "Movie URL must be provided.") String imdbUrl, String title, Integer year, String genre, String director, String actors, String awards) {
 		this.imdbUrl = imdbUrl;
-		this.name = name;
 		this.title = title;
 		this.year = year;
 		this.genre = genre;
 		this.director = director;
 		this.actors = actors;
 		this.awards = awards;
-		this.ratings = ratings;
+
 	}
 
 	public String getName() {
@@ -50,14 +48,6 @@ public class Movie extends AbstractModel {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public Integer getYear() {
@@ -100,12 +90,20 @@ public class Movie extends AbstractModel {
 		this.awards = awards;
 	}
 
-	public List<Rating> getRatings() {
-		return ratings;
+//	public List<Rating> getRatings() {
+//		return ratings;
+//	}
+//
+//	public void setRatings(List<Rating> ratings) {
+//		this.ratings = ratings;
+//	}
+
+	public String getTitle() {
+		return title;
 	}
 
-	public void setRatings(List<Rating> ratings) {
-		this.ratings = ratings;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 

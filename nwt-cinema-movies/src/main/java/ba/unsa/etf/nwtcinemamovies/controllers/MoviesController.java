@@ -34,6 +34,17 @@ public class MoviesController extends AbstractController<MovieService> {
 		return ResponseEntity.ok(service.update(movie));
 	}
 
+	@Transactional
+	@RequestMapping(value = "/addMovie/{movieID}", method = RequestMethod.POST)
+	public ResponseEntity addMovie(@PathVariable("movieID") final String movieId) {
+		try{
+		return ResponseEntity.ok(service.addNewMovie(movieId));
+		}
+		catch (java.io.IOException e)
+		{return ResponseEntity.badRequest().body(
+				JSONConverter.toJSON("Failed to fetch movie with given id " + movieId));}
+	}
+
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "{movieId}", method = RequestMethod.GET)
 	public ResponseEntity findById(@PathVariable("movieId") final Long movieId) {
