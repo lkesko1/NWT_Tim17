@@ -10,12 +10,26 @@ services:
     networks:
       - app
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - app
+
   movies:
     build: ./nwt-cinema-movies
     container_name: movies_container
     depends_on: 
       - database
       - eureka-server
+      - rabbitmq
     ports:
       - 8030:8030
     networks:
@@ -27,6 +41,7 @@ services:
     depends_on:
       - database
       - eureka-server
+      - rabbitmq
     ports:
       - 8040:8040
     networks:
@@ -40,12 +55,16 @@ services:
     depends_on:
       - database
       - eureka-server
+      - rabbitmq
     ports:
       - 8050:8050
+    environment:
+      SPRING_RABBITMQ_HOST: rabbit
     networks:
       - app
 
   database:
+    restart: always
     image: sameersbn/postgresql
     container_name: pg_container
     volumes:
@@ -61,20 +80,17 @@ services:
     networks:
        - app
 
-  # rabbit1:
-  #   image: "rabbitmq:latest"
-  #   hostname: "rabbit1"
-  #   environment:
-  #      - RABBITMQ_ERLANG_COOKIE=secret_cookie
+   
+  # rabbit:
+  #   image: "rabbitmq:3-management"
+  #   hostname: "rabbit"
   #   ports:
-  #      - "15672:15672"
-  #      - "5672:5672"
+  #     - "15672:15672"
+  #     - "5672:5672"
   #   labels:
-  #      NAME: "rabbitmq1"
+  #     NAME: "rabbitmq"
   #   volumes:
-  #      - ./rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
-  #   networks:
-  #      - app
+  #     - ./rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
 
 #volumes:
 #  psql_data: 
