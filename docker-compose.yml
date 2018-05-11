@@ -20,6 +20,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_VHOST: vhost
     networks:
       - app
 
@@ -58,8 +59,6 @@ services:
       - rabbitmq
     ports:
       - 8050:8050
-    environment:
-      SPRING_RABBITMQ_HOST: rabbit
     networks:
       - app
 
@@ -73,27 +72,10 @@ services:
        - DB_NAME=nwt-cinema-movies,nwt-cinema-projections,nwt-cinema-reservations
        - DB_USER=nwt
        - DB_PASS=nwt
-      # - PGDATA=/var/lib/postgresql/data/pgdata
-      # - PGPORT=5432
     ports:
        - 5433:5432
     networks:
        - app
-
-   
-  # rabbit:
-  #   image: "rabbitmq:3-management"
-  #   hostname: "rabbit"
-  #   ports:
-  #     - "15672:15672"
-  #     - "5672:5672"
-  #   labels:
-  #     NAME: "rabbitmq"
-  #   volumes:
-  #     - ./rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
-
-#volumes:
-#  psql_data: 
 
 networks:
   app:
