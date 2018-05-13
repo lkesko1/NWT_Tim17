@@ -11,16 +11,16 @@ services:
       - app
 
   rabbitmq:
-    image: rabbitmq:3-management
-    restart: always
     hostname: rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672
+    container_name: rabbitmq_container
+    image: rabbitmq:3-management
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
       RABBITMQ_DEFAULT_VHOST: vhost
+    ports:
+      - 5672:5672
+      - 15672:15672
     networks:
       - app
 
@@ -30,6 +30,8 @@ services:
     depends_on: 
       - database
       - eureka-server
+      - rabbitmq
+    links:
       - rabbitmq
     ports:
       - 8030:8030
@@ -51,8 +53,6 @@ services:
   reservations:
     build: ./nwt-cinema-reservations
     container_name: reservations_container
-    links:
-      - eureka-server
     depends_on:
       - database
       - eureka-server
@@ -63,7 +63,6 @@ services:
       - app
 
   database:
-    restart: always
     image: sameersbn/postgresql
     container_name: pg_container
     volumes:
@@ -76,6 +75,19 @@ services:
        - 5433:5432
     networks:
        - app
+
+  gateway:
+    build: ./nwt-api-gateway
+    image: zuul-server:latest
+    container_name: api_gateway_container
+    environment:
+      - EUREKA_HOST=eureka-server
+    depends_on:
+      - eureka-server
+    ports:
+      - 8080:8080
+    networks: 
+      - app
 
 networks:
   app:
