@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient("nwt-cinema-projections")
 public interface MovieProjectionsClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movietimetable/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "movietimetable/{id}")
     MovieProjectionDTO getMovieProjection(@PathVariable("id") Long id);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/movietimetable/reserve-tickets")
+    @RequestMapping(method = RequestMethod.POST, value = "movietimetable/reserve-tickets")
     ResponseEntity reserveTickets(@RequestBody TicketReservationDTO ticketReservation);
 
 }

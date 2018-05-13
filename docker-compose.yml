@@ -7,64 +7,64 @@ services:
     build: ./nwt-eureka-server
     ports:
       - 8761:8761
-    networks:
-      - app
+    network_mode: bridge
+    # networks:
+    #   - app
 
   rabbitmq:
-    hostname: rabbitmq
-    container_name: rabbitmq_container
     image: rabbitmq:3-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
-      RABBITMQ_DEFAULT_VHOST: vhost
-    ports:
-      - 5672:5672
-      - 15672:15672
-    networks:
-      - app
+    network_mode: bridge
 
   movies:
     build: ./nwt-cinema-movies
     container_name: movies_container
+    environment: 
+      SPRING_RABBITMQ_HOST: 172.17.0.1
     depends_on: 
       - database
       - eureka-server
       - rabbitmq
-    links:
-      - rabbitmq
     ports:
       - 8030:8030
-    networks:
-      - app
+    network_mode: bridge
 
   projections:
     build: ./nwt-cinema-projections
     container_name: projections_container
+    environment:
+      SPRING_RABBITMQ_HOST: 172.17.0.1
     depends_on:
       - database
       - eureka-server
       - rabbitmq
     ports:
       - 8040:8040
-    networks:
-      - app
+    network_mode: bridge
 
   reservations:
     build: ./nwt-cinema-reservations
     container_name: reservations_container
+    environment:
+      SPRING_RABBITMQ_HOST: 172.17.0.1
     depends_on:
       - database
       - eureka-server
       - rabbitmq
     ports:
       - 8050:8050
-    networks:
-      - app
+    network_mode: bridge
 
   database:
     image: sameersbn/postgresql
     container_name: pg_container
+    restart: always
     volumes:
        - /srv/docker/postgresql:/var/lib/postgresql
     environment:
@@ -73,8 +73,7 @@ services:
        - DB_PASS=nwt
     ports:
        - 5433:5432
-    networks:
-       - app
+    network_mode: bridge
 
   gateway:
     build: ./nwt-api-gateway
@@ -84,13 +83,10 @@ services:
       - EUREKA_HOST=eureka-server
     depends_on:
       - eureka-server
+    links: 
+      - eureka-server
     ports:
       - 8080:8080
-    networks: 
-      - app
-
-networks:
-  app:
-    driver: bridge
+    network_mode: bridge
 
  

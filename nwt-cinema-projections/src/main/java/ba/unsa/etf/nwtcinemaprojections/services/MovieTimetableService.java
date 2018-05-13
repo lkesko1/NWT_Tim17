@@ -40,7 +40,9 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
         try {
 
             Long movieId = movieProjection.getMovieID();
+            System.out.println(movieId);
             MovieDTO movieDTO = moviesClient.getMovie(movieId);
+            System.out.println(movieDTO.getTitle());
 
 //            Ovdje ce ici movieDTO.getId() == null
             if (movieDTO.getTitle() == null) {
