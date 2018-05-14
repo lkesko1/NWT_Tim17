@@ -38,7 +38,7 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
     @Override
     public MovieTimetable add(MovieTimetable movieProjection) {
         try {
-
+            System.out.println(movieProjection);
             Long movieId = movieProjection.getMovieID();
             System.out.println(movieId);
             MovieDTO movieDTO = moviesClient.getMovie(movieId);
