@@ -1,35 +1,38 @@
 import React, { Component } from "react";
-import { List, Segment, Container, Header, Grid, Divider } from "semantic-ui-react";
-import logo from "../../images/movie-time-cinema-logo-8B5BE91828-seeklogo.com.png";
+import {
+  Segment,
+  Container,
+  Divider,
+  Icon
+} from "semantic-ui-react";
 
 export default class Footer extends Component {
   render() {
     return (
-      <Segment inverted vertical >
-      <Divider />
-      
+      <Segment inverted vertical textAlign='center'>
         <Container>
-          <Grid divided inverted stackable>
+          {/* <Grid divided inverted stackable>
             <Grid.Row>
-              <Grid.Column width={3}>
+              <Grid.Column width={8}>
                 <Header inverted as="h4" content="About" />
-                <List link inverted>
+                <List link inverted >
+                <List.Item> Alibegović A. </List.Item>
+                <List.Item> Cerić E. </List.Item>
+                <List.Item> Hadžibulić A. </List.Item>
+                <List.Item> Keško L. </List.Item>
 
                 </List>
               </Grid.Column>
-              <Grid.Column width={3}>
-                <Header inverted as="h4" content="Services" />
-                <List link inverted>
-                  
-                </List>
-              </Grid.Column>
-              <Grid.Column width={7}>
+
+              <Grid.Column width={8}>
                 <Header as="h4" inverted>
                   Contact
                 </Header>
               </Grid.Column>
             </Grid.Row>
-          </Grid>
+          </Grid> */}
+          <Divider/>
+          <Icon name='copyright' /> 2018 NWT Tim 17
         </Container>
       </Segment>
     );

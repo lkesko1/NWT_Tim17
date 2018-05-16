@@ -6,6 +6,8 @@ import reducers from "./state"
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import registerServiceWorker from "./registerServiceWorker";
+import 'bootstrap/dist/css/bootstrap.css';
+
 
 let store = createStore(
   reducers, 
