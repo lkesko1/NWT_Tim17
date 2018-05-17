@@ -18,7 +18,7 @@ public class User extends AbstractModel {
 
 	@NotNull
 	@Size(min=3)
-	private String userName;
+	private String username;
 
 	@NotNull
 	@Size(min=3)
@@ -50,12 +50,12 @@ public class User extends AbstractModel {
 		this.password = password;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getFirstName() {
@@ -85,16 +85,16 @@ public class User extends AbstractModel {
 	public User() {
 	}
 
-	public User(String email, String password, String userName, String firstName, String lastName, Date birthday) {
+	public User(String email, String password, String username, String firstName, String lastName, Date birthday) {
 		this.email = email;
 		this.password = password;
-		this.userName = userName;
+		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthday = birthday;
 	}
 
 	public String toString() {
-		return "User(Name: " + this.getFirstName() + " " + this.getLastName() + ")" + " " + this.getUserName();
+		return "User(Name: " + this.getFirstName() + " " + this.getLastName() + ")" + " " + this.getUsername();
 	}
 }
