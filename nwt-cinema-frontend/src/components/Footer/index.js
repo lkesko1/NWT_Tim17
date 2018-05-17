@@ -31,7 +31,6 @@ export default class Footer extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid> */}
-          <Divider/>
           <Icon name='copyright' /> 2018 NWT Tim 17
         </Container>
       </Segment>

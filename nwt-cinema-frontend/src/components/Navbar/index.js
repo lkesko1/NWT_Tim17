@@ -1,27 +1,26 @@
 import React, { Component } from "react";
-import {
-  Segment,
-  Button,
-  Menu,
-  Icon,
-  Image
-} from "semantic-ui-react";
+import { Segment, Button, Menu, Icon, Image } from "semantic-ui-react";
 import logo from "../../images/movie-time.png";
+import { Link } from "react-router-dom";
 
 export default class Navbar extends Component {
   render() {
     return (
-      <Segment  vertical>
-        <Menu inverted fixed='top' size="small">
-        <Menu.Item>
+      <Segment vertical>
+        <Menu inverted fixed="top" size="small">
+          <Menu.Item>
             <Image size="tiny" src={logo} alt="logo" />
-        </Menu.Item>
+          </Menu.Item>
           <Menu.Item as="a" active>
-            <Icon name="home" />
-            Home
+            <Link to="/">
+              <Icon name="home" />
+              Home
+            </Link>
           </Menu.Item>
           <Menu.Item as="a">
-            <Icon name="film" /> Movies{" "}
+            <Link to="/movies">
+              <Icon name="film" /> Movies{" "}
+            </Link>
           </Menu.Item>
           <Menu.Item as="a">
             <Icon name="video camera" /> Projections{" "}
@@ -42,7 +41,7 @@ export default class Navbar extends Component {
             </Button>
           </Menu.Item>
         </Menu>
-       </Segment>
+      </Segment>
     );
   }
 }

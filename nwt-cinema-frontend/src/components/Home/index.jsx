@@ -6,6 +6,7 @@ import logo from "../../images/movie-time.png"
 export default class Home extends Component {
   render() {
     return (
+      
       <Segment style={{ padding: "8em 0em" }} vertical>
         <Grid container stackable verticalAlign="middle">
           <Grid.Row>
