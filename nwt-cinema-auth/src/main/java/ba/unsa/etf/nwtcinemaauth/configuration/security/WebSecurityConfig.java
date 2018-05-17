@@ -21,12 +21,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/auth/register").permitAll()
-                .antMatchers(HttpMethod.POST,"/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                .antMatchers(HttpMethod.POST,"/auth/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // We filter the api/login requests
-                .addFilterBefore(new LoginFilter("/login", authenticationManager()),
+                .addFilterBefore(new LoginFilter("/auth/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class);
 
 
