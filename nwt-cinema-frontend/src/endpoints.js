@@ -1,0 +1,1 @@
+export const movieEndpoint = "http://localhost:8080/movies/movies";

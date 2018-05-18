@@ -10,18 +10,29 @@ import {
   Divider
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
-import { fetchMovie } from "../../state/movie/actions";
-import { getMovie } from "../../state/movie/stateSelector";
-import { connect } from "react-redux";
 import image from "../../images/DMOHA20140112005.jpg"
+import axios from "axios";
+import {movieEndpoint } from "../../endpoints"
 
-class Movie extends Component {
-  // componentDidUpdate() {
-  //   this.props.fetchMovies();
-  // }
+export default class Movie extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { movie: null, error: null };
+  }
+
+  componentWillMount() {
+    axios.get(movieEndpoint + "/1")
+    .then(response => {
+      const movie = response.data;
+      this.setState({movie: movie})
+    })
+    .catch(error => {
+      this.setState({error: error})
+    });
+  }
 
   getMovieContent() {
-    const { movie, youtubeId } = this.props;
+    const { movie, youtubeId } = this.state;
 
     const content = (
       <Segment color="yellow" >
@@ -70,7 +81,7 @@ class Movie extends Component {
   }
 
   render() {
-    const { movie } = this.props;
+    const { movie } = this.state;
 
     if (!movie) {
       return (
@@ -86,10 +97,3 @@ class Movie extends Component {
   }
 }
 
-export default connect(
-  state => ({
-    movie: getMovie(state),
-    // youtubeId: getMovieFromYoutube(state),
-  }),
-  { fetchMovie }
-)(Movie);

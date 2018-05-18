@@ -1,25 +1,16 @@
 import React, { Component } from "react";
-import { fetchMovie } from "../../state/movie/actions";
-import { getMovie } from "../../state/movie/stateSelector";
-import { connect } from "react-redux";
 import Movie from "./Movie";
 import {Grid} from "semantic-ui-react";
 
-class MovieScreen extends Component {
-  componentDidMount() {
-    this.props.fetchMovie();
-  }
-
+export default class MovieScreen extends Component {
   render() {
-    const { movie } = this.props;
-    console.log(movie)
     return (
       <div>
         <Grid >
           <Grid.Row>
             <Grid.Column width={3} />
             <Grid.Column width={10}>
-              <Movie movie={movie} />
+              <Movie/>
             </Grid.Column>
             <Grid.Column width={3} />
           </Grid.Row>
@@ -28,10 +19,3 @@ class MovieScreen extends Component {
     );
   }
 }
-
-export default connect(
-  state => ({
-    movie: getMovie(state)
-  }),
-  { fetchMovie }
-)(MovieScreen);

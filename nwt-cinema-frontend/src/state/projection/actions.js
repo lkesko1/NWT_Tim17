@@ -1,1 +1,0 @@
-export const SET_PROJECTIONS = "SET_PROJECTIONS";

@@ -8,18 +8,29 @@ import {
   Message
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
-import { fetchMovies } from "../../state/movie/actions";
-import { getMovies } from "../../state/movie/stateSelector";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import {movieEndpoint} from "../../endpoints"
 
-class MoviesList extends Component {
-  // componentDidUpdate() {
-  //   this.props.fetchMovies();
-  // }
+export default class MoviesList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { movies: [], error: null };
+  }
+
+  componentWillMount() {
+    axios.get(movieEndpoint + "/findAll")
+    .then(response => {
+      const movies = response.data;
+      this.setState({movies: movies})
+    })
+    .catch(error => {
+      this.setState({error: error})
+    });
+  }
 
   getContent() {
-    const { movies } = this.props;
+    const { movies } = this.state;
     let moviesList = [];
     let index = 0;
 
@@ -64,9 +75,9 @@ class MoviesList extends Component {
   }
 
   render() {
-    const { movies } = this.props;
+    const { movies, error } = this.state;
 
-    if (!movies || movies.length === 0) {
+    if (!movies || movies.length === 0 || error) {
       return (
         <Message negative size="huge">
           <Message.Header>
@@ -81,9 +92,3 @@ class MoviesList extends Component {
   }
 }
 
-export default connect(
-  state => ({
-    movies: getMovies(state)
-  }),
-  { fetchMovies }
-)(MoviesList);
