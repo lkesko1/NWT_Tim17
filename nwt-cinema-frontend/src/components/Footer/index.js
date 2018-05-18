@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Segment,
   Container,
-  Divider,
   Icon
 } from "semantic-ui-react";
 

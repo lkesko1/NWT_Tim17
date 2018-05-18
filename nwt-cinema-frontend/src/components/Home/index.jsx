@@ -7,7 +7,6 @@ export default class Home extends Component {
   render() {
     return (
       
-      <Segment style={{ padding: "8em 0em" }} vertical>
         <Grid container stackable verticalAlign="middle">
           <Grid.Row>
             <Grid.Column width={8} textAlign="center">
@@ -34,7 +33,6 @@ export default class Home extends Component {
           </Grid.Row>
 
         </Grid>
-      </Segment>
     );
   }
 }

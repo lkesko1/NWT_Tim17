@@ -1,4 +1,4 @@
-import { SET_MOVIES } from "./actions";
+import { SET_MOVIES, SET_MOVIE} from "./actions";
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
@@ -7,6 +7,14 @@ export default function reducer(state = {}, action) {
         ...state,
         movies: action.movies
       };
+    }
+
+    case SET_MOVIE: {
+      return {
+        ...state,
+        movie: action.movie,
+        youtube: action.youtube
+      }
     }
 
     default:
