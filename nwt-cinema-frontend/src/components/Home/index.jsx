@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./style.css";
-import { Segment, Grid, Button, Header, Image } from "semantic-ui-react";
+import { Grid, Button, Header, Image } from "semantic-ui-react";
 import jumbotronImage from "../../images/DMOHA20140112005.jpg";
 import logo from "../../images/movie-time.png"
 export default class Home extends Component {

@@ -9,28 +9,10 @@ import {
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import {movieEndpoint} from "../../endpoints"
 
 export default class MoviesList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { movies: [], error: null };
-  }
-
-  componentWillMount() {
-    axios.get(movieEndpoint + "/findAll")
-    .then(response => {
-      const movies = response.data;
-      this.setState({movies: movies})
-    })
-    .catch(error => {
-      this.setState({error: error})
-    });
-  }
-
   getContent() {
-    const { movies } = this.state;
+    const { movies } = this.props;
     let moviesList = [];
     let index = 0;
 
@@ -75,7 +57,7 @@ export default class MoviesList extends Component {
   }
 
   render() {
-    const { movies, error } = this.state;
+    const { movies, error } = this.props;
 
     if (!movies || movies.length === 0 || error) {
       return (
