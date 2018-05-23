@@ -12,3 +12,11 @@ Radi:
 Ne radi:
 
 sve ostalo ho ho :D :D (sto manje stvari radi, manje bugova ;)))))
+
+{
+  "movieId": 1,
+  "createdBy": 3,
+  "date": "2018-05-10",
+  "actualTickets": 50,
+  "maxTickets": 55
+}

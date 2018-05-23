@@ -1,0 +1,100 @@
+version: '3'
+
+services:
+  eureka-server:
+    image: eureka-server:latest
+    container_name: eureka_server_container
+    build: ./nwt-eureka-server
+    ports:
+      - 8761:8761
+    networks:
+      - app
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app
+    
+  database:
+    image: sameersbn/postgresql
+    container_name: pg_container
+    restart: always
+    volumes:
+       - /srv/docker/postgresql:/var/lib/postgresql
+    environment:
+       - DB_NAME=nwt-cinema-movies,nwt-cinema-projections,nwt-cinema-reservations
+       - DB_USER=nwt
+       - DB_PASS=nwt
+    ports:
+       - 5432:5432
+    networks:
+      - app
+
+  movies:
+    build: ./nwt-cinema-movies
+    container_name: movies_container
+    environment: 
+      SPRING_RABBITMQ_HOST: rabbitmq
+    depends_on: 
+      - database
+      - eureka-server
+      - rabbitmq
+    ports:
+      - 8030:8030
+    networks:
+      - app
+
+  projections:
+    build: ./nwt-cinema-projections
+    container_name: projections_container
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+    depends_on:
+      - database
+      - eureka-server
+      - rabbitmq
+    ports:
+      - 8040:8040
+    networks:
+      - app
+
+  reservations:
+    build: ./nwt-cinema-reservations
+    container_name: reservations_container
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+    depends_on:
+      - database
+      - eureka-server
+      - rabbitmq
+    ports:
+      - 8050:8050
+    networks:
+      - app
+
+  gateway:
+    build: ./nwt-api-gateway
+    image: zuul-server:latest
+    container_name: api_gateway_container
+    depends_on:
+      - eureka-server
+      - projections
+      - movies
+      - reservations
+    ports:
+      - 8080:8080
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
+
+ 
