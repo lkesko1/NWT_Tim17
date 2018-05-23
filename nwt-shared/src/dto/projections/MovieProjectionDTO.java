@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemaprojections.feign_clients.dto;
+package dto.projections;
 
 import java.util.Date;
 
@@ -53,4 +53,11 @@ public class MovieProjectionDTO {
     }
 
 
+    public Long getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
 }
