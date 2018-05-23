@@ -8,12 +8,15 @@ import ba.unsa.etf.nwtcinemaprojections.feign_clients.MoviesClient;
 import ba.unsa.etf.nwtcinemaprojections.feign_clients.dto.MovieDTO;
 import ba.unsa.etf.nwtcinemaprojections.feign_clients.dto.MovieProjectionDTO;
 import ba.unsa.etf.nwtcinemaprojections.models.MovieTimetable;
+import ba.unsa.etf.nwtcinemaprojections.models.ProjectionsDTO;
 import ba.unsa.etf.nwtcinemaprojections.repositories.IMovieTimetableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -72,6 +75,22 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
         return moviesClient.getMovieDetails(movieId);
 
     }
+
+    public List<ProjectionsDTO> getProjections(){
+        List<MovieTimetable> projs = repository.findAll();
+
+        List<ProjectionsDTO> projections = new ArrayList<>();
+
+        for (MovieTimetable proj: projs
+             ) {
+            MovieDTO movieDetails = getDetails(proj.getMovieID());
+            projections.add(new ProjectionsDTO(proj.getId(), proj.getMovieID(), proj.getCreatedBy(), proj.getDate(), proj.getActualTickets(), proj.getMaxTickets(), movieDetails.getTitle(), movieDetails.getGenre()));
+        }
+
+        return projections;
+    }
+
+
 
 
 }

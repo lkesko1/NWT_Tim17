@@ -32,10 +32,14 @@ export default class Navbar extends Component {
             </Link>
           </Menu.Item>
           <Menu.Item name="projections"  active={activeItem === 'projections'} onClick={this.handleItemClick}>
+            <Link to="/projections">
             <Icon name="video camera" /> Projections{" "}
+            </Link>
           </Menu.Item>
           <Menu.Item name="about" active={activeItem === 'about'} onClick={this.handleItemClick}>
+            <Link to="/about-us">
             <Icon name="question" />About us{" "}
+            </Link>
           </Menu.Item>
           <Menu.Item name="contact" active={activeItem === 'contact'} onClick={this.handleItemClick}>
             <Icon name="phone" /> Contact{" "}
