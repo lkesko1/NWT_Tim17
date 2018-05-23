@@ -1,7 +1,8 @@
 package ba.unsa.etf.nwtcinemaauth.configuration.security;
 
-import ba.unsa.etf.nwtcinemaauth.models.User;
+import ba.unsa.etf.nwtcinemaauth.models.NWTCinemaUser;
 import ba.unsa.etf.nwtcinemaauth.repositories.IUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,17 +15,18 @@ import java.util.Collections;
 @Service
 public class NWTCinemaUserDetailsService implements UserDetailsService {
 
+    @Autowired
     private IUserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User userAccount = userRepository.findUserByUsername(username);
-        if(userAccount == null) {
-            throw new UsernameNotFoundException("User not found");
+        NWTCinemaUser NWTCinemaUserAccount = userRepository.findUserByUsername(username);
+        if(NWTCinemaUserAccount == null) {
+            throw new UsernameNotFoundException("NWTCinemaUser not found");
         }
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        return org.springframework.security.core.userdetails.User.withUsername(userAccount.getUsername())
-                .password(encoder.encode(userAccount.getPassword()))
+        return org.springframework.security.core.userdetails.User.withUsername(NWTCinemaUserAccount.getUsername())
+                .password(encoder.encode(NWTCinemaUserAccount.getPassword()))
                 .authorities(Collections.emptyList())
                 .build();
     }

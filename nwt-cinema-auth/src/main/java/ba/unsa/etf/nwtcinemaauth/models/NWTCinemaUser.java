@@ -5,7 +5,7 @@ import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
-public class User extends AbstractModel {
+public class NWTCinemaUser extends AbstractModel {
 
 	@NotNull
 	@Pattern(regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")
@@ -29,10 +29,6 @@ public class User extends AbstractModel {
 	@Size(min=3)
 	@Pattern(regexp = "^[A-Z]([A-Za-z]{2,})$")
 	private String lastName;
-
-	@NotNull
-	@Past
-	private Date birthday;
 
 	public String getEmail() {
 		return email;
@@ -74,27 +70,18 @@ public class User extends AbstractModel {
 		this.lastName = lastName;
 	}
 
-	public Date getBirthday() {
-		return birthday;
+	public NWTCinemaUser() {
 	}
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
-
-	public User() {
-	}
-
-	public User(String email, String password, String username, String firstName, String lastName, Date birthday) {
+	public NWTCinemaUser(String email, String password, String username, String firstName, String lastName, Date birthday) {
 		this.email = email;
 		this.password = password;
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.birthday = birthday;
 	}
 
 	public String toString() {
-		return "User(Name: " + this.getFirstName() + " " + this.getLastName() + ")" + " " + this.getUsername();
+		return "NWTCinemaUser(Name: " + this.getFirstName() + " " + this.getLastName() + ")" + " " + this.getUsername();
 	}
 }

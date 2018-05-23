@@ -1,7 +1,7 @@
 package ba.unsa.etf.nwtcinemaauth.controllers;
 
 
-import ba.unsa.etf.nwtcinemaauth.models.User;
+import ba.unsa.etf.nwtcinemaauth.models.NWTCinemaUser;
 import ba.unsa.etf.nwtcinemaauth.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,15 +20,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ResponseEntity register(@Valid @RequestBody User user) {
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity register(@Valid @RequestBody NWTCinemaUser NWTCinemaUser) {
         try {
-            userService.createUser(user);
+            userService.createUser(NWTCinemaUser);
             return ResponseEntity.ok()
                     .build();
         }
         catch (Exception exc) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .build();
         }
     }
