@@ -1,7 +1,7 @@
 package ba.unsa.etf.nwtcinemaauth.configuration.security;
 
+import ba.unsa.etf.nwtcinemaauth.dto.LoginDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dto.auth.LoginDTO;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

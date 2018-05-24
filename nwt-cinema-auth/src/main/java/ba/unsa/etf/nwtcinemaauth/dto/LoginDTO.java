@@ -1,4 +1,4 @@
-package dto.auth;
+package ba.unsa.etf.nwtcinemaauth.dto;
 
 public class LoginDTO {
     private String username;

@@ -1,4 +1,4 @@
-package dto.projections;
+package ba.unsa.etf.nwtcinemaprojections.dto;
 
 import java.util.Date;
 
@@ -12,8 +12,6 @@ public class MovieProjectionDTO {
 
     public MovieProjectionDTO() {
     }
-
-
 
     public MovieProjectionDTO(Long movieID, Long createdBy, Date date, Integer actualTickets, Integer maxTickets) {
         this.movieID = movieID;

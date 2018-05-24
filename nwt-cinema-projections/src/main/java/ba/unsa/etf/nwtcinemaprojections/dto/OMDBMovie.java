@@ -1,4 +1,4 @@
-package dto.movies;
+package ba.unsa.etf.nwtcinemaprojections.dto;
 
 import java.util.List;
 

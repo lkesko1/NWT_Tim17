@@ -1,6 +1,4 @@
-package dto.projections;
-
-import dto.movies.OMDBMovie;
+package ba.unsa.etf.nwtcinemaprojections.dto;
 
 import java.util.Date;
 
@@ -52,3 +50,4 @@ public class MovieProjectionDetailsDTO {
         this.movie = movie;
     }
 }
+
