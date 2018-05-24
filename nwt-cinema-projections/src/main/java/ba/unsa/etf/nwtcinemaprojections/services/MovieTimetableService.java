@@ -1,13 +1,12 @@
 package ba.unsa.etf.nwtcinemaprojections.services;
 
-import ba.unsa.etf.nwtcinemaprojections.RabbitMQConfiguration;
 import ba.unsa.etf.nwtcinemaprojections.controllers.dto.TicketReservationDTO;
+import ba.unsa.etf.nwtcinemaprojections.dto.MovieProjectionDetailsDTO;
+import ba.unsa.etf.nwtcinemaprojections.dto.OMDBMovie;
 import ba.unsa.etf.nwtcinemaprojections.feign_clients.MoviesClient;
 import ba.unsa.etf.nwtcinemaprojections.feign_clients.dto.MovieDTO;
 import ba.unsa.etf.nwtcinemaprojections.models.MovieTimetable;
 import ba.unsa.etf.nwtcinemaprojections.repositories.IMovieTimetableRepository;
-import dto.movies.OMDBMovie;
-import dto.projections.MovieProjectionDetailsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;

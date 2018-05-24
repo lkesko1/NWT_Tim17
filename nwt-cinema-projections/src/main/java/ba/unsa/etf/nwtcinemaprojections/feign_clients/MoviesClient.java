@@ -1,8 +1,8 @@
 package ba.unsa.etf.nwtcinemaprojections.feign_clients;
 
+import ba.unsa.etf.nwtcinemaprojections.dto.MovieProjectionDTO;
 import ba.unsa.etf.nwtcinemaprojections.feign_clients.dto.MovieDTO;
 
-import dto.projections.MovieProjectionDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
