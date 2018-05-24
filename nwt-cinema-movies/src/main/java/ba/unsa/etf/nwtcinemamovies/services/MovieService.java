@@ -1,25 +1,21 @@
 package ba.unsa.etf.nwtcinemamovies.services;
 
-import ba.unsa.etf.nwtcinemamovies.interfaces.MovieRepository;
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
 import ba.unsa.etf.nwtcinemamovies.models.MovieDTO;
 import ba.unsa.etf.nwtcinemamovies.models.MovieListDTO;
 import ba.unsa.etf.nwtcinemamovies.repositories.MovieRepositoryImpl;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
-import com.netflix.discovery.converters.Auto;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
@@ -93,7 +89,8 @@ public class MovieService extends AbstractService<MovieRepositoryImpl> {
 		String my_url = "http://www.omdbapi.com/?i="+imdbID+"&apikey=2d5ee0b5";
 		HttpResponse response = client.execute((new HttpGet(my_url)));
 		MovieDTO newMovie = readResponse(response);
-		Movie mymovie = this.repository.save(new Movie( my_url, newMovie.getTitle(), newMovie.getYear(), newMovie.getGenre(), newMovie.getDirector(), newMovie.getActors(), newMovie.getAwards()));
+		Movie mymovie = this.repository.save(
+				new Movie( my_url, newMovie.getTitle(), newMovie.getYear(), newMovie.getGenre(), newMovie.getDirector(), newMovie.getActors(), newMovie.getAwards()));
 
 		return mymovie;
 		//Todo: rijesiti rating?!
