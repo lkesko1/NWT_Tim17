@@ -21,15 +21,13 @@ services:
       - "15672:15672"
     networks:
       - app
-    
+
   database:
     image: sameersbn/postgresql
     container_name: pg_container
     restart: always
-    volumes:
-       - /srv/docker/postgresql:/var/lib/postgresql
     environment:
-       - DB_NAME=nwt-cinema-movies,nwt-cinema-projections,nwt-cinema-reservations
+       - DB_NAME=nwt-cinema-movies,nwt-cinema-projections,nwt-cinema-reservations,nwt-cinema-auth
        - DB_USER=nwt
        - DB_PASS=nwt
     ports:
@@ -37,12 +35,26 @@ services:
     networks:
       - app
 
+  auth:
+    build: ./nwt-cinema-auth
+    container_name: auth_container
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+    depends_on:
+      - database
+      - eureka-server
+      - rabbitmq
+    ports:
+      - 8020:8020
+    networks:
+      - app
+
   movies:
     build: ./nwt-cinema-movies
     container_name: movies_container
-    environment: 
+    environment:
       SPRING_RABBITMQ_HOST: rabbitmq
-    depends_on: 
+    depends_on:
       - database
       - eureka-server
       - rabbitmq
@@ -97,4 +109,4 @@ networks:
   app:
     driver: bridge
 
- 
+
