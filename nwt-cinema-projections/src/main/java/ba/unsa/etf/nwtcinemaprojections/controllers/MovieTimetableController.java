@@ -31,6 +31,13 @@ public class MovieTimetableController extends BaseController<MovieTimetable, Mov
         return service.getDetails(movieId);
     }
 
+    @RequestMapping(value = "actuals", method = RequestMethod.GET)
+    public ResponseEntity actuals() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(this.service.getActualProjections());
+    }
+
     @Transactional(readOnly = true)
     @RequestMapping(value = "/get-projections", method = RequestMethod.GET)
     public Iterable getProjections() {

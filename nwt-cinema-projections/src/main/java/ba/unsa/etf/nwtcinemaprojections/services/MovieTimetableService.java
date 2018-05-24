@@ -1,18 +1,15 @@
 package ba.unsa.etf.nwtcinemaprojections.services;
 
-import ba.unsa.etf.nwtcinemaprojections.RabbitMQConfiguration;
 import ba.unsa.etf.nwtcinemaprojections.controllers.dto.TicketReservationDTO;
+import ba.unsa.etf.nwtcinemaprojections.dto.MovieProjectionDetailsDTO;
+import ba.unsa.etf.nwtcinemaprojections.dto.OMDBMovie;
 import ba.unsa.etf.nwtcinemaprojections.feign_clients.MoviesClient;
 import ba.unsa.etf.nwtcinemaprojections.feign_clients.dto.MovieDTO;
-import ba.unsa.etf.nwtcinemaprojections.feign_clients.MoviesClient;
-import ba.unsa.etf.nwtcinemaprojections.feign_clients.dto.MovieDTO;
-import ba.unsa.etf.nwtcinemaprojections.feign_clients.dto.MovieProjectionDTO;
 import ba.unsa.etf.nwtcinemaprojections.models.MovieTimetable;
 import ba.unsa.etf.nwtcinemaprojections.models.ProjectionsDTO;
 import ba.unsa.etf.nwtcinemaprojections.repositories.IMovieTimetableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -76,8 +73,29 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
 
     }
 
+    public List<MovieProjectionDetailsDTO> getActualProjections() {
+        List<MovieProjectionDetailsDTO> movieProjectionDetailsDTOS = new ArrayList<>();
+        List<MovieTimetable> movieTimetables = this.repository.findAll();
+        // TODO filter by date -> move to repository | fix a bug with not autogenerating methods in repositories
+        for (MovieTimetable movieTimetable : movieTimetables) {
+            MovieDTO movieDTO = moviesClient.getMovieDetails(movieTimetable.getMovieID());
+            //
     public List<ProjectionsDTO> getProjections(){
         List<MovieTimetable> projs = repository.findAll();
+
+            movieProjectionDetailsDTOS.add(
+                    new MovieProjectionDetailsDTO(
+                            movieTimetable.getActualTickets(),
+                            movieTimetable.getMaxTickets(),
+                            movieTimetable.getDate(),
+                            new OMDBMovie() // todo fill with props
+                    )
+            );
+        }
+
+        return movieProjectionDetailsDTOS;
+    }
+
 
         List<ProjectionsDTO> projections = new ArrayList<>();
 

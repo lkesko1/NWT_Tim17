@@ -17,3 +17,10 @@
     * Right click on `pom.xml` and select 'Add as Maven project' from the context menu
 4. If your PostgreSQL server instance have set a listen port to 5432, then you should change `application.properties` to update `server.port` variable to 5432 for every module
 5. Now you should be able to run every microservice clicking on the green run icon next to the application class name
+
+#### Docker start:
+1. install docker
+2. In each project create jar file by executing the following command: 
+   * mvn clean package -Dmaven.test.skip=true
+3. From main folder start docker: 
+   * docker-compose build && docker-compose up

@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemaprojections.feign_clients.dto;
+package ba.unsa.etf.nwtcinemaprojections.dto;
 
 import java.util.Date;
 
@@ -12,8 +12,6 @@ public class MovieProjectionDTO {
 
     public MovieProjectionDTO() {
     }
-
-
 
     public MovieProjectionDTO(Long movieID, Long createdBy, Date date, Integer actualTickets, Integer maxTickets) {
         this.movieID = movieID;
@@ -53,4 +51,11 @@ public class MovieProjectionDTO {
     }
 
 
+    public Long getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
 }
