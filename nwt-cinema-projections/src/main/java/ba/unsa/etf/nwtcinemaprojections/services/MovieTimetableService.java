@@ -10,6 +10,7 @@ import ba.unsa.etf.nwtcinemaprojections.models.ProjectionsDTO;
 import ba.unsa.etf.nwtcinemaprojections.repositories.IMovieTimetableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.expression.spel.ast.Projection;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -80,9 +81,6 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
         for (MovieTimetable movieTimetable : movieTimetables) {
             MovieDTO movieDTO = moviesClient.getMovieDetails(movieTimetable.getMovieID());
             //
-    public List<ProjectionsDTO> getProjections(){
-        List<MovieTimetable> projs = repository.findAll();
-
             movieProjectionDetailsDTOS.add(
                     new MovieProjectionDetailsDTO(
                             movieTimetable.getActualTickets(),
@@ -97,6 +95,9 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
     }
 
 
+    public List<ProjectionsDTO> getProjections(){
+
+        List<MovieTimetable> projs = repository.findAll();
         List<ProjectionsDTO> projections = new ArrayList<>();
 
         for (MovieTimetable proj: projs
