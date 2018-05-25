@@ -5,11 +5,9 @@ import {
     Segment,
     List,
     Message,
-    Embed,
     Divider
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
-import image from "../../images/DMOHA20140112005.jpg"
 
 export default class Projection extends Component {
     getMovieContent() {
