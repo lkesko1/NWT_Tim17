@@ -10,6 +10,8 @@ import MovieScreen from "./components/Movies/MovieScreen";
 import AboutUs from "./components/AboutUs/AboutUs";
 import ProjectionsScreen from "./components/Projections/ProjectionsScreen";
 import ProjectionScreen from "./components/Projections/ProjectionScreen";
+import Search from "./components/SearchMovies/Search";
+import SearchMovieScreen from "./components/SearchMovies/SearchMovieScreen";
 
 class App extends Component {
   render() {
@@ -24,6 +26,8 @@ class App extends Component {
               <Route exact path="/projections/:id" component={ProjectionScreen} />
               <Route exact path={"/about-us"} component={AboutUs} />
               <Route exact path={"/contact"} component={Home} />
+              <Route exact path={"/search"} component={Search} />
+            <Route exact path="/search/:id" component={SearchMovieScreen} />
           </Content>
         </div>
       </Router>
