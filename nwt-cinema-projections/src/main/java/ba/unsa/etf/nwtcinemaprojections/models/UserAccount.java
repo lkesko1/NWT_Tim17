@@ -1,5 +1,6 @@
 package ba.unsa.etf.nwtcinemaprojections.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -7,22 +8,21 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class UserRole extends AbstractModel {
+public class UserAccount extends AbstractModel {
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Role.class)
-	@NotNull
+	@ManyToOne(targetEntity = Role.class)
 	private Role role;
 
 	@NotNull
-	@Min(1)
-	private Long userId;
+	@Column(unique = true)
+	private String username;
 
-	public Long getUserId() {
-		return userId;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Role getRole() {
@@ -33,11 +33,11 @@ public class UserRole extends AbstractModel {
 		this.role = role;
 	}
 
-	public UserRole() {
+	public UserAccount() {
 	}
 
-	public UserRole(Role role, Long userId) {
+	public UserAccount(Role role, String username) {
 		this.role = role;
-		this.userId = userId;
+		this.username = username;
 	}
 }

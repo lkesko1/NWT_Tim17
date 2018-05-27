@@ -1,6 +1,7 @@
-package ba.unsa.etf.nwtcinemareservations;
+package ba.unsa.etf.nwtcinemareservations.configuration;
 
 
+import ba.unsa.etf.nwtcinemareservations.RabbitMQReceiver;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;

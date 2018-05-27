@@ -1,5 +1,6 @@
-package ba.unsa.etf.nwtcinemaprojections;
+package ba.unsa.etf.nwtcinemaprojections.configuration;
 
+import ba.unsa.etf.nwtcinemaprojections.RabbitMQReceiver;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -9,6 +10,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 @Configuration
 public class RabbitMQConfiguration {
@@ -50,4 +52,5 @@ public class RabbitMQConfiguration {
         container.setMessageListener(listenerAdapter);
         return container;
     }
+
 }

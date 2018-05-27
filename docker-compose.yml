@@ -58,6 +58,7 @@ services:
       - database
       - eureka-server
       - rabbitmq
+      - auth
     ports:
       - 8030:8030
     networks:
@@ -72,6 +73,7 @@ services:
       - database
       - eureka-server
       - rabbitmq
+      - auth
     ports:
       - 8040:8040
     networks:
@@ -86,6 +88,7 @@ services:
       - database
       - eureka-server
       - rabbitmq
+      - auth
     ports:
       - 8050:8050
     networks:
@@ -100,6 +103,7 @@ services:
       - projections
       - movies
       - reservations
+      - auth
     ports:
       - 8080:8080
     networks:
