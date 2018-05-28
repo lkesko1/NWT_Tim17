@@ -3,42 +3,26 @@ import { Item, Icon, Button, Segment, List, Message } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import { Link } from "react-router-dom";
 import { NewReservationModal } from "../Reservations/NewReservationModal";
-import _ from "lodash";
-import axios from "axios";
 
 export default class ProjectionsList extends Component {
     componentDidMount() {
-    this.setState({ reservationModalVisible: false });
+    this.setState({ reservationModalVisible: false, tickets: 1});
   }
 
-  showReservationModal(projection) {
-    this.setState({ reservationModalVisible: true, selectedProjection: projection, tickets:1});
-  }
-
-  saveReservation() {
-    axios.post('/reservations/create', {
-        numberOfTickets: this.state.tickets,
-        userId: 1,
-        movieProjectionId: this.state.selectedProjection.projectionID
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    this.setState({ reservationModalVisible: false, selectedProjection: null  });
+  showReservationModal(id) {
+    this.setState({ reservationModalVisible: true, selectedProjectionId: id, error:null});
   }
 
   hideReservationModal(){
-    this.setState({ reservationModalVisible: false, selectedProjection:null });
+    this.setState({ reservationModalVisible: false, selectedProjectionId:null, error:null});
   }
 
-  changeSelectedProjection(e){
-  }
-
-  updateNumberOfTickets(e){
-    this.setState({...this.state, tickets: e.target.value+1})
+  updateForm(e, key, value){
+    if (key == 'projection') {
+      this.setState({...this.state, selectedProjectionId: value})
+    } else {
+      this.setState({...this.state, tickets: value})
+    }
   }
 
   getContent() {
@@ -58,7 +42,6 @@ export default class ProjectionsList extends Component {
                 <Item.Header>{currentProjection.title}</Item.Header>
                 <Item.Description>
                   <List>
-                    x`
                     <List.Item>
                       {" "}
                       <b> Genre: </b> {currentProjection.genre}{" "}
@@ -81,7 +64,7 @@ export default class ProjectionsList extends Component {
                       className="positive ui button"
                       primary
                       floated="right"
-                      onClick={this.showReservationModal.bind(this, currentProjection)}
+                      onClick={this.showReservationModal.bind(this, currentProjection.projectionID)}
                     >
                       Make a reservation
                       <Icon name="right chevron" />
@@ -123,12 +106,11 @@ export default class ProjectionsList extends Component {
     return <div>
      <NewReservationModal
             reservationModalVisible={this.state.reservationModalVisible}
-            saveReservation={this.saveReservation.bind(this)}
             hideReservationModal={this.hideReservationModal.bind(this)}
             projections={projections}
-            selectedProjection={this.state.selectedProjection}
-            changeSelectedProjection={this.changeSelectedProjection.bind(this)}
-            updateNumberOfTickets={this.updateNumberOfTickets.bind(this)}
+            selectedProjectionId={this.state.selectedProjectionId}
+            updateForm={this.updateForm.bind(this)}
+            tickets={this.state.tickets}
           />
           {this.getContent()} </div>;
   }
