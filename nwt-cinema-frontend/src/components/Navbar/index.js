@@ -20,26 +20,18 @@ export default class Navbar extends Component {
           <Menu.Item>
             <Image size="tiny" src={logo} alt="logo" />
           </Menu.Item>
-          <Menu.Item name="home" active={activeItem === 'home'} onClick={this.handleItemClick}>
-            <Link to="/">
+          <Menu.Item name="home" active={activeItem === 'home'} onClick={this.handleItemClick} href="/">
               <Icon name="home" />
               Home
-            </Link>
           </Menu.Item>
-          <Menu.Item name="movies" active={activeItem === 'movies'} onClick={this.handleItemClick}>
-            <Link to="/movies">
+          <Menu.Item name="movies" active={activeItem === 'movies'} onClick={this.handleItemClick} href="/movies">
               <Icon name="film" /> Movies{" "}
-            </Link>
           </Menu.Item>
-          <Menu.Item name="projections"  active={activeItem === 'projections'} onClick={this.handleItemClick}>
-            <Link to="/projections">
+          <Menu.Item name="projections"  active={activeItem === 'projections'} onClick={this.handleItemClick} href="/projections">
             <Icon name="video camera" /> Projections{" "}
-            </Link>
           </Menu.Item>
-          <Menu.Item name="about" active={activeItem === 'about'} onClick={this.handleItemClick}>
-            <Link to="/about-us">
+          <Menu.Item name="about" active={activeItem === 'about'} onClick={this.handleItemClick} href="about-us">
             <Icon name="question" />About us{" "}
-            </Link>
           </Menu.Item>
           <Menu.Item name="contact" active={activeItem === 'contact'} onClick={this.handleItemClick}>
             <Icon name="phone" /> Contact{" "}

@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-    Item,
-    Icon,
-    Segment,
-    List,
-    Message,
-    Embed,
-    Divider
-} from "semantic-ui-react";
+
 
 
 export default class AboutUs extends Component {
