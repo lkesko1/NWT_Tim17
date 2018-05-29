@@ -12,6 +12,7 @@ import ProjectionsScreen from "./components/Projections/ProjectionsScreen";
 import ProjectionScreen from "./components/Projections/ProjectionScreen";
 import Search from "./components/SearchMovies/Search";
 import SearchMovieScreen from "./components/SearchMovies/SearchMovieScreen";
+import AddMovieToDatabase from "./components/SearchMovies/AddMovieToDatabase"
 
 class App extends Component {
   render() {
@@ -27,7 +28,8 @@ class App extends Component {
               <Route exact path={"/about-us"} component={AboutUs} />
               <Route exact path={"/contact"} component={Home} />
               <Route exact path={"/search"} component={Search} />
-            <Route exact path="/search/:id" component={SearchMovieScreen} />
+              <Route exact path={"/search/:id"} component={SearchMovieScreen} />
+              <Route exact path={"/add-movie/:id"} component={AddMovieToDatabase}/>
           </Content>
         </div>
       </Router>

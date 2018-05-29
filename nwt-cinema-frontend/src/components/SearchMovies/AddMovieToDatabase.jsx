@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import MovieSearchMovie from "./MovieSearchMovie";
-import {Grid, Button, Icon} from "semantic-ui-react";
+import {Grid, Button, Icon, Message} from "semantic-ui-react";
 import axios from "axios";
 import {movieEndpoint} from "../../endpoints";
+import SweetAlert from 'sweetalert2-react';
 
 export default class AddMovieToDatabase extends Component {
     constructor(props) {
@@ -26,7 +26,7 @@ export default class AddMovieToDatabase extends Component {
 
         const {movie, error} = this.state;
 
-        if (!movies || movies.length === 0 || error) {
+        if (!movie || error) {
             return (
                 <Message negative size="huge">
                     <Message.Header>
@@ -36,8 +36,9 @@ export default class AddMovieToDatabase extends Component {
                 </Message>
             );
         }
-        return <div>
-            
+        else
+        return
+        (<div>
                 <button onClick={() => this.setState({ show: true })}>Alert</button>
                 <SweetAlert
                     show={this.state.show}
@@ -45,7 +46,7 @@ export default class AddMovieToDatabase extends Component {
                     text="SweetAlert in React"
                     onConfirm={() => this.setState({ show: false })}
                 />
-             </div>;}
+        </div>);}
 
 
 }
