@@ -63,6 +63,8 @@ public class MovieService extends AbstractService<MovieRepositoryImpl> {
 		return fetchAsync(callables);
 	}
 
+
+
 	/**
 	 * Sends http get to OMDB api
 	 *
@@ -93,6 +95,9 @@ public class MovieService extends AbstractService<MovieRepositoryImpl> {
 		String my_url = "http://www.omdbapi.com/?i="+imdbID+"&apikey=2d5ee0b5";
 		HttpResponse response = client.execute((new HttpGet(my_url)));
 		MovieDTO newMovie = readResponse(response);
+		if(newMovie.getYear() == null ||  newMovie.getGenre() ==null || newMovie.getDirector() == null )
+			throw new IOException();
+
 		Movie mymovie = this.repository.save(new Movie( my_url, newMovie.getTitle(), newMovie.getYear(), newMovie.getGenre(), newMovie.getDirector(), newMovie.getActors(), newMovie.getAwards()));
 
 		return mymovie;

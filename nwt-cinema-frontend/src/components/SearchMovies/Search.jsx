@@ -25,17 +25,20 @@ export default class Search extends Component {
             .then(response => {
                 const movies = response.data;
                 if (movies.Search == null )
-                    {this.setState({
-
-                        searchedMovies: {
-                            "Search": [{"imdbID" : "1",
-                                "Title" : "NotFound",
-                                "Year":"Not Found"}]
-                        }})}
+                    this.setState({searchedMovies: null});
+                    // {this.setState({
+                    //
+                    //     searchedMovies: {
+                    //         "Search": [{"imdbID" : "1",
+                    //             "Title" : "NotFound",
+                    //             "Year":"Not Found"}]
+                    //     }})}
                 else
                 {this.setState({
 
                         searchedMovies: movies})}
+
+
             })
             .catch(error => {
                 this.setState({error: error})
@@ -43,8 +46,103 @@ export default class Search extends Component {
 
     }
 
-    render () {
+     NotNull() {
+         return
+             (
+             <div class="ui hidden divider">
+             <div class = "ui cards">
+                 {this.state.searchedMovies.Search.map((movie) =>
+                     <div class="card">
+                         <div class="content">
+                             <List key={movie.imdbID}>
 
+                                 <List.Item>{movie.Title}</List.Item>
+                                 <List.Item>{movie.Year}</List.Item>
+
+                             </List>
+                         </div>
+                         <div class="extra content">
+                             <Link to={'/search/'+ movie.imdbID}>
+                                 <Button primary floated="right">
+                                     View more
+                                     <Icon name="right chevron" />
+                                 </Button>
+                             </Link>
+                         </div>
+                     </div>)
+
+                  }
+                  </div>
+                  </div>);
+
+     }
+
+    IsNull() {
+        return
+            (
+            <div class="ui hidden divider">
+                <div class = "ui cards">
+
+                        <div class="card">
+                            <div class="content">
+                                <h1>Not found!</h1>
+                            </div>
+                        </div>)
+                </div>
+            </div>);
+    }
+
+    Check() {
+
+        if (!this.state.searchedMovies) {
+            console.log(this.state.searchedMovies);
+            return
+
+
+            (<div className="ui hidden divider">
+                    <div className = "ui cards">
+
+                        <div className="card">
+                            <div className="content">
+                                <h1>Not found!</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>);
+        }
+        return
+
+        (<div className="ui hidden divider">
+                <div className = "ui cards">
+                    {this.state.searchedMovies.Search.map((movie) =>
+                        <div className="card">
+                            <div className="content">
+                                <List key={movie.imdbID}>
+
+                                    <List.Item>{movie.Title}</List.Item>
+                                    <List.Item>{movie.Year}</List.Item>
+
+                                </List>
+                            </div>
+                            <div className="extra content">
+                                <Link to={'/search/'+ movie.imdbID}>
+                                    <Button primary floated="right">
+                                        View more
+                                        <Icon name="right chevron" />
+                                    </Button>
+                                </Link>
+                            </div>
+                        </div>)
+
+                    }
+                </div>
+            </div>);
+        }
+
+
+render () {
+
+            //console.log(this.state.searchedMovies.Search);
         return (
 
             <div>
@@ -53,32 +151,32 @@ export default class Search extends Component {
                     <i class="search icon"></i>
                     <input type="text" onChange={this.myFunction.bind(this)}  placeholder="Type here..." />
                 </div>
+                {this.Check()}
+                {/*<div class="ui hidden divider"></div>*/}
+                     {/*<div class = "ui cards">*/}
+                         {/*<div class="ui hidden divider"></div>*/}
+                     {/*{this.state.searchedMovies.Search.map((movie) =>*/}
+                         {/*<div class="card">*/}
+                             {/*<div class="content">*/}
+                                 {/*<List key={movie.imdbID}>*/}
 
-                <div class="ui hidden divider"></div>
-                     <div class = "ui cards">
-                     {this.state.searchedMovies.Search.map((movie) =>
-                         <div class="card">
-                             <div class="content">
-                                 <List key={movie.imdbID}>
+                                     {/*<List.Item>{movie.Title}</List.Item>*/}
+                                    {/*<List.Item>{movie.Year}</List.Item>*/}
 
-                                     <List.Item>{movie.Title}</List.Item>
-                                    <List.Item>{movie.Year}</List.Item>
+                                 {/*</List>*/}
+                             {/*</div>*/}
+                             {/*<div class="extra content">*/}
+                                 {/*<Link to={'/search/'+ movie.imdbID}>*/}
+                                     {/*<Button primary floated="right">*/}
+                                         {/*View more*/}
+                                         {/*<Icon name="right chevron" />*/}
+                                     {/*</Button>*/}
+                                 {/*</Link>*/}
+                             {/*</div>*/}
+                         {/*</div>)*/}
 
-                                 </List>
-                             </div>
-                             <div class="extra content">
-                                 <Link to={'/search/'+ movie.imdbID}>
-                                     <Button primary floated="right">
-                                         View more
-                                         <Icon name="right chevron" />
-                                     </Button>
-                                 </Link>
-                             </div>
-                         </div>)
-
-                     }
-                     </div>
-
+                     {/*}*/}
+                     {/*</div>*/}
             </div>
         )
     }

@@ -37,13 +37,13 @@ export default class MoviesList extends Component {
               <Item.Extra>
                 <Icon color="green" name="check" /> {currentMovie.Ratings.length} Reviews
                 <Link to="/movies/1">
-                
+
                 <Button primary floated="right">
                   View more
                   <Icon name="right chevron" />
                 </Button>
                 </Link>
-                
+
               </Item.Extra>
             </Item.Content>
           </Item>
