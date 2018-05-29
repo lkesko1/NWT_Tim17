@@ -1,7 +1,7 @@
 package ba.unsa.etf.nwtcinemamovies.repositories;
 
-import ba.unsa.etf.nwtcinemamovies.interfaces.MovieReviewRepository;
 import ba.unsa.etf.nwtcinemamovies.models.MovieReview;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
  */
 @Repository
 @Transactional
-public class MovieReviewRepositoryImpl extends AbstractRepositoryImpl<MovieReview, Long>
-		implements MovieReviewRepository<MovieReview, Long> {
+public interface IMovieReviewRepository extends JpaRepository<MovieReview, Long> {
 
 }

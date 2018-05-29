@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemaprojections.dto;
+package ba.unsa.etf.nwtcinemamovies.dto;
 
 import java.io.Serializable;
 

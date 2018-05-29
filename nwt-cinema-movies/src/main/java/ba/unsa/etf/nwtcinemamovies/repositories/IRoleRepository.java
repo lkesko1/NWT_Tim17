@@ -1,7 +1,7 @@
 package ba.unsa.etf.nwtcinemamovies.repositories;
 
-import ba.unsa.etf.nwtcinemamovies.interfaces.RoleRepository;
 import ba.unsa.etf.nwtcinemamovies.models.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
  */
 @Repository
 @Transactional
-public class RoleRepositoryImpl extends AbstractRepositoryImpl<Role, Long>
-		implements RoleRepository<Role, Long>{
-
+public interface IRoleRepository extends JpaRepository<Role, Long> {
+    Role findRoleByRoleTitle(String t);
 }

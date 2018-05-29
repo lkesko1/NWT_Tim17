@@ -24,7 +24,7 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 					JSONConverter.toJSON("Failed to create movie review for movie "
 							+ movieReview.getMovie().getImdbUrl()));
 		}
-		return ResponseEntity.ok(service.save(movieReview));
+		return ResponseEntity.ok(service.add(movieReview));
 	}
 
 	@Transactional
@@ -41,13 +41,13 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "{reviewId}", method = RequestMethod.GET)
 	public String findById(@PathVariable("reviewId") final Long reviewId) {
-		return JSONConverter.toJSON(service.findById(MovieReview.class, reviewId));
+		return JSONConverter.toJSON(service.findById(reviewId));
 	}
 
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "findAll", method = RequestMethod.GET)
 	public String findAll() {
-		return JSONConverter.toJSON(service.findAll(MovieReview.class));
+		return JSONConverter.toJSON(service.findAll());
 	}
 
 

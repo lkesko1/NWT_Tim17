@@ -1,18 +1,15 @@
 package ba.unsa.etf.nwtcinemamovies.services;
 
-import ba.unsa.etf.nwtcinemamovies.interfaces.MovieRepository;
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
 import ba.unsa.etf.nwtcinemamovies.models.MovieDTO;
 import ba.unsa.etf.nwtcinemamovies.models.MovieListDTO;
-import ba.unsa.etf.nwtcinemamovies.repositories.MovieRepositoryImpl;
+import ba.unsa.etf.nwtcinemamovies.repositories.IMovieRepository;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
-import com.netflix.discovery.converters.Auto;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -26,14 +23,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 @Service
-public class MovieService extends AbstractService<MovieRepositoryImpl> {
+public class MovieService extends BaseService<Movie, IMovieRepository> {
 
 	private static final String OMDB_API_KEY = "2d5ee0b5";
 	private static final String BASE_URL = "http://www.omdbapi.com/?apikey=";
 
 	private HttpClient client = HttpClientBuilder.create().build();
-
-
 
 	/**
 	 * Fetches IMDB url from database, and than makes API call (GET) to OMDB api
@@ -43,8 +38,11 @@ public class MovieService extends AbstractService<MovieRepositoryImpl> {
 	 * @throws IOException in case reading of the stream fails
 	 */
 	public MovieDTO fetchMovie(Long movieId) throws IOException {
-		Movie movie = findById(Movie.class, movieId);
-		return fetch(formUrl(movie));
+		Optional<Movie> movie = findById(movieId);
+		if (movie.isPresent()) {
+			return fetch(formUrl(movie.get()));
+		}
+		return null;
 	}
 
 	/**
@@ -56,7 +54,7 @@ public class MovieService extends AbstractService<MovieRepositoryImpl> {
 	 */
 	public List<MovieDTO> fetchAll() throws ExecutionException, InterruptedException {
 		Collection<Callable<MovieDTO>> callables = new ArrayList<>();
-		Iterable<Movie> movies = findAll(Movie.class);
+		Iterable<Movie> movies = findAll();
 		for (Movie movie : movies) {
 			callables.add(() -> fetch(formUrl(movie)));
 		}

@@ -23,7 +23,7 @@ public class RolesController extends AbstractController<RoleService> {
 			return ResponseEntity.badRequest()
 					.body(JSONConverter.toJSON("Failed to create role with title " + role.getRoleTitle()));
 		}
-		return ResponseEntity.ok(service.save(role));
+		return ResponseEntity.ok(service.add(role));
 	}
 
 	@Transactional
@@ -39,13 +39,13 @@ public class RolesController extends AbstractController<RoleService> {
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "{roleId}", method = RequestMethod.GET)
 	public String findById(@PathVariable("roleId") final Long roleId) {
-		return JSONConverter.toJSON(service.findById(Role.class, roleId));
+		return JSONConverter.toJSON(service.findById(roleId));
 	}
 
 	@Transactional(readOnly = true)
 	@RequestMapping(value = "findAll", method = RequestMethod.GET)
 	public String findAll() {
-		return JSONConverter.toJSON(service.findAll(Role.class));
+		return JSONConverter.toJSON(service.findAll());
 	}
 
 	@Transactional

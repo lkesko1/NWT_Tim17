@@ -5,4 +5,6 @@ public class Configuration {
 
     public static String USER_CREATED_ROUTING_KEY = "users.created";
     public static String ROLE_USER = "ROLE_USER";
+
+
 }

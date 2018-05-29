@@ -7,13 +7,13 @@ public class RMQTransferObject implements Serializable {
 
     private String routingKey;
 
-    public RMQTransferObject(String sender, String routingKey, Object payload) {
+    public RMQTransferObject(String sender, String routingKey, Serializable payload) {
         this.sender = sender;
         this.routingKey = routingKey;
         this.payload = payload;
     }
 
-    private Object payload;
+    private Serializable payload;
 
     public String getSender() {
         return sender;
@@ -26,11 +26,11 @@ public class RMQTransferObject implements Serializable {
         this.sender = sender;
     }
 
-    public Object getPayload() {
+    public Serializable getPayload() {
         return payload;
     }
 
-    public void setPayload(Object payload) {
+    public void setPayload(Serializable payload) {
         this.payload = payload;
     }
 

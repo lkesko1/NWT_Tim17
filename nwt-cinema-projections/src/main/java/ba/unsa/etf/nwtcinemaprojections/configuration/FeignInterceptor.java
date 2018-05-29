@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemareservations.configuration;
+package ba.unsa.etf.nwtcinemaprojections.configuration;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
