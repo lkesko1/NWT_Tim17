@@ -59,7 +59,7 @@ export default class Search extends Component {
                 </List>
               </div>
               <div class="extra content">
-                <Link to={"/search/" + movie.imdbID}>
+                <Link to={"/search/"+movie.imdbID}>
                   <Button primary floated="right">
                     View more
                     <Icon name="right chevron" />

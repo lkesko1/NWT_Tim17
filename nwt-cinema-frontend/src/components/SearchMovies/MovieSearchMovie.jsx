@@ -46,7 +46,7 @@ export default class MovieSearchMovie extends Component {
                                         <b> Awards: </b>
                                         {movie.Awards}
                                     </List.Item>
-                                    <Link to={'/search/'+ movie.imdbID}>
+                                    <Link to={'/add-movie/'+movie.imdbID}>
                                         <Button primary floated="right">
                                             Add to database
                                             <Icon name="right chevron" />
