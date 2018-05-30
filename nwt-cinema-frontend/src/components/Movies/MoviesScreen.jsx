@@ -11,7 +11,7 @@ export default class MoviesScreen extends Component {
     this.state = { movies: [], error: null };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     axios
       .get(movieEndpoint + "/findAll")
       .then(response => {

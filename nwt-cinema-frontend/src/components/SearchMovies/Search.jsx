@@ -107,8 +107,7 @@ export default class Search extends Component {
                   <Input
                     fluid
                     icon={<Icon name="search" inverted circular link />}
-                    iconPosition="right"
-                    placeholder="Type here..."
+                      placeholder="Type here..."
                     onChange={this.myFunction.bind(this)}
                   />
                 </Grid.Column>
