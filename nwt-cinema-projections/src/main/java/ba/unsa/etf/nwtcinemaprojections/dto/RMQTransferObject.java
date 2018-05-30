@@ -2,18 +2,19 @@ package ba.unsa.etf.nwtcinemaprojections.dto;
 
 import java.io.Serializable;
 
+
 public class RMQTransferObject implements Serializable {
     private String sender;
 
     private String routingKey;
 
-    public RMQTransferObject(String sender, String routingKey, Serializable payload) {
+    private String payload;
+
+    public RMQTransferObject(String sender, String routingKey, String payload) {
         this.sender = sender;
         this.routingKey = routingKey;
         this.payload = payload;
     }
-
-    private Serializable payload;
 
     public String getSender() {
         return sender;
@@ -26,11 +27,11 @@ public class RMQTransferObject implements Serializable {
         this.sender = sender;
     }
 
-    public Serializable getPayload() {
+    public String getPayload() {
         return payload;
     }
 
-    public void setPayload(Serializable payload) {
+    public void setPayload(String payload) {
         this.payload = payload;
     }
 

@@ -2,26 +2,21 @@ package ba.unsa.etf.nwtcinemamovies;
 
 import ba.unsa.etf.nwtcinemamovies.configuration.RMQHandler;
 import ba.unsa.etf.nwtcinemamovies.dto.RMQTransferObject;
-import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
+import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
-
-import java.io.ByteArrayInputStream;
-
 
 @Component
 public class RabbitMQReceiver {
-    public void receiveMessage(String message) {
+    public void receiveMessage(Object message) {
         System.out.println("Received <" + message + ">");
 
-        RMQTransferObject transferObject =
-                JSONConverter.fromJSON(
-                        new ByteArrayInputStream(message.getBytes()), RMQTransferObject.class);
+        Gson gson = new Gson();
+        RMQTransferObject transferObject = gson.fromJson((String)message, RMQTransferObject.class);
         try {
-            RMQHandler handler = new RMQHandler();
-            handler.actionHandler(transferObject);
+            RMQHandler.actionHandler(transferObject);
         }
         catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
+            System.out.println("Exception thrown: " + e.getMessage());
         }
     }
 }

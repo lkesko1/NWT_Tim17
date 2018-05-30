@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 public class Role extends AbstractModel {
 
-	@NotNull(message = "Role must have a title.")
+	@NotNull(message = "Role must have a roleTitle.")
 	private String roleTitle;
 
 	@NotNull

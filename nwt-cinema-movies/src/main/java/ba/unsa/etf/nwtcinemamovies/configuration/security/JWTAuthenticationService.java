@@ -48,7 +48,7 @@ public class JWTAuthenticationService {
 //            Account userAccount = accountRepository.findAccountByUsername(user);
 //            Collection<GrantedAuthority> authorities = new ArrayList<>();
 //            if(userAccount != null) {
-//                authorities.add(new SimpleGrantedAuthority(userAccount.getRole().getTitle()));
+//                authorities.add(new SimpleGrantedAuthority(userAccount.getRole().getRoleTitle()));
 //            }
 //
 //            return user != null ?

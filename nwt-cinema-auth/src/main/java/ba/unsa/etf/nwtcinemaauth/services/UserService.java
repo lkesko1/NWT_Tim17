@@ -6,6 +6,7 @@ import ba.unsa.etf.nwtcinemaauth.dto.RMQTransferObject;
 import ba.unsa.etf.nwtcinemaauth.models.NWTCinemaUser;
 import ba.unsa.etf.nwtcinemaauth.repositories.IUserRepository;
 import ba.unsa.etf.nwtcinemaauth.utils.JSONConverter;
+import com.google.gson.Gson;
 import com.netflix.config.WebApplicationProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,22 @@ public class UserService {
 
     public void createUser(NWTCinemaUser nwtCinemaUser) {
         userRepository.save(nwtCinemaUser);
+//        rabbitTemplate.convertAndSend(
+//                Configuration.EXCHANGE_KEY,
+//                Configuration.USER_CREATED_ROUTING_KEY,
+//                JSONConverter.toJSON(new RMQTransferObject(
+//                        "nwt-cinema-auth",
+//                        Configuration.USER_CREATED_ROUTING_KEY,
+//                        new CreatedUser(nwtCinemaUser.getUsername(), Configuration.ROLE_USER)))
+//        );
+        Gson gson = new Gson();
         rabbitTemplate.convertAndSend(
                 Configuration.EXCHANGE_KEY,
                 Configuration.USER_CREATED_ROUTING_KEY,
-                JSONConverter.toJSON(new RMQTransferObject(
+                gson.toJson(new RMQTransferObject(
                         "nwt-cinema-auth",
                         Configuration.USER_CREATED_ROUTING_KEY,
-                        new CreatedUser(nwtCinemaUser.getUsername(), Configuration.ROLE_USER)))
+                        gson.toJson(new CreatedUser(nwtCinemaUser.getUsername(), Configuration.ROLE_USER))))
         );
     }
 }
