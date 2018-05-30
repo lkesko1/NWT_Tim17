@@ -27,7 +27,6 @@ export class ProjectionModal extends Component {
       hideProjectionModal,
       selectedDate,
       numberOfTickets,
-      showConfirmationMessage
     } = this.props;
 
     axios
@@ -40,7 +39,7 @@ export class ProjectionModal extends Component {
       })
       .then(response => {
         console.log(response);
-        showConfirmationMessage("Projection successfully added");
+        hideProjectionModal();
       })
       .catch(error => {
         console.log(error);
