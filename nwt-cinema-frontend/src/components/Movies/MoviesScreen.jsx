@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import MoviesList from "./MoviesList";
-import {Grid} from "semantic-ui-react";
+import { Grid, Button, Divider } from "semantic-ui-react";
 import axios from "axios";
-import {movieEndpoint} from "../../endpoints";
+import { movieEndpoint } from "../../endpoints";
+import { Link } from "react-router-dom";
 
 export default class MoviesScreen extends Component {
   constructor(props) {
@@ -11,26 +12,36 @@ export default class MoviesScreen extends Component {
   }
 
   componentWillMount() {
-    axios.get(movieEndpoint + "/findAll")
-    .then(response => {
-      const movies = response.data;
-      this.setState({movies: movies})
-    })
-    .catch(error => {
-      this.setState({error: error})
-    });
+    axios
+      .get(movieEndpoint + "/findAll")
+      .then(response => {
+        const movies = response.data;
+        this.setState({ movies: movies });
+      })
+      .catch(error => {
+        this.setState({ error: error });
+      });
   }
 
   render() {
-    const {movies, error} = this.state;
+    const { movies, error } = this.state;
 
     return (
       <div>
-        <Grid >
+        <Grid>
           <Grid.Row>
             <Grid.Column width={3} />
             <Grid.Column width={10}>
-              <MoviesList movies={movies} error={error}/>
+              <Link to="/search">
+                <Button
+                  positive
+                  labelPosition="right"
+                  icon="search"
+                  content="Search and add movies"
+                />
+              </Link>
+              <Divider hidden />
+              <MoviesList movies={movies} error={error} />
             </Grid.Column>
             <Grid.Column width={3} />
           </Grid.Row>

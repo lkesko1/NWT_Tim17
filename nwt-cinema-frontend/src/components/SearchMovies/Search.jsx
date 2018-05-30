@@ -2,7 +2,16 @@ import React, { Component } from "react";
 import SearchInput, { createFilter } from "react-search-input";
 import { movieEndpoint } from "../../endpoints";
 import axios from "axios";
-import { List, Button, Icon, Card } from "semantic-ui-react";
+import {
+  List,
+  Button,
+  Icon,
+  Card,
+  Grid,
+  Input,
+  Message,
+  Segment
+} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 export default class Search extends Component {
@@ -49,17 +58,17 @@ export default class Search extends Component {
   setMovies() {
     if (this.state.searchedMovies) {
       return (
-        <div class="ui cards">
+        <div className="ui centered cards">
           {this.state.searchedMovies.Search.map(movie => (
-            <div class="card" key={movie.imdbID}>
-              <div class="content">
+            <div className="card" key={movie.imdbID}>
+              <div className="content">
                 <List>
                   <List.Item>{movie.Title}</List.Item>
                   <List.Item>{movie.Year}</List.Item>
                 </List>
               </div>
-              <div class="extra content">
-                <Link to={"/search/"+movie.imdbID}>
+              <div className="extra content">
+                <Link to={"/search/" + movie.imdbID}>
                   <Button primary floated="right">
                     View more
                     <Icon name="right chevron" />
@@ -71,24 +80,47 @@ export default class Search extends Component {
         </div>
       );
     }
-    return <div class="ui cards">Not found</div>;
+    return (
+      <Grid>
+        <Grid.Column width={8} >
+          <Message icon compact warning size="large">
+            <Icon name="search" />
+            <Message.Content>
+              <Message.Header>Movie search</Message.Header>
+              Movie not found.
+            </Message.Content>
+          </Message>
+        </Grid.Column>
+      </Grid>
+    );
   }
 
   render() {
     return (
-      <div>
-        <div class="ui icon input">
-          <i class="search icon" />
-          <input
-            type="text"
-            onChange={this.myFunction.bind(this)}
-            placeholder="Type here..."
-          />
-        </div>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={2} />
+          <Grid.Column width={12}>
+            <Segment color="yellow">
+              <Grid>
+                <Grid.Column width={8}>
+                  <Input
+                    fluid
+                    icon={<Icon name="search" inverted circular link />}
+                    iconPosition="right"
+                    placeholder="Type here..."
+                    onChange={this.myFunction.bind(this)}
+                  />
+                </Grid.Column>
+              </Grid>
+            </Segment>
 
-        <div class="ui hidden divider" />
-        {this.setMovies()}
-      </div>
+            <div className="ui hidden divider" />
+            {this.setMovies()}
+          </Grid.Column>
+          <Grid.Column width={2} />
+        </Grid.Row>
+      </Grid>
     );
   }
 
