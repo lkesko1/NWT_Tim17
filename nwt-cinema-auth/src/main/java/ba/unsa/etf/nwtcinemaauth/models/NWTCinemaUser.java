@@ -1,6 +1,10 @@
 package ba.unsa.etf.nwtcinemaauth.models;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.*;
 import java.util.Date;
 
@@ -16,19 +20,10 @@ public class NWTCinemaUser extends AbstractModel {
 	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{4,8}$") //between 4 and 8 characters, at least one letter and one number:
 	private String password;
 
+	@Column(unique = true)
 	@NotNull
 	@Size(min=3)
 	private String username;
-
-	@NotNull
-	@Size(min=3)
-	@Pattern(regexp = "^[A-Z]([A-Za-z]{2,})$")
-	private String firstName;
-
-	@NotNull
-	@Size(min=3)
-	@Pattern(regexp = "^[A-Z]([A-Za-z]{2,})$")
-	private String lastName;
 
 	public String getEmail() {
 		return email;
@@ -54,34 +49,16 @@ public class NWTCinemaUser extends AbstractModel {
 		this.username = username;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
 	public NWTCinemaUser() {
 	}
 
-	public NWTCinemaUser(String email, String password, String username, String firstName, String lastName, Date birthday) {
+	public NWTCinemaUser(String email, String password, String username, Date birthday) {
 		this.email = email;
 		this.password = password;
 		this.username = username;
-		this.firstName = firstName;
-		this.lastName = lastName;
 	}
 
 	public String toString() {
-		return "NWTCinemaUser(Name: " + this.getFirstName() + " " + this.getLastName() + ")" + " " + this.getUsername();
+		return "NWTCinemaUser | Username: " + this.getUsername();
 	}
 }

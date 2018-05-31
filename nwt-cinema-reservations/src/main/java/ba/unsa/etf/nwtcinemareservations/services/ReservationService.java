@@ -1,6 +1,6 @@
 package ba.unsa.etf.nwtcinemareservations.services;
 
-import ba.unsa.etf.nwtcinemareservations.RabbitMQConfiguration;
+import ba.unsa.etf.nwtcinemareservations.configuration.RabbitMQConfiguration;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.MovieProjectionsClient;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.dto.MovieProjectionDTO;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.dto.TicketReservationDTO;

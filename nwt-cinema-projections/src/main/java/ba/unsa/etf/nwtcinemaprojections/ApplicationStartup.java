@@ -2,10 +2,10 @@ package ba.unsa.etf.nwtcinemaprojections;
 
 import ba.unsa.etf.nwtcinemaprojections.models.MovieTimetable;
 import ba.unsa.etf.nwtcinemaprojections.models.Role;
-import ba.unsa.etf.nwtcinemaprojections.models.UserRole;
+import ba.unsa.etf.nwtcinemaprojections.models.UserAccount;
 import ba.unsa.etf.nwtcinemaprojections.repositories.IMovieTimetableRepository;
 import ba.unsa.etf.nwtcinemaprojections.repositories.IRoleRepository;
-import ba.unsa.etf.nwtcinemaprojections.repositories.IUserRoleRepository;
+import ba.unsa.etf.nwtcinemaprojections.repositories.IUserAccountRepository;
 import ba.unsa.etf.nwtcinemaprojections.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -17,11 +17,7 @@ import java.util.Date;
 @Component
 public class ApplicationStartup implements ApplicationListener<ApplicationReadyEvent> {
 
-    private static final String ROLE_TITLE_ADM = "Administrator";
-    private static final String ROLE_DESCRIPTION_ADM = "Administrator";
 
-    private static final String ROLE_TITLE_USR = "User";
-    private static final String ROLE_DESCRIPTION_USR = "User";
 
     private static final Long USER_ADM = 1000L;
     private static final Long USER_USR_ONE = 1001L;
@@ -40,7 +36,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
     private IRoleRepository roleRepository ;
 
     @Autowired
-    private IUserRoleRepository userRoleRepository;
+    private IUserAccountRepository userAccountRepository;
 
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
@@ -49,12 +45,12 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 
     private void seedData() {
 
-        final Role roleAdm = roleRepository.save(new Role(ROLE_TITLE_ADM, ROLE_DESCRIPTION_ADM));
-        final Role roleUsr = roleRepository.save(new Role (ROLE_TITLE_USR, ROLE_DESCRIPTION_USR));
+        final Role roleAdmin = roleRepository.save(new Role(RoleService.ROLE_ADMIN, RoleService.ROLE_DESCRIPTION_ADMIN));
+        final Role roleUser = roleRepository.save(new Role (RoleService.ROLE_USER, RoleService.ROLE_DESCRIPTION_USER));
 
-        final UserRole userRoleAdm = userRoleRepository.save(new UserRole(roleAdm, USER_ADM));
-        final UserRole userRoleUsr1 = userRoleRepository.save(new UserRole(roleUsr, USER_USR_ONE));
-        final UserRole userRoleUsr2 = userRoleRepository.save(new UserRole(roleUsr, USER_USR_TWO));
+//        final UserAccount adminUser = userAccountRepository.save(new UserAccount(roleAdmin, ));
+//        final UserAccount userRoleUsr1 = userRoleRepository.save(new UserAccount(roleUsr, USER_USR_ONE));
+//        final UserAccount userRoleUsr2 = userRoleRepository.save(new UserAccount(roleUsr, USER_USR_TWO));
 
 
 

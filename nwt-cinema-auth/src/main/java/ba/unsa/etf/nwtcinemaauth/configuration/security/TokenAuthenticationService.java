@@ -18,8 +18,8 @@ import static io.jsonwebtoken.SignatureAlgorithm.HS512;
 public class TokenAuthenticationService {
     private static IUserRepository accountRepository;
 
-    static final long EXPIRATIONTIME = 864_000_000; // 10 days
-    static final String SECRET = "netflix-management";
+    static final long EXPIRATION_TIME = 864_000_000; // 10 days
+    static final String SECRET = "nwt-cinema-secret-key";
     static final String TOKEN_PREFIX = "Bearer";
     static final String HEADER_STRING = "Authorization";
 
@@ -30,7 +30,7 @@ public class TokenAuthenticationService {
 
         String JWT = Jwts.builder()
                 .setSubject(username)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(HS512, SECRET)
                 .compact();
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
