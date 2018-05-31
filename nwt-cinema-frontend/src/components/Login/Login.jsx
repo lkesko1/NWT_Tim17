@@ -1,9 +1,50 @@
 import React, { Component } from "react";
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import axios from "axios";
+
+const API_ROUTE = 'http://localhost:8080/auth/login';
+
 
 export default class Login extends Component {
-    
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            username: '',
+            pass: '',
+            authenticated: false
+        }
+
+        this.updateState = this.updateState.bind(this);
+    };
+
+    updateState (event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+    login (event) {
+        const data = {
+            username: this.state.email,
+            password: this.state.pass
+        };
+
+        axios.post(API_ROUTE, data)
+            .then(response => {
+                localStorage.setItem('token', response.headers['authorization']);
+                axios.defaults.headers['Authorization'] = response.headers['authorization'];
+                this.setState({authenticated: true})
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+
     render() {
+
         return(
         <div className='login-form'>
             <style>{`
@@ -30,6 +71,9 @@ export default class Login extends Component {
                                 icon='user'
                                 iconPosition='left'
                                 placeholder='Username'
+                                name='username'
+                                value={this.state.username}
+                                onChange={this.updateState}
                             />
                             <Form.Input
                                 fluid
@@ -37,9 +81,13 @@ export default class Login extends Component {
                                 iconPosition='left'
                                 placeholder='Password'
                                 type='password'
+                                name='pass'
+                                value={this.state.pass}
+                                onChange={this.updateState}
                             />
 
-                            <Button color='green' fluid size='large'>Login</Button>
+                            <Button color='green' fluid size='large'
+                                    onClick={(event) => this.login(event)}>Login</Button>
                         </Segment>
                     </Form>
                     <Message>
