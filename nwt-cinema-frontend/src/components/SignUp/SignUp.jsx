@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import { Redirect } from 'react-router';
+import axios from "axios";
 
 const API_ROUTE = 'http://localhost:8080/auth/register';
 
