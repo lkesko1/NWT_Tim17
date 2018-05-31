@@ -15,8 +15,17 @@ import SearchMovieScreen from "./components/SearchMovies/SearchMovieScreen";
 import AddMovieToDatabase from "./components/SearchMovies/AddMovieToDatabase";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
+import axios from "axios";
 
 class App extends Component {
+  componentDidMount() {
+    let token = localStorage.getItem("token");
+    if (token) {
+      axios.defaults.headers['Authorization'] = token;
+    }
+    console.log('axios defaults', axios.defaults)
+  }
+
   render() {
     return (
       <Router >
