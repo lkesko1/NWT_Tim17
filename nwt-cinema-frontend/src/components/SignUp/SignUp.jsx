@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import { Redirect } from 'react-router';
 import axios from "axios";
+import { authEndpoint } from "../../endpoints";
 
-const API_ROUTE = 'http://localhost:8080/auth/register';
+const API_ROUTE = authEndpoint + '/register';
 
 export default class SignUp extends Component {
 

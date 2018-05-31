@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ProjectionsList from "./ProjectionsList";
 import { Grid } from "semantic-ui-react";
 import axios from "axios";
-import { projectionsEndpoint } from "../../endpoints";
+import { projectionsEndpoint, movieEndpoint } from "../../endpoints";
 
 export default class ProjectionsScreen extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ export default class ProjectionsScreen extends Component {
 
   componentWillMount() {
     axios
-      .get(projectionsEndpoint + "/movietimetable/get-projections")
+      .get(projectionsEndpoint + "/get-projections")
       .then(response => {
         const projections = response.data;
         this.setState({ ...this.state, projections: projections });
@@ -27,7 +27,7 @@ export default class ProjectionsScreen extends Component {
       });
 
     axios
-      .get(projectionsEndpoint + "/movies/movies/findAll")
+      .get(movieEndpoint + "/findAll")
       .then(response => {
         const movies = response.data;
         this.setState({ ...this.state, movies: movies });
