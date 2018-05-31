@@ -12,7 +12,9 @@ import ProjectionsScreen from "./components/Projections/ProjectionsScreen";
 import ProjectionScreen from "./components/Projections/ProjectionScreen";
 import Search from "./components/SearchMovies/Search";
 import SearchMovieScreen from "./components/SearchMovies/SearchMovieScreen";
-import AddMovieToDatabase from "./components/SearchMovies/AddMovieToDatabase"
+import AddMovieToDatabase from "./components/SearchMovies/AddMovieToDatabase";
+import Login from "./components/Login/Login";
+import SignUp from "./components/SignUp/SignUp";
 
 class App extends Component {
   render() {
@@ -30,6 +32,8 @@ class App extends Component {
               <Route exact path={"/search"} component={Search} />
               <Route exact path={"/search/:id"} component={SearchMovieScreen} />
               <Route exact path={"/add-movie/:id"} component={AddMovieToDatabase}/>
+              <Route exact path={"/login"} component={Login}/>
+              <Route exact path={"/sign-up"} component={SignUp}/>
           </Content>
         </div>
       </Router>

@@ -38,8 +38,8 @@ export default class Navbar extends Component {
           </Menu.Item>
 
           <Menu.Item position="right">
-            <Button inverted>Log in</Button>
-            <Button inverted primary style={{ marginLeft: "0.5em" }}>
+            <Button inverted onClick={this.handleItemClick} href="/login">Log in</Button>
+            <Button inverted primary style={{ marginLeft: "0.5em" }} onClick={this.handleItemClick} href="/sign-up">
               Sign Up
             </Button>
           </Menu.Item>
