@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MovieSearchMovie from "./MovieSearchMovie";
-import {Grid, Button, Icon} from "semantic-ui-react";
+import {Grid} from "semantic-ui-react";
 import axios from "axios";
 
 export default class SearchMovieScreen extends Component {

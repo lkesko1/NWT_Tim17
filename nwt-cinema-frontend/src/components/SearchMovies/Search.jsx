@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import SearchInput, { createFilter } from "react-search-input";
-import { movieEndpoint } from "../../endpoints";
 import axios from "axios";
 import {
   List,
   Button,
   Icon,
-  Card,
   Grid,
   Input,
   Message,

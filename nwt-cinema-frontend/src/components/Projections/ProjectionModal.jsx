@@ -1,22 +1,15 @@
 import React, { Component } from "react";
 import {
-  Label,
   Modal,
   Button,
   Dropdown,
   Form,
   Divider,
-  Image,
-  List,
-  Grid,
-  Segment,
   Icon,
-  Confirm
 } from "semantic-ui-react";
 import _ from "lodash";
 import axios from "axios";
 import { projectionsEndpoint } from "../../endpoints";
-import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
