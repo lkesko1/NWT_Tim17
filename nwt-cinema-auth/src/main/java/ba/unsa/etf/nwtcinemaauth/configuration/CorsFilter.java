@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemamovies.configuration;
+package ba.unsa.etf.nwtcinemaauth.configuration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,3 +41,4 @@ public class CorsFilter implements Filter {
     public void destroy() {
     }
 }
+
