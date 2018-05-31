@@ -15,9 +15,9 @@ public class Role extends AbstractModel {
 	@NotNull
 	private String description;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role", targetEntity = UserRole.class,
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role", targetEntity = UserAccount.class,
 			cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<UserRole> userRoles = new ArrayList<>();
+	private List<UserAccount> userAccounts = new ArrayList<>();
 
 	public String getRoleTitle() {
 		return roleTitle;
@@ -35,8 +35,8 @@ public class Role extends AbstractModel {
 		this.description = description;
 	}
 
-	public List<UserRole> getUserRoles() {
-		return userRoles;
+	public List<UserAccount> getUserAccounts() {
+		return userAccounts;
 	}
 
 	public Role() {

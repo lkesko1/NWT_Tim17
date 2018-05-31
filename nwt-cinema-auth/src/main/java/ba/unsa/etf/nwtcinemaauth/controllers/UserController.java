@@ -29,7 +29,7 @@ public class UserController {
         }
         catch (Exception exc) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .build();
+                    .body(exc.getLocalizedMessage());
         }
     }
 

@@ -5,7 +5,7 @@ Radi:
     -> POST http://127.0.0.1:8050/reservations/create
         {
         	"numberOfTickets": 5,
-        	"userId": 3,
+        	"username": 3,
         	"movieProjectionId": 3
         }
 

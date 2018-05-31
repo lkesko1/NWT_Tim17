@@ -21,7 +21,7 @@ public class MoviesController extends AbstractController<MovieService> {
 			return ResponseEntity.badRequest()
 					.body(JSONConverter.toJSON("Failed to create movie with url " + movie.getImdbUrl()));
 		}
-		return ResponseEntity.ok(service.save(movie));
+		return ResponseEntity.ok(service.add(movie));
 	}
 
 	@Transactional

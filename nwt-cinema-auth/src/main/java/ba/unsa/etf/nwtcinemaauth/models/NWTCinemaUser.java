@@ -1,6 +1,10 @@
 package ba.unsa.etf.nwtcinemaauth.models;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.*;
 import java.util.Date;
 
@@ -16,6 +20,7 @@ public class NWTCinemaUser extends AbstractModel {
 	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{4,8}$") //between 4 and 8 characters, at least one letter and one number:
 	private String password;
 
+	@Column(unique = true)
 	@NotNull
 	@Size(min=3)
 	private String username;
