@@ -2,7 +2,7 @@ version: '3'
 
 services:
   eureka-server:
-#    image: eureka-server:latest
+    image: eureka-server:latest
     container_name: eureka_server_container
     build: ./nwt-eureka-server
     ports:
