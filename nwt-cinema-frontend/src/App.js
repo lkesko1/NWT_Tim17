@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  BrowserRouter as Router,
+  Router,
   Route
 } from "react-router-dom";
 import Home from "./components/Home/index.jsx";
@@ -16,9 +16,13 @@ import AddMovieToDatabase from "./components/SearchMovies/AddMovieToDatabase";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
 import axios from "axios";
+import createBrowserHistory from 'history/createBrowserHistory'
+
+const history = createBrowserHistory()
 
 class App extends Component {
-  componentDidMount() {
+  componentWillMount() {
+
     let token = localStorage.getItem("token");
     if (token) {
       axios.defaults.headers['Authorization'] = token;
@@ -28,9 +32,9 @@ class App extends Component {
 
   render() {
     return (
-      <Router >
+      <Router history={history}>
         <div>
-          <Content>
+          <Content history={history}>
             <Route exact path={"/"} component={Home}/>
               <Route exact path="/movies" component={MoviesScreen} />
               <Route exact path="/movies/:id" component={MovieScreen} />
