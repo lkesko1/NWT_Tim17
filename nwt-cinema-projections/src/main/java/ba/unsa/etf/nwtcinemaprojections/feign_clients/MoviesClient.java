@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Component
-@FeignClient("movies")
+@FeignClient("nwt-cinema-movies")
 public interface MoviesClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/movies/movies/{id}")
