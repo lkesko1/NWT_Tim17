@@ -6,5 +6,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MovieReviewService extends BaseService<MovieReview, IMovieReviewRepository> {
-
 }

@@ -45,6 +45,10 @@ public class MovieDTO {
 		}
 	}
 
+	private Long id;
+
+	private List<MovieReview> reviews;
+
 	@JsonProperty("Title")
 	private String title;
 
@@ -142,5 +146,21 @@ public class MovieDTO {
 	@JsonSetter
 	public void setRatings(List<Rating> ratings) {
 		this.ratings = ratings;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<MovieReview> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<MovieReview> reviews) {
+		this.reviews = reviews;
 	}
 }

@@ -8,8 +8,6 @@ public class ProjectionsDTO {
 
     private Long movieID;
 
-    private Long createdBy;
-
     private Date date;
 
     private Integer actualTickets;
@@ -23,10 +21,9 @@ public class ProjectionsDTO {
     public ProjectionsDTO() {
     }
 
-    public ProjectionsDTO(Long projectionID, Long movieID, Long createdBy, Date date, Integer actualTickets, Integer maxTickets, String title, String genre) {
+    public ProjectionsDTO(Long projectionID, Long movieID, Date date, Integer actualTickets, Integer maxTickets, String title, String genre) {
         this.projectionID = projectionID;
         this.movieID = movieID;
-        this.createdBy = createdBy;
         this.date = date;
         this.actualTickets = actualTickets;
         this.maxTickets = maxTickets;
@@ -48,14 +45,6 @@ public class ProjectionsDTO {
 
     public void setMovieID(Long movieID) {
         this.movieID = movieID;
-    }
-
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
     }
 
     public Date getDate() {

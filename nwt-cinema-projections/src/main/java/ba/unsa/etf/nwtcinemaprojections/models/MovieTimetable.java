@@ -15,10 +15,6 @@ public class MovieTimetable extends AbstractModel {
 	private Long movieID;
 
 	@NotNull
-	@Min(1)
-	private Long createdBy;
-
-	@NotNull
 	private Date date;
 
 	@NotNull
@@ -30,14 +26,6 @@ public class MovieTimetable extends AbstractModel {
 	@Min(0)
 	@Max(1000)
 	private Integer maxTickets;
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
 
 	public Date getDate() {
 		return date;
@@ -66,14 +54,12 @@ public class MovieTimetable extends AbstractModel {
 	public MovieTimetable() {
 	}
 
-	public MovieTimetable(Long movieID, Long createdBy, Date date, Integer actualTickets, Integer maxTickets) {
+	public MovieTimetable(Long movieID, Date date, Integer actualTickets, Integer maxTickets) {
 		this.movieID = movieID;
-		this.createdBy = createdBy;
 		this.date = date;
 		this.actualTickets = actualTickets;
 		this.maxTickets = maxTickets;
 	}
-
 
 	public Integer getActualTickets() {
 		return actualTickets;
