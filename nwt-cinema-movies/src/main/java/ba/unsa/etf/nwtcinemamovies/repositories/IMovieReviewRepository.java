@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * The movie review repository implementation
@@ -15,4 +16,6 @@ import javax.transaction.Transactional;
 @Transactional
 public interface IMovieReviewRepository extends JpaRepository<MovieReview, Long> {
 
+	@Transactional
+	List<MovieReview> findByMovie(Long movieId);
 }
