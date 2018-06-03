@@ -1,5 +1,8 @@
 package ba.unsa.etf.nwtcinemamovies.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -12,6 +15,9 @@ public class MovieReview extends AbstractModel {
 
 	@NotNull(message = "User id must be defined.")
 	private Long userId;
+
+	@JsonProperty
+	private UserAccount user;
 
 	@Min(value = 1, message = "Minimum movie rate is 1.")
 	@Max(value = 10, message = "Maximum movie rate is 10.")
@@ -64,5 +70,13 @@ public class MovieReview extends AbstractModel {
 
 	public MovieReview() {
 	}
+	
+	@JsonGetter
+	public UserAccount getUser() {
+		return user;
+	}
 
+	public void setUser(UserAccount user) {
+		this.user = user;
+	}
 }
