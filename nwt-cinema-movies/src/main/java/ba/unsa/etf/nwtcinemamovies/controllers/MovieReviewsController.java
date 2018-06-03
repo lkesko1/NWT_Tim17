@@ -50,7 +50,11 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 		return JSONConverter.toJSON(service.findAll());
 	}
 
-
+	@Transactional(readOnly = true)
+	@RequestMapping(value = "{movieId}", method = RequestMethod.GET)
+	public String findByMovie(@PathVariable("movieId") final Long movieId) {
+		return JSONConverter.toJSON(service.findByMovie(movieId));
+	}
 
 	@Transactional
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)

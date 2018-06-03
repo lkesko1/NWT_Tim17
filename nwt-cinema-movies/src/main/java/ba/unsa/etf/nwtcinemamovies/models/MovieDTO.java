@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MovieDTO {
+public class MovieDTO extends AbstractModel {
 
 	private static class Rating {
 
