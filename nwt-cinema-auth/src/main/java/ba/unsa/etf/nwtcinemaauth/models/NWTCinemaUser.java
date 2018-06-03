@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -24,6 +25,9 @@ public class NWTCinemaUser extends AbstractModel {
 	@NotNull
 	@Size(min=3)
 	private String username;
+
+	@ManyToOne(targetEntity = Role.class)
+	private Role role;
 
 	public String getEmail() {
 		return email;
@@ -52,13 +56,22 @@ public class NWTCinemaUser extends AbstractModel {
 	public NWTCinemaUser() {
 	}
 
-	public NWTCinemaUser(String email, String password, String username, Date birthday) {
+	public NWTCinemaUser(String email, String password, String username, Role role) {
 		this.email = email;
 		this.password = password;
 		this.username = username;
+		this.role = role;
 	}
 
 	public String toString() {
 		return "NWTCinemaUser | Username: " + this.getUsername();
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

@@ -5,6 +5,7 @@ import ba.unsa.etf.nwtcinemamovies.models.MovieReview;
 import ba.unsa.etf.nwtcinemamovies.models.Role;
 import ba.unsa.etf.nwtcinemamovies.models.UserAccount;
 import ba.unsa.etf.nwtcinemamovies.repositories.IRoleRepository;
+import ba.unsa.etf.nwtcinemamovies.repositories.IUserAccountRepository;
 import ba.unsa.etf.nwtcinemamovies.services.MovieReviewService;
 import ba.unsa.etf.nwtcinemamovies.services.MovieService;
 import ba.unsa.etf.nwtcinemamovies.services.RoleService;
@@ -28,7 +29,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 	 */
 
 	private MovieService movieService;
-	private UserAccountService userAccountService;
+	private IUserAccountRepository userAccountRepository;
 	private MovieReviewService movieReviewService;
 
 	@Autowired
@@ -40,8 +41,8 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 	}
 
 	@Autowired
-	public void setUserAccountService(UserAccountService userAccountService) {
-		this.userAccountService = userAccountService;
+	public void setUserAccountService(IUserAccountRepository userAccountRepository) {
+		this.userAccountRepository = userAccountRepository;
 	}
 
 	@Autowired
@@ -54,16 +55,27 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 		seedData();
 	}
 
-	private void seedData() {
-		final Movie movie = movieService.add(new Movie(IMDB_URL));
+	@SuppressWarnings("Duplicates")
+	private void seedUsers() {
 		final Role roleAdmin = roleRepository.save(new Role(RoleService.ROLE_ADMIN, RoleService.ROLE_DESCRIPTION_ADMIN));
 		final Role roleUser = roleRepository.save(new Role (RoleService.ROLE_USER, RoleService.ROLE_DESCRIPTION_USER));
-		movieReviewService.add(new MovieReview(DUMMY_UID, RATE, MOVIE_COMMENT, movie));
 
+		userAccountRepository.save(new UserAccount(roleAdmin, "admin"));
+		userAccountRepository.save(new UserAccount(roleUser, "adnan"));
+		userAccountRepository.save(new UserAccount(roleUser, "anisa"));
+		userAccountRepository.save(new UserAccount(roleUser, "edin"));
+		userAccountRepository.save(new UserAccount(roleUser, "lejla"));
+	}
+
+	private void seedData() {
+
+		this.seedUsers();
+
+		final Movie movie = movieService.add(new Movie(IMDB_URL));
+		movieReviewService.add(new MovieReview(DUMMY_UID, RATE, MOVIE_COMMENT, movie));
 		//seed some more movies for testing purposes
 		movieService.add(new Movie("http://www.imdb.com/title/tt2527336/"));
 		movieService.add(new Movie("http://www.imdb.com/title/tt3501632/"));
 		movieService.add(new Movie("http://www.imdb.com/title/tt2250912/"));
 	}
-
 }

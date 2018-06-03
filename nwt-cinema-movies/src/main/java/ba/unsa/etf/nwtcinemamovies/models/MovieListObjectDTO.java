@@ -13,7 +13,7 @@ public class MovieListObjectDTO {
     private String title;
 
     @JsonProperty("Year")
-    private Integer year;
+    private String year;
 
     @JsonProperty("imdbID")
     private String imdbID;
@@ -24,7 +24,7 @@ public class MovieListObjectDTO {
     public MovieListObjectDTO() {
     }
 
-    public MovieListObjectDTO(String title, Integer year, String imdbID, String poster) {
+    public MovieListObjectDTO(String title, String year, String imdbID, String poster) {
         this.title = title;
         this.year = year;
         this.imdbID = imdbID;
@@ -40,11 +40,11 @@ public class MovieListObjectDTO {
         this.title = title;
     }
 
-    public Integer getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(String year) {
         this.year = year;
     }
 

@@ -19,6 +19,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/movietimetable/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // And filter other requests to check the presence of JWT in header

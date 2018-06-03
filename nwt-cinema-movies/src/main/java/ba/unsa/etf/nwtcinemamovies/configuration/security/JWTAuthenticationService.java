@@ -1,5 +1,7 @@
 package ba.unsa.etf.nwtcinemamovies.configuration.security;
 
+import ba.unsa.etf.nwtcinemamovies.models.UserAccount;
+import ba.unsa.etf.nwtcinemamovies.repositories.IUserAccountRepository;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,41 +24,38 @@ import static io.jsonwebtoken.SignatureAlgorithm.HS512;
 @Service
 public class JWTAuthenticationService {
 
+    private static IUserAccountRepository userAccountRepository;
 
-//    private static IAccountRepository accountRepository;
-
-    static final long EXPIRATIONTIME = 864_000_000; // 10 days
-    static final String SECRET = "netflix-management";
+    static final String SECRET = "nwt-cinema-secret-key";
     static final String TOKEN_PREFIX = "Bearer";
     static final String HEADER_STRING = "Authorization";
 
     public static Authentication getAuthentication(HttpServletRequest request) {
 
-//        ServletContext servletContext = request.getServletContext();
-//        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-//        accountRepository = webApplicationContext.getBean(IAccountRepository.class);
-//
-//        String token = request.getHeader(HEADER_STRING);
-//        if (token != null) {
-//            // parse the token.
-//            String user = Jwts.parser()
-//                    .setSigningKey(SECRET)
-//                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-//                    .getBody()
-//                    .getSubject();
-//
-//            Account userAccount = accountRepository.findAccountByUsername(user);
-//            Collection<GrantedAuthority> authorities = new ArrayList<>();
-//            if(userAccount != null) {
-//                authorities.add(new SimpleGrantedAuthority(userAccount.getRole().getRoleTitle()));
-//            }
-//
-//            return user != null ?
-//                    new UsernamePasswordAuthenticationToken(user, null, authorities) :
-//                    null;
-//        }
+        ServletContext servletContext = request.getServletContext();
+        WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+        userAccountRepository = webApplicationContext.getBean(IUserAccountRepository.class);
+
+        String token = request.getHeader(HEADER_STRING);
+        if (token != null) {
+            // parse the token.
+            String user = Jwts.parser()
+                    .setSigningKey(SECRET)
+                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                    .getBody()
+                    .getSubject();
+
+            UserAccount userAccount = userAccountRepository.findUserAccountByUsername(user);
+            Collection<GrantedAuthority> authorities = new ArrayList<>();
+            if(userAccount != null) {
+                authorities.add(new SimpleGrantedAuthority(userAccount.getRole().getRoleTitle()));
+            }
+
+            return user != null ?
+                    new UsernamePasswordAuthenticationToken(user, null, authorities) :
+                    null;
+        }
         return null;
     }
 }
-
 

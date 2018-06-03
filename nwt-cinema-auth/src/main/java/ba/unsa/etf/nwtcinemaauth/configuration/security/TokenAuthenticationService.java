@@ -34,5 +34,6 @@ public class TokenAuthenticationService {
                 .signWith(HS512, SECRET)
                 .compact();
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
+        res.addHeader("Role", accountRepository.findUserByUsername(username).getRole().getRoleTitle());
     }
 }

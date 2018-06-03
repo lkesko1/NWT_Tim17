@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@SuppressWarnings("Duplicates")
 @Component
 public class CorsFilter implements Filter {
     private final Logger log = LoggerFactory.getLogger(CorsFilter.class);
