@@ -7,7 +7,7 @@ export default class Content extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar activeItem={this.props.history.location.pathname}/>
         <Segment style={{ minHeight: 600, padding: "8em 0em" }} vertical>
           {this.props.children}
         </Segment>

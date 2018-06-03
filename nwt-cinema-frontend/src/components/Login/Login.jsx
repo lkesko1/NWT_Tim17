@@ -9,6 +9,7 @@ import {
 } from "semantic-ui-react";
 import axios from "axios";
 import { authEndpoint } from "../../endpoints";
+import { Redirect } from "react-router-dom";
 
 const API_ROUTE = authEndpoint + "/login";
 
@@ -45,6 +46,11 @@ export default class Login extends Component {
         axios.defaults.headers["Authorization"] =
           response.headers["authorization"];
         this.setState({ authenticated: true });
+        console.log("Logged in");
+        this.setState({
+          ...this.state,
+          loggedin: true
+        });
       })
       .catch(function(error) {
         console.log(error);
@@ -52,6 +58,11 @@ export default class Login extends Component {
   }
 
   render() {
+
+    if (this.state.loggedin){
+      return <Redirect to="/" />
+    }
+    
     return (
       <div className="login-form">
         <style>{`

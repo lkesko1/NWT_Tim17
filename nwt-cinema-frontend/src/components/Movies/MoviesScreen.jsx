@@ -12,6 +12,12 @@ export default class MoviesScreen extends Component {
   }
 
   componentDidMount() {
+    // let token = localStorage.getItem("token");
+    // if (token) {
+    //   axios.defaults.headers['Authorization'] = token;
+    // }
+    // console.log('axios defaults', axios.defaults)
+    // console.log(axios.defaults.headers['Authorization']);
     axios
       .get(movieEndpoint + "/findAll")
       .then(response => {
