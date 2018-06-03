@@ -22,9 +22,6 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 	private static final Integer RATE = 10;
 	private static final String MOVIE_COMMENT = "Gladiator is awesome!!!";
 
-	Role roleAdmin;
-	Role roleUser;
-
 	/**
 	 * This event is executed as late as conceivably possible to indicate that
 	 * the application is ready to service requests.
@@ -59,8 +56,8 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 
 	@SuppressWarnings("Duplicates")
 	private void seedUsers() {
-		roleAdmin = roleRepository.save(new Role(RoleService.ROLE_ADMIN, RoleService.ROLE_DESCRIPTION_ADMIN));
-		roleUser = roleRepository.save(new Role (RoleService.ROLE_USER, RoleService.ROLE_DESCRIPTION_USER));
+		final Role roleAdmin = roleRepository.save(new Role(RoleService.ROLE_ADMIN, RoleService.ROLE_DESCRIPTION_ADMIN));
+		final Role roleUser = roleRepository.save(new Role (RoleService.ROLE_USER, RoleService.ROLE_DESCRIPTION_USER));
 
 		userAccountRepository.save(new UserAccount(roleAdmin, "admin"));
 		userAccountRepository.save(new UserAccount(roleUser, "adnan"));
@@ -73,11 +70,11 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 
 		this.seedUsers();
 
-		final Movie movie = movieService.add(new Movie(IMDB_URL));
-		movieReviewService.add(new MovieReview(new UserAccount(roleUser, "NAME"), RATE, MOVIE_COMMENT, movie));
+		final Movie movie = movieService.add(new Movie(IMDB_URL, "Gladiator"));
+		movieReviewService.add(new MovieReview(DUMMY_UID, RATE, MOVIE_COMMENT, movie));
 		//seed some more movies for testing purposes
-		movieService.add(new Movie("http://www.imdb.com/title/tt2527336/"));
-		movieService.add(new Movie("http://www.imdb.com/title/tt3501632/"));
-		movieService.add(new Movie("http://www.imdb.com/title/tt2250912/"));
+		movieService.add(new Movie("http://www.imdb.com/title/tt2527336/", "Star Wars: The Last Jedi"));
+		movieService.add(new Movie("http://www.imdb.com/title/tt3501632/", "Thor: Ragnarok"));
+		movieService.add(new Movie("http://www.imdb.com/title/tt2250912/", "Spider-Man Homecoming"));
 	}
 }

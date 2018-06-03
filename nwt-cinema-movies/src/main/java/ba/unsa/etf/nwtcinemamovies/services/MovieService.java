@@ -118,12 +118,15 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 		List<MovieDTO> movieDTOS = new ArrayList<>();
 		for (Future future : futures) {
 			MovieDTO dto = (MovieDTO) future.get();
-			Optional<Movie> movie = movies.stream().filter(m -> m.getTitle() == dto.getTitle()).findFirst();
+			Optional<Movie> movie = movies.stream().filter(m -> m.getTitle().contains(dto.getTitle())).findFirst();
+			System.out.println(movie.isPresent() ? movie.get().getTitle() : "NEMA FILMA");
+			System.out.println("DTO: " + dto.getTitle());
 			if (movie.isPresent()) {
 				dto.setId(movie.get().getId());
 				dto.setReviews(movie.get().getMovieReviews());
 			}
 			movieDTOS.add(dto);
+			System.out.println(dto.toString());
 		}
 		return movieDTOS;
 	}
