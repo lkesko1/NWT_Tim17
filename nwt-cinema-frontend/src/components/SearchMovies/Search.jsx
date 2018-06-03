@@ -10,6 +10,7 @@ import {
   Segment
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import {movieEndpoint } from "../../endpoints";
 
 export default class Search extends Component {
   constructor(props) {
@@ -26,8 +27,8 @@ export default class Search extends Component {
   myFunction(term) {
     axios
       .get(
-        //movieEndpoint + "/get-movies/" + term.target.value)
-        "http://www.omdbapi.com/?s=" + term.target.value + "&apikey=2d5ee0b5"
+        movieEndpoint + "/get-movies/" + term.target.value
+        // "http://www.omdbapi.com/?s=" + term.target.value + "&apikey=2d5ee0b5"
       )
       .then(response => {
         const movies = response.data;
