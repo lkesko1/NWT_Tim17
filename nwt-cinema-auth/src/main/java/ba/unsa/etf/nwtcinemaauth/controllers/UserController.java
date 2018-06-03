@@ -23,7 +23,7 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity register(@Valid @RequestBody NWTCinemaUser nwtCinemaUser) {
         try {
-            userService.createUser(nwtCinemaUser);
+            userService.createUser(nwtCinemaUser, false);
             return ResponseEntity.ok()
                     .build();
         }

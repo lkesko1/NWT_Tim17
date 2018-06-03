@@ -4,6 +4,8 @@ import ba.unsa.etf.nwtcinemaauth.configuration.Configuration;
 import ba.unsa.etf.nwtcinemaauth.dto.CreatedUser;
 import ba.unsa.etf.nwtcinemaauth.dto.RMQTransferObject;
 import ba.unsa.etf.nwtcinemaauth.models.NWTCinemaUser;
+import ba.unsa.etf.nwtcinemaauth.models.Role;
+import ba.unsa.etf.nwtcinemaauth.repositories.IRoleRepository;
 import ba.unsa.etf.nwtcinemaauth.repositories.IUserRepository;
 import ba.unsa.etf.nwtcinemaauth.utils.JSONConverter;
 import com.google.gson.Gson;
@@ -18,18 +20,22 @@ public class UserService {
     private IUserRepository userRepository;
 
     @Autowired
+    private IRoleRepository roleRepository;
+
+    @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void createUser(NWTCinemaUser nwtCinemaUser) {
+    public void createUser(NWTCinemaUser nwtCinemaUser, Boolean admin) {
+        Role role = null;
+        if (admin) {
+            role = roleRepository.findRoleByRoleTitle("ROLE_ADMIN");
+        }
+        else {
+            role = roleRepository.findRoleByRoleTitle("ROLE_USER");
+        }
+        nwtCinemaUser.setRole(role);
         userRepository.save(nwtCinemaUser);
-//        rabbitTemplate.convertAndSend(
-//                Configuration.EXCHANGE_KEY,
-//                Configuration.USER_CREATED_ROUTING_KEY,
-//                JSONConverter.toJSON(new RMQTransferObject(
-//                        "nwt-cinema-auth",
-//                        Configuration.USER_CREATED_ROUTING_KEY,
-//                        new CreatedUser(nwtCinemaUser.getUsername(), Configuration.ROLE_USER)))
-//        );
+        // Notify other microservices
         Gson gson = new Gson();
         rabbitTemplate.convertAndSend(
                 Configuration.EXCHANGE_KEY,
@@ -37,7 +43,7 @@ public class UserService {
                 gson.toJson(new RMQTransferObject(
                         "nwt-cinema-auth",
                         Configuration.USER_CREATED_ROUTING_KEY,
-                        gson.toJson(new CreatedUser(nwtCinemaUser.getUsername(), Configuration.ROLE_USER))))
+                        gson.toJson(new CreatedUser(nwtCinemaUser.getUsername(), role.getRoleTitle()))))
         );
     }
 }
