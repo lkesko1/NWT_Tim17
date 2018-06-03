@@ -32,5 +32,4 @@ public class UserController {
                     .body(exc.getLocalizedMessage());
         }
     }
-
 }

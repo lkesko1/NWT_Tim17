@@ -18,18 +18,11 @@ import java.util.Date;
 @Component
 public class ApplicationStartup implements ApplicationListener<ApplicationReadyEvent> {
 
-    private static final Long USER_ADM = 1000L;
-    private static final Long USER_USR_ONE = 1001L;
-    private static final Long USER_USR_TWO = 1002L;
-
-    private static final Long MOVIEPROJID = 10L;
-    private static final Long MOVIEPROJID2 = 20L;
-
     @Autowired
     private IRoleRepository roleRepository ;
 
     @Autowired
-    private IUserAccountRepository userRoleRepository;
+    private IUserAccountRepository userAccountRepository;
 
     @Autowired
     private IReservationRepository iReservationRepository;
@@ -39,19 +32,24 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
         seedData();
     }
 
-    private void seedData() {
-
+    @SuppressWarnings("Duplicates")
+    private void seedUsers() {
         final Role roleAdmin = roleRepository.save(new Role(RoleService.ROLE_ADMIN, RoleService.ROLE_DESCRIPTION_ADMIN));
         final Role roleUser = roleRepository.save(new Role (RoleService.ROLE_USER, RoleService.ROLE_DESCRIPTION_USER));
 
-
-        final UserAccount userRoleAdm = userRoleRepository.save(new UserAccount(roleAdmin, "admin"));
-//        final UserAccount userRoleUsr1 = userRoleRepository.save(new UserAccount(roleUser, USER_USR_ONE));
-//        final UserAccount userRoleUsr2 = userRoleRepository.save(new UserAccount(roleUser, USER_USR_TWO));
-
-        final Reservation reservation1 = iReservationRepository.save(new Reservation(USER_USR_ONE, MOVIEPROJID, 3, new Date(2018, 2,3)));
-        final Reservation reservation2 = iReservationRepository.save(new Reservation(USER_USR_ONE, MOVIEPROJID2, 2, new Date(2018, 2,3)));
-        final Reservation reservation3 = iReservationRepository.save(new Reservation(USER_USR_TWO, MOVIEPROJID2, 2,  new Date(2018, 4, 3)));
+        userAccountRepository.save(new UserAccount(roleAdmin, "admin"));
+        userAccountRepository.save(new UserAccount(roleUser, "adnan"));
+        userAccountRepository.save(new UserAccount(roleUser, "anisa"));
+        userAccountRepository.save(new UserAccount(roleUser, "edin"));
+        userAccountRepository.save(new UserAccount(roleUser, "lejla"));
     }
 
+    private void seedData() {
+
+        this.seedUsers();
+
+        iReservationRepository.save(new Reservation(2L, 1L, 3, new Date(2018, 2,3)));
+        iReservationRepository.save(new Reservation(3L, 2L, 2, new Date(2018, 2,3)));
+        iReservationRepository.save(new Reservation(4L, 2L, 2, new Date(2018, 4, 3)));
     }
+}

@@ -16,15 +16,6 @@ import java.util.Date;
 
 @Component
 public class ApplicationStartup implements ApplicationListener<ApplicationReadyEvent> {
-
-
-
-    private static final Long USER_ADM = 1000L;
-    private static final Long USER_USR_ONE = 1001L;
-    private static final Long USER_USR_TWO = 1002L;
-
-
-
     /**
      * This event is executed as late as conceivably possible to indicate that
      * the application is ready to service requests.
@@ -43,32 +34,34 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
         seedData();
     }
 
-    private void seedData() {
-
+    @SuppressWarnings("Duplicates")
+    private void seedUsers() {
         final Role roleAdmin = roleRepository.save(new Role(RoleService.ROLE_ADMIN, RoleService.ROLE_DESCRIPTION_ADMIN));
         final Role roleUser = roleRepository.save(new Role (RoleService.ROLE_USER, RoleService.ROLE_DESCRIPTION_USER));
 
-//        final UserAccount adminUser = userAccountRepository.save(new UserAccount(roleAdmin, ));
-//        final UserAccount userRoleUsr1 = userRoleRepository.save(new UserAccount(roleUsr, USER_USR_ONE));
-//        final UserAccount userRoleUsr2 = userRoleRepository.save(new UserAccount(roleUsr, USER_USR_TWO));
+        userAccountRepository.save(new UserAccount(roleAdmin, "admin"));
+        userAccountRepository.save(new UserAccount(roleUser, "adnan"));
+        userAccountRepository.save(new UserAccount(roleUser, "anisa"));
+        userAccountRepository.save(new UserAccount(roleUser, "edin"));
+        userAccountRepository.save(new UserAccount(roleUser, "lejla"));
+    }
 
+    private void seedData() {
 
+        this.seedUsers();
 
         movieTimetableRepository.save(new MovieTimetable(
-                new Long(1),
-                new Long(1),
+                1L,
                 new Date(),
                 10,
                 100));
         movieTimetableRepository.save(new MovieTimetable(
-                new Long(2),
-                new Long(2),
+                2L,
                 new Date(),
                 140,
                 200));
         movieTimetableRepository.save(new MovieTimetable(
-                new Long(3),
-                new Long(3),
+                3L,
                 new Date(),
                 200,
                 300));
