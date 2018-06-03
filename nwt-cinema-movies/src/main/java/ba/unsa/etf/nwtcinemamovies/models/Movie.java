@@ -1,7 +1,7 @@
 package ba.unsa.etf.nwtcinemamovies.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.URL;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +15,7 @@ public class Movie extends AbstractModel {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", targetEntity = MovieReview.class,
 			cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonIgnore
+
 	private List<MovieReview> movieReviews = new ArrayList<>();
 
 	@URL(message = "The URL provided is not valid.")

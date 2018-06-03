@@ -113,10 +113,17 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 	private List<MovieDTO> fetchAsync(Collection<Callable<MovieDTO>> callables)
 			throws ExecutionException, InterruptedException {
 
+		List<Movie> movies = repository.findAll();
 		List<Future<MovieDTO>> futures = Executors.newCachedThreadPool().invokeAll(callables);
 		List<MovieDTO> movieDTOS = new ArrayList<>();
 		for (Future future : futures) {
-			movieDTOS.add((MovieDTO) future.get());
+			MovieDTO dto = (MovieDTO) future.get();
+			Optional<Movie> movie = movies.stream().filter(m -> m.getTitle() == dto.getTitle()).findFirst();
+			if (movie.isPresent()) {
+				dto.setId(movie.get().getId());
+				dto.setReviews(movie.get().getMovieReviews());
+			}
+			movieDTOS.add(dto);
 		}
 		return movieDTOS;
 	}

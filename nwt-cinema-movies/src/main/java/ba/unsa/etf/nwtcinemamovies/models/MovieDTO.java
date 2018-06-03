@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MovieDTO extends AbstractModel {
+public class MovieDTO {
 
 	private static class Rating {
 
@@ -44,6 +44,10 @@ public class MovieDTO extends AbstractModel {
 			this.value = value;
 		}
 	}
+
+	private Long id;
+
+	private List<MovieReview> reviews;
 
 	@JsonProperty("Title")
 	private String title;
@@ -142,5 +146,21 @@ public class MovieDTO extends AbstractModel {
 	@JsonSetter
 	public void setRatings(List<Rating> ratings) {
 		this.ratings = ratings;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<MovieReview> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<MovieReview> reviews) {
+		this.reviews = reviews;
 	}
 }

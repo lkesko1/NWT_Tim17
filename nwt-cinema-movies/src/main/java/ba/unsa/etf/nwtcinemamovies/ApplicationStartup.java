@@ -9,7 +9,6 @@ import ba.unsa.etf.nwtcinemamovies.repositories.IUserAccountRepository;
 import ba.unsa.etf.nwtcinemamovies.services.MovieReviewService;
 import ba.unsa.etf.nwtcinemamovies.services.MovieService;
 import ba.unsa.etf.nwtcinemamovies.services.RoleService;
-import ba.unsa.etf.nwtcinemamovies.services.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -22,6 +21,9 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 	private static final Long DUMMY_UID = 100000L;
 	private static final Integer RATE = 10;
 	private static final String MOVIE_COMMENT = "Gladiator is awesome!!!";
+
+	Role roleAdmin;
+	Role roleUser;
 
 	/**
 	 * This event is executed as late as conceivably possible to indicate that
@@ -57,8 +59,8 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 
 	@SuppressWarnings("Duplicates")
 	private void seedUsers() {
-		final Role roleAdmin = roleRepository.save(new Role(RoleService.ROLE_ADMIN, RoleService.ROLE_DESCRIPTION_ADMIN));
-		final Role roleUser = roleRepository.save(new Role (RoleService.ROLE_USER, RoleService.ROLE_DESCRIPTION_USER));
+		roleAdmin = roleRepository.save(new Role(RoleService.ROLE_ADMIN, RoleService.ROLE_DESCRIPTION_ADMIN));
+		roleUser = roleRepository.save(new Role (RoleService.ROLE_USER, RoleService.ROLE_DESCRIPTION_USER));
 
 		userAccountRepository.save(new UserAccount(roleAdmin, "admin"));
 		userAccountRepository.save(new UserAccount(roleUser, "adnan"));
@@ -72,7 +74,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 		this.seedUsers();
 
 		final Movie movie = movieService.add(new Movie(IMDB_URL));
-		movieReviewService.add(new MovieReview(DUMMY_UID, RATE, MOVIE_COMMENT, movie));
+		movieReviewService.add(new MovieReview(new UserAccount(roleUser, "NAME"), RATE, MOVIE_COMMENT, movie));
 		//seed some more movies for testing purposes
 		movieService.add(new Movie("http://www.imdb.com/title/tt2527336/"));
 		movieService.add(new Movie("http://www.imdb.com/title/tt3501632/"));
