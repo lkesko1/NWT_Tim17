@@ -22,6 +22,8 @@ public class Movie extends AbstractModel {
 	@NotNull(message = "Movie URL must be provided.")
 	private String imdbUrl;
 
+	private String youTubeLink;
+
 	private String name;
 	private String title;
 	private Integer year;
@@ -31,7 +33,9 @@ public class Movie extends AbstractModel {
 	private String awards;
 	//private List<Rating> ratings;
 
-	public Movie( @URL(message = "The URL provided is not valid.") @NotNull(message = "Movie URL must be provided.") String imdbUrl, String title, Integer year, String genre, String director, String actors, String awards) {
+	public Movie( @URL(message = "The URL provided is not valid.") @NotNull(message = "Movie URL must be provided.")
+						  String imdbUrl, String title, Integer year, String genre, String director, String actors,
+				  String awards) {
 		this.imdbUrl = imdbUrl;
 		this.title = title;
 		this.year = year;
@@ -39,7 +43,19 @@ public class Movie extends AbstractModel {
 		this.director = director;
 		this.actors = actors;
 		this.awards = awards;
+	}
 
+	public Movie( @URL(message = "The URL provided is not valid.") @NotNull(message = "Movie URL must be provided.")
+						  String imdbUrl, String title, Integer year, String genre, String director, String actors,
+				  String awards, String youTubeLink) {
+		this.imdbUrl = imdbUrl;
+		this.title = title;
+		this.year = year;
+		this.genre = genre;
+		this.director = director;
+		this.actors = actors;
+		this.awards = awards;
+		this.youTubeLink = youTubeLink;
 	}
 
 	public String getName() {
@@ -90,7 +106,15 @@ public class Movie extends AbstractModel {
 		this.awards = awards;
 	}
 
-//	public List<Rating> getRatings() {
+	public String getYouTubeLink() {
+		return youTubeLink;
+	}
+
+	public void setYouTubeLink(String youTubeLink) {
+		this.youTubeLink = youTubeLink;
+	}
+
+	//	public List<Rating> getRatings() {
 //		return ratings;
 //	}
 //
