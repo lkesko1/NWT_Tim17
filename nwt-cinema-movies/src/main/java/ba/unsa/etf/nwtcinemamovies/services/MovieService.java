@@ -37,10 +37,12 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 	 * @return {@link MovieDTO} the movie data transfer object
 	 * @throws IOException in case reading of the stream fails
 	 */
-	public MovieDTO fetchMovie(Long movieId) throws IOException {
-		Optional<Movie> movie = findById(movieId);
+	public Optional<Movie> fetchMovie(Long movieId) throws IOException {
+		Optional<Movie> movie = repository.findById(movieId);
 		if (movie.isPresent()) {
-			return fetch(formUrl(movie.get()));
+//			return fetch(formUrl(movie.get()));
+			return movie;
+
 		}
 		return null;
 	}
@@ -100,6 +102,14 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 
 		return mymovie;
 		//Todo: rijesiti rating?!
+	}
+
+	public MovieDTO fetchMovieByIMDBId(String imdbID) throws IOException{
+		String my_url = "http://www.omdbapi.com/?i="+imdbID+"&apikey=2d5ee0b5";
+		HttpResponse response = client.execute((new HttpGet(my_url)));
+		MovieDTO newMovie = readResponse(response);
+
+		return newMovie;
 	}
 
 	/**
