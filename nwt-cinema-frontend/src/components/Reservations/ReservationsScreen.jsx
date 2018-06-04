@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReservationsList from "./ReservationsList";
+import { ReservationsList }  from "./ReservationsList";
 import { Grid, Button, Divider } from "semantic-ui-react";
 import axios from "axios";
 import { reservationsEndpoint } from "../../endpoints";

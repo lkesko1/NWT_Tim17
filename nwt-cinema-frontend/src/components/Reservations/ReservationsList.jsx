@@ -10,7 +10,7 @@ import {
 import logo from "../../images/cinema (1).png";
 import { Link } from "react-router-dom";
 
-export default class ReservationsList extends Component {
+export class ReservationsList extends Component {
   getContent() {
     const { reservations } = this.props;
     let reservationsList = [];
