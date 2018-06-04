@@ -103,7 +103,8 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
         for (MovieTimetable proj: projs
              ) {
             MovieDTO movieDetails = getDetails(proj.getMovieID());
-            projections.add(new ProjectionsDTO(proj.getId(), proj.getMovieID(), proj.getDate(), proj.getActualTickets(), proj.getMaxTickets(), movieDetails.getTitle(), movieDetails.getGenre()));
+//            projections.add(new ProjectionsDTO(proj.getId(), proj.getMovieID(), proj.getDate(), proj.getActualTickets(), proj.getMaxTickets(), movieDetails.getTitle(), movieDetails.getGenre()));
+            projections.add(new ProjectionsDTO(proj.getId(), proj.getActualTickets(), proj.getMaxTickets(), movieDetails.getTitle()));
         }
 
         return projections;
