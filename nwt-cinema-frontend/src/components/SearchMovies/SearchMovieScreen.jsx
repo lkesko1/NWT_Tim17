@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MovieSearchMovie from "./MovieSearchMovie";
 import {Grid} from "semantic-ui-react";
 import axios from "axios";
+import {movieEndpoint} from "../../endpoints";
 
 export default class SearchMovieScreen extends Component {
     constructor(props) {

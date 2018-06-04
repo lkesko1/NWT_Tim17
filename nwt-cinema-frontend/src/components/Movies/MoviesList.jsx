@@ -14,13 +14,11 @@ export default class MoviesList extends Component {
   getContent() {
     const { movies } = this.props;
     let moviesList = [];
-    let index = 0;
+    console.log(movies);
 
     for (let currentMovie of movies) {
-      index += 1;
-      // const currentMovie = movie;
       const content = (
-        <Segment color="yellow" key={index}>
+        <Segment color="yellow" key={currentMovie.id}>
         <Item.Group divided>
           <Item>
             <Item.Image  style={{marginTop: 20}} size="small" src={logo} />
@@ -36,8 +34,7 @@ export default class MoviesList extends Component {
               </Item.Description>
               <Item.Extra>
                 <Icon color="green" name="check" /> {currentMovie.Ratings.length} Reviews
-                <Link to="/movies/1">
-
+                <Link to={`/movies/${currentMovie.id}`}>
                 <Button primary floated="right">
                   View more
                   <Icon name="right chevron" />

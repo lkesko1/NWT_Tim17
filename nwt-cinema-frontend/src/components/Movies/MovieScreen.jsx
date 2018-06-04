@@ -16,13 +16,17 @@ export default class MovieScreen extends Component {
     }
   }
 
+  addReview(){
+    
+  }
 
   componentWillMount() {
     axios
-      .get(movieEndpoint + "/1")
+      .get(movieEndpoint + "/" + this.props.match.params.id)
       .then(response => {
         const movie = response.data;
         this.setState({ movie: movie });
+
       })
       .catch(error => {
         this.setState({ error: error });
@@ -30,7 +34,7 @@ export default class MovieScreen extends Component {
   }
 
   render() {
-    const { movie, error } = this.state;
+        console.log(this.state.movie);
 
     return (
       <div>
@@ -39,8 +43,8 @@ export default class MovieScreen extends Component {
             <Grid.Column width={3} />
             <Grid.Column width={10}>
               <Movie
-                movie={movie}
-                error={error}
+                movie={this.state.movie}
+                error={this.state.error}
                 updateForm={this.updateForm.bind(this)}
                 addReview={this.addReview.bind(this)}
                 movieReviewText={this.props.movieReviewText}
