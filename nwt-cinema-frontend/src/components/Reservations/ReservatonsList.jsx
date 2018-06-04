@@ -18,7 +18,6 @@ export default class ReservationsList extends Component {
 
     for (let currentReservation of reservations) {
       index += 1;
-      // const currentMovie = movie;
       const content = (
         <Segment color="yellow" key={index}>
         <Item.Group divided>
@@ -26,25 +25,14 @@ export default class ReservationsList extends Component {
             <Item.Image  style={{marginTop: 20}} size="small" src={logo} />
 
             <Item.Content>
-              <Item.Header >{currentReservation.Title}</Item.Header>
+              <Item.Header >{currentReservation.MovieName}</Item.Header>
               <Item.Description>
                 <List>
-                  <List.Item> <b> Year: </b> {currentReservation.Year} </List.Item>
-                  <List.Item> <b> Genre: </b> {currentReservation.Genre} </List.Item>
-                  <List.Item> <b> Actors: </b>{currentReservation.Actors} </List.Item>
+                  <List.Item> <b> Number of tickets: </b> {currentReservation.numberOfTickets} </List.Item>
+                  <List.Item> <b> Date created: </b> {currentReservation.dateCreated} </List.Item>
                 </List>
               </Item.Description>
-              <Item.Extra>
-                <Icon color="green" name="check" /> {currentReservation.Ratings.length} Reviews
-                <Link to="/reservations/1">
-
-                <Button primary floated="right">
-                  View more
-                  <Icon name="right chevron" />
-                </Button>
-                </Link>
-
-              </Item.Extra>
+             
             </Item.Content>
           </Item>
         </Item.Group>

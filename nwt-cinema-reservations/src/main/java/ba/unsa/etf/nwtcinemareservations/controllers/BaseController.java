@@ -18,7 +18,7 @@ public abstract class BaseController<M extends AbstractModel, S extends BaseServ
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private S service;
+    protected S service;
 
     @Transactional
     @RequestMapping(value = "create", method = RequestMethod.POST)

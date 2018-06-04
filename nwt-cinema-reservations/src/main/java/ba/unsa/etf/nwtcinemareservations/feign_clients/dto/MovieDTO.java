@@ -27,42 +27,6 @@ public class MovieDTO {
         this.id = id;
     }
 
-    private static class Rating {
-
-        @JsonProperty("Source")
-        private String source;
-
-        @JsonProperty("Value")
-        private String value;
-
-        public Rating(String source, String value) {
-            this.source = source;
-            this.value = value;
-        }
-
-        public Rating() {
-            //Default empty CTOR
-        }
-
-        public String getSource() {
-            return source;
-        }
-
-        @JsonSetter
-        public void setSource(String source) {
-            this.source = source;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        @JsonSetter
-        public void setValue(String value) {
-            this.value = value;
-        }
-    }
-
     @JsonProperty("Title")
     private String title;
 
@@ -81,18 +45,14 @@ public class MovieDTO {
     @JsonProperty("Awards")
     private String awards;
 
-    @JsonProperty("Ratings")
-    private List<Rating> ratings;
 
-    public MovieDTO(String Title, Integer Year, String Genre, String Director, String Actors, String Awards,
-                    List<Rating> Ratings) {
+    public MovieDTO(String Title, Integer Year, String Genre, String Director, String Actors, String Awards) {
         this.title = Title;
         this.year = Year;
         this.genre = Genre;
         this.director = Director;
         this.actors = Actors;
         this.awards = Awards;
-        this.ratings = Ratings;
     }
 
     public MovieDTO() {
@@ -151,15 +111,6 @@ public class MovieDTO {
     @JsonSetter
     public void setAwards(String awards) {
         this.awards = awards;
-    }
-
-    public List<Rating> getRatings() {
-        return ratings;
-    }
-
-    @JsonSetter
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
     }
 
     public Long getId() {

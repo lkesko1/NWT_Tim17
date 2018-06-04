@@ -13,7 +13,7 @@ export default class ReservationsScreen extends Component {
 
   componentDidMount() {
     axios
-      .get(reservationsEndpoint + "/findAll")
+      .get(reservationsEndpoint + "/get-reservations" + this.props.match.params.id)
       .then(response => {
         const reservations = response.data;
         this.setState({ reservations: reservations });

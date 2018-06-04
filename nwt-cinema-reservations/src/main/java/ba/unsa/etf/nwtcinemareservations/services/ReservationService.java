@@ -2,6 +2,8 @@ package ba.unsa.etf.nwtcinemareservations.services;
 
 import ba.unsa.etf.nwtcinemareservations.configuration.RabbitMQConfiguration;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.MovieProjectionsClient;
+import ba.unsa.etf.nwtcinemareservations.feign_clients.MoviesClient;
+import ba.unsa.etf.nwtcinemareservations.feign_clients.dto.MovieDTO;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.dto.MovieProjectionDTO;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.dto.TicketReservationDTO;
 import ba.unsa.etf.nwtcinemareservations.models.Reservation;
@@ -22,6 +24,9 @@ public class ReservationService extends BaseService<Reservation, IReservationRep
 
     @Autowired
     private MovieProjectionsClient movieProjectionsClient;
+
+    @Autowired
+    private MoviesClient moviesClient;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -70,7 +75,7 @@ public class ReservationService extends BaseService<Reservation, IReservationRep
 
     }
 
-    public Iterable<Reservation> getReservationsByUserID(Long userID){
+    public List<Reservation> getReservationsByUserID(Long userID){
         List<Reservation> all = repository.findAll();
 
         List<Reservation> returnReservations = new ArrayList<>();
@@ -83,13 +88,21 @@ public class ReservationService extends BaseService<Reservation, IReservationRep
         return returnReservations;
     }
 
-//    public Iterable<ReservationDTO> getReservationsByUserIDwDetails(Long userID){
-//        List<Reservation> reservations = getReservationsByUserID(userID);
-//
-//        for(Reservation res : reservations) {
-//            movieProjectionsClient.getMovieProjection(res.getMovieProjectionId());
-//
-//        }
-//    }
+    public List<ReservationDTO> getReservationsByUserIDwDetails(Long userID){
+        List<Reservation> reservations = getReservationsByUserID(userID);
+        List<ReservationDTO> usersReservation = new ArrayList<>();
+
+        for(Reservation res : reservations) {
+            MovieProjectionDTO movieProjectionDTO = movieProjectionsClient.getMovieProjection(res.getMovieProjectionId());
+            MovieDTO movieDTO = moviesClient.getMovieDetails(movieProjectionDTO.getMovieID());
+            ReservationDTO reservation
+             = new ReservationDTO(res.getId(), res.getMovieProjectionId(),
+                    movieDTO.getId(),
+                    res.getUserId(), movieDTO.getTitle(), res.getNumberOfTickets(),res.getDateCreated());
+            usersReservation.add(reservation);
+
+        }
+        return usersReservation;
+    }
 }
 
