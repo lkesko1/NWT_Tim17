@@ -5,6 +5,7 @@ import ba.unsa.etf.nwtcinemareservations.feign_clients.MovieProjectionsClient;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.dto.MovieProjectionDTO;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.dto.TicketReservationDTO;
 import ba.unsa.etf.nwtcinemareservations.models.Reservation;
+import ba.unsa.etf.nwtcinemareservations.models.ReservationDTO;
 import ba.unsa.etf.nwtcinemareservations.repositories.IReservationRepository;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ReservationService extends BaseService<Reservation, IReservationRepository> {
@@ -51,5 +54,42 @@ public class ReservationService extends BaseService<Reservation, IReservationRep
             return null;
         }
     }
+
+    public Iterable<Reservation> getReservationsByProjectionID(Long movieProjectionID){
+        List<Reservation> all = repository.findAll();
+
+        List<Reservation> returnReservations = new ArrayList<>();
+
+        for(Reservation res : all){
+            if(res.getMovieProjectionId() == movieProjectionID)
+                returnReservations.add(res);
+
+        }
+
+        return returnReservations;
+
+    }
+
+    public Iterable<Reservation> getReservationsByUserID(Long userID){
+        List<Reservation> all = repository.findAll();
+
+        List<Reservation> returnReservations = new ArrayList<>();
+
+        for(Reservation res : all){
+            if(res.getUserId() == userID)
+                returnReservations.add(res);
+
+        }
+        return returnReservations;
+    }
+
+//    public Iterable<ReservationDTO> getReservationsByUserIDwDetails(Long userID){
+//        List<Reservation> reservations = getReservationsByUserID(userID);
+//
+//        for(Reservation res : reservations) {
+//            movieProjectionsClient.getMovieProjection(res.getMovieProjectionId());
+//
+//        }
+//    }
 }
 
