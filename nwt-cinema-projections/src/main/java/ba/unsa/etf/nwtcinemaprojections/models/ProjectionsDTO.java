@@ -6,9 +6,9 @@ public class ProjectionsDTO {
 
     private Long projectionID;
 
-//    private Long movieID;
-//
-//    private Date date;
+    private Long movieID;
+
+    private Date date;
 
     private Integer actualTickets;
 
@@ -16,20 +16,20 @@ public class ProjectionsDTO {
 
     private String title;
 
-//    private String genre;
+    private String genre;
 
     public ProjectionsDTO() {
     }
 
-//    public ProjectionsDTO(Long projectionID, Long movieID, Date date, Integer actualTickets, Integer maxTickets, String title, String genre) {
-//        this.projectionID = projectionID;
-//        this.movieID = movieID;
-//        this.date = date;
-//        this.actualTickets = actualTickets;
-//        this.maxTickets = maxTickets;
-//        this.title = title;
-//        this.genre = genre;
-//    }
+    public ProjectionsDTO(Long projectionID, Long movieID, Date date, Integer actualTickets, Integer maxTickets, String title, String genre) {
+        this.projectionID = projectionID;
+        this.movieID = movieID;
+        this.date = date;
+        this.actualTickets = actualTickets;
+        this.maxTickets = maxTickets;
+        this.title = title;
+        this.genre = genre;
+    }
 
     public Long getProjectionID() {
         return projectionID;
@@ -39,21 +39,21 @@ public class ProjectionsDTO {
         this.projectionID = projectionID;
     }
 
-//    public Long getMovieID() {
-//        return movieID;
-//    }
-//
-//    public void setMovieID(Long movieID) {
-//        this.movieID = movieID;
-//    }
-//
-//    public Date getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(Date date) {
-//        this.date = date;
-//    }
+    public Long getMovieID() {
+        return movieID;
+    }
+
+    public void setMovieID(Long movieID) {
+        this.movieID = movieID;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Integer getActualTickets() {
         return actualTickets;
@@ -79,19 +79,13 @@ public class ProjectionsDTO {
         this.title = title;
     }
 
-//    public String getGenre() {
-//        return genre;
-//    }
-//
-//    public void setGenre(String genre) {
-//        this.genre = genre;
-//    }
-
-
-    public ProjectionsDTO(Long projectionID, Integer actualTickets, Integer maxTickets, String title) {
-        this.projectionID = projectionID;
-        this.actualTickets = actualTickets;
-        this.maxTickets = maxTickets;
-        this.title = title;
+    public String getGenre() {
+        return genre;
     }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+
 }
