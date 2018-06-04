@@ -3,7 +3,16 @@ import "./style.css";
 import { Grid, Button, Header, Image } from "semantic-ui-react";
 import jumbotronImage from "../../images/DMOHA20140112005.jpg";
 import logo from "../../images/movie-time.png"
+
+export let role;
+
 export default class Home extends Component {
+  state = {};
+
+  componentWillMount(){
+    role = localStorage.getItem("role");
+  }
+  
   render() {
     return (
       

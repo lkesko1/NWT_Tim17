@@ -41,7 +41,6 @@ export class NewReservationModal extends Component {
     const {
       reservationModalVisible,
       hideReservationModal,
-      saveReservation,
       projections,
       selectedProjectionId,
       updateForm
@@ -58,7 +57,7 @@ export class NewReservationModal extends Component {
     if (selectedProjectionId) {
       let value = selectedProjectionId ? selectedProjectionId : 0;
       const selectedProjection = _.find(projections, projection => {
-        return projection.projectionID == selectedProjectionId;
+        return projection.projectionID === selectedProjectionId;
       });
       const date = moment(selectedProjection.date).format(
         "YYYY-MM-DD HH:mm:ss"

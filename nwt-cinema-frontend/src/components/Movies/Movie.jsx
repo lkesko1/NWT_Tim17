@@ -10,18 +10,38 @@ import {
   Divider,
   Comment,
   Label,
-  Header
+  Header,
+  Form,
+  Button
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import image from "../../images/DMOHA20140112005.jpg";
+// import axios from "axios";
+// import {reviewEndpoint} from "../../endpoints";
 
 export default class Movie extends Component {
+  addReview() {
+    console.log(this.props.movieReviewText);
+    // axios
+    //   .post(reviewEndpoint + "/create", {
+    //     userId: currentUser,
+    //     rate: currentRate,
+    //     comment: this.state.movieReviewText,
+    //     movie: this.props.movie
+    //   })
+    //   .then(response => {
+    //     console.log(response);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+  }
+
   getMovieContent() {
-    const { movie } = this.props;
-    const reviews = [];
+    const { movie, updateForm, addReview } = this.props;
+    // const reviews = [];
 
     for (let review of movie.Ratings) {
-      console.log(review);
     }
     const ReviewContent = (
       <Comment.Group>
@@ -39,22 +59,39 @@ export default class Movie extends Component {
             <Comment.Text>How artistic!</Comment.Text>
           </Comment.Content>
         </Comment>
+
+        {localStorage.getItem("role") === "ROLE_USER" && (
+          <Form reply>
+            <Form.TextArea
+              onChange={e => {
+                updateForm(e, "review", e.target.value);
+              }}
+            />
+
+            <Button
+              content="Add review"
+              labelPosition="left"
+              icon="edit"
+              primary
+              onClick={this.addReview.bind(this)}
+            />
+          </Form>
+        )}
       </Comment.Group>
     );
 
     const panels = [
       {
-        title:  {
-          content: <Label color='blue' content="Show movie reviews" />,
-          key: 'content-title'
+        title: {
+          content: <Label color="blue" content="Show movie reviews" />,
+          key: "content-title"
         },
         content: {
           content: ReviewContent,
-          key: 'content-review',
-        },
+          key: "content-review"
+        }
       }
     ];
-
 
     const content = (
       <Segment color="yellow">
@@ -91,7 +128,6 @@ export default class Movie extends Component {
         </Item.Group>
         <Accordion size="large" panels={panels} />
         <Divider />
-        
 
         <Embed id="do9zep1n8cU" placeholder={image} source="youtube" />
       </Segment>

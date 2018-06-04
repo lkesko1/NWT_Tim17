@@ -42,10 +42,8 @@ export class ProjectionModal extends Component {
   render() {
     const {
       projectionModalVisible,
-      saveProjection,
       hideProjectionModal,
       movies,
-      selectedMovieId,
       updateForm,
       selectedDate,
       handleChange
@@ -124,6 +122,5 @@ export class ProjectionModal extends Component {
         </Modal>
       </div>
     );
-    return <div />;
   }
 }
