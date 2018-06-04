@@ -6,12 +6,18 @@ import axios from "axios";
 
 export default class Navbar extends Component {
   state = {};
+  handleItemClick = (e, { name }) => {
+    this.setState({ ...this.state, activeItem: "hom" });
+  };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   logout() {
+    localStorage.removeItem("role");
     localStorage.removeItem("token");
-    this.setState({activeItem: "login"});
+    this.setState({
+      activeItem: "logout",
+      redirect: true
+    });
   }
 
   render() {
@@ -22,7 +28,10 @@ export default class Navbar extends Component {
       if (!activeItem) activeItem = "home";
     }
 
-    const userAuthenticated = axios.defaults.headers.Authorization ? true : false;
+    const userAuthenticated =
+      axios.defaults.headers.Authorization && localStorage.getItem("token")
+        ? true
+        : false;
 
     return (
       <Segment vertical>
@@ -78,11 +87,7 @@ export default class Navbar extends Component {
           <Menu.Item position="right">
             {!userAuthenticated ? (
               <div>
-                <Button
-                  as={Link}
-                  to="/login"
-                  inverted
-                >
+                <Button as={Link} to="/login" inverted>
                   Log in
                 </Button>
                 <Button
@@ -96,7 +101,7 @@ export default class Navbar extends Component {
                 </Button>
               </div>
             ) : (
-              <Button as={Link} to="/login" inverted onClick={this.logout}>
+              <Button as={Link} to="/login" inverted onClick={this.logout.bind(this)}>
                 Log out
               </Button>
             )}

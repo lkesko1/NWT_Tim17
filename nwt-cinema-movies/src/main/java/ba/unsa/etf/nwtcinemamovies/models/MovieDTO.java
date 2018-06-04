@@ -163,4 +163,9 @@ public class MovieDTO {
 	public void setReviews(List<MovieReview> reviews) {
 		this.reviews = reviews;
 	}
+
+	@Override
+	public String toString() {
+		return id + " " + title;
+	}
 }

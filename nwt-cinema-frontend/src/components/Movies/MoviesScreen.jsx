@@ -12,12 +12,7 @@ export default class MoviesScreen extends Component {
   }
 
   componentDidMount() {
-    // let token = localStorage.getItem("token");
-    // if (token) {
-    //   axios.defaults.headers['Authorization'] = token;
-    // }
-    // console.log('axios defaults', axios.defaults)
-    // console.log(axios.defaults.headers['Authorization']);
+
     axios
       .get(movieEndpoint + "/findAll")
       .then(response => {
@@ -30,6 +25,7 @@ export default class MoviesScreen extends Component {
   }
 
   render() {
+    const role = localStorage.getItem("role")
     const { movies, error } = this.state;
 
     return (
@@ -38,15 +34,19 @@ export default class MoviesScreen extends Component {
           <Grid.Row>
             <Grid.Column width={3} />
             <Grid.Column width={10}>
-              <Link to="/search">
-                <Button
-                  positive
-                  labelPosition="right"
-                  icon="search"
-                  content="Search and add movies"
-                />
-              </Link>
-              <Divider hidden />
+              {role === "ROLE_ADMIN" && (
+                <div>
+                  <Link to="/search">
+                    <Button
+                      positive
+                      labelPosition="right"
+                      icon="search"
+                      content="Search and add movies"
+                    />
+                  </Link>
+                  <Divider hidden />
+                </div>
+              )}
               <MoviesList movies={movies} error={error} />
             </Grid.Column>
             <Grid.Column width={3} />

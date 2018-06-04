@@ -19,11 +19,16 @@ import axios from "axios";
 import createBrowserHistory from 'history/createBrowserHistory'
 
 const history = createBrowserHistory()
+export let currentUser;
+export let token;
+export let role;
 
 class App extends Component {
   componentWillMount() {
 
-    let token = localStorage.getItem("token");
+    token = localStorage.getItem("token");
+    role = localStorage.getItem("role");
+    
     if (token) {
       axios.defaults.headers['Authorization'] = token;
     }

@@ -11,7 +11,7 @@ export default class ProjectionScreen extends Component {
     }
 
     componentWillMount() {
-        axios.get(projectionsEndpoint + "/movietimetable/get-details/"  +this.props.match.params.id)
+        axios.get(projectionsEndpoint + "/get-details/"  + this.props.match.params.id)
             .then(response => {
                 const movie = response.data;
                 this.setState({movie: movie})

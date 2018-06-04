@@ -43,6 +43,8 @@ export default class Login extends Component {
       .post(API_ROUTE, data)
       .then(response => {
         localStorage.setItem("token", response.headers["authorization"]);
+        localStorage.setItem("role", response.headers["role"]);
+
         axios.defaults.headers["Authorization"] =
           response.headers["authorization"];
         this.setState({ authenticated: true });
@@ -58,11 +60,10 @@ export default class Login extends Component {
   }
 
   render() {
-
-    if (this.state.loggedin){
-      return <Redirect to="/" />
+    if (this.state.loggedin) {
+      return <Redirect to="/" />;
     }
-    
+
     return (
       <div className="login-form">
         <style>{`
