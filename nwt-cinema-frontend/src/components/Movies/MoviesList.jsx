@@ -5,7 +5,9 @@ import {
   Button,
   Segment,
   List,
-  Message
+  Message,
+  Dimmer,
+  Loader
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import { Link } from "react-router-dom";
@@ -58,6 +60,14 @@ export default class MoviesList extends Component {
 
   render() {
     const { movies, error } = this.props;
+
+    if (!movies && !error) {
+      return (
+        <Dimmer active inverted>
+          <Loader content="Loading" />
+        </Dimmer>
+      );
+    }
 
     if (!movies || movies.length === 0 || error) {
       return (

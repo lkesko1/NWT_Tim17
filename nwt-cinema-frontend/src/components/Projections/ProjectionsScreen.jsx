@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import ProjectionsList from "./ProjectionsList";
-import { Grid } from "semantic-ui-react";
+import { Grid, Segment } from "semantic-ui-react";
 import axios from "axios";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { projectionsEndpoint, movieEndpoint } from "../../endpoints";
 
 export default class ProjectionsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projections: [],
+      projections: null,
       error: null,
       movies: [],
       redirect: false
@@ -29,7 +29,7 @@ export default class ProjectionsScreen extends Component {
         this.setState({ ...this.state, projections: projections });
       })
       .catch(error => {
-        this.setState({ error: error });
+        this.setState({ ...this.state, error: error, projections: [] });
       });
 
     axios
@@ -47,7 +47,7 @@ export default class ProjectionsScreen extends Component {
     const { projections, error, movies } = this.state;
 
     if (this.state.redirect) {
-      return <Redirect to="/login" />
+      return <Redirect to="/login" />;
     }
 
     return (
@@ -56,14 +56,14 @@ export default class ProjectionsScreen extends Component {
           <Grid.Row>
             <Grid.Column width={3} />
             <Grid.Column width={10}>
-            <h3> Cinema projections </h3>
-
-              <ProjectionsList
-                redirect={this.redirect.bind(this)}
-                projections={projections}
-                error={error}
-                movies={movies}
-              />
+              <h3> Cinema projections </h3>
+                <ProjectionsList
+                  redirect={this.redirect.bind(this)}
+                  projections={projections}
+                  error={error}
+                  movies={movies}
+                />
+                
             </Grid.Column>
             <Grid.Column width={3} />
           </Grid.Row>

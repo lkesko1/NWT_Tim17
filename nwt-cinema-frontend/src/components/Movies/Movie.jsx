@@ -12,7 +12,9 @@ import {
   Label,
   Header,
   Form,
-  Button
+  Button,
+  Dimmer, 
+  Loader
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import image from "../../images/DMOHA20140112005.jpg";
@@ -120,9 +122,17 @@ export default class Movie extends Component {
   }
 
   render() {
-    const { movie } = this.props;
+    const { movie, error } = this.props;
 
-    if (!movie) {
+    if (!movie && !error) {
+      return (
+        <Dimmer active inverted>
+          <Loader content="Loading" />
+        </Dimmer>
+      );
+    }
+
+    if (!movie || error) {
       return (
         <Message negative size="huge">
           <Message.Header>

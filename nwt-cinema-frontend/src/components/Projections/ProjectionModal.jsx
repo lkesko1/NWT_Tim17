@@ -27,7 +27,7 @@ export class ProjectionModal extends Component {
         movieID: selectedMovieId,
         createdBy: 1,
         date: selectedDate,
-        actualTickets: numberOfTickets,
+        actualTickets: 0,
         maxTickets: numberOfTickets
       })
       .then(response => {
@@ -95,9 +95,9 @@ export class ProjectionModal extends Component {
                   type="number"
                   min={1}
                   max={1000}
-                  defaultValue={100}
+                  defaultValue={this.props.numberOfTickets}
                   onChange={e => {
-                    updateForm(e, "tickets", e.target.value);
+                    updateForm(e, "numberOfTickets", e.target.value);
                   }}
                 />
               </Form.Field>

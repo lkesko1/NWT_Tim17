@@ -25,10 +25,10 @@ export default class ProjectionScreen extends Component {
           )
           .then(response => {
             let movie = response.data;
-            this.setState({ movie: movie });
+            this.setState({ ...this.state, movie: movie });
           })
           .catch(error => {
-            this.setState({ error: error });
+            this.setState({ ...this.state, error: error });
           });
       })
       .catch(error => {

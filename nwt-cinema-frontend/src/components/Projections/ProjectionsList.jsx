@@ -1,5 +1,15 @@
 import React, { Component } from "react";
-import { Item, Icon, Button, Segment, List, Message, Label} from "semantic-ui-react";
+import {
+  Item,
+  Icon,
+  Button,
+  Segment,
+  List,
+  Message,
+  Label,
+  Dimmer, 
+  Loader
+} from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import { Link } from "react-router-dom";
 import { NewReservationModal } from "../Reservations/NewReservationModal";
@@ -12,7 +22,7 @@ export default class ProjectionsList extends Component {
       reservationModalVisible: false,
       tickets: 1,
       projectionModalVisible: false,
-      selectedDate: moment(),
+      selectedDate: moment()
     });
   }
 
@@ -44,8 +54,9 @@ export default class ProjectionsList extends Component {
     } else if (key == "tickets") {
       this.setState({ ...this.state, tickets: value });
     } else if (key === "movie") {
-      console.log("OK");
       this.setState({ ...this.state, selectedMovieId: value });
+    } else if (key === "numberOfTickets") {
+      this.setState({ ...this.state, numberOfTickets: value });
     }
   }
 
@@ -128,17 +139,13 @@ export default class ProjectionsList extends Component {
                     </Button>
                   </Link>
                   <Label color="red">
-                  {" "}
-                  Date: {moment(currentProjection.date).format(
-                    "YYYY-MM-DD"
-                  )} 
-                </Label>
+                    {" "}
+                    Date: {moment(currentProjection.date).format("YYYY-MM-DD")}
+                  </Label>
 
                   <Label color="red">
-                  Time: {moment(currentProjection.date).format(
-                    "HH:mm:ss"
-                  )}
-                </Label>
+                    Time: {moment(currentProjection.date).format("HH:mm:ss")}
+                  </Label>
                 </Item.Extra>
               </Item.Content>
             </Item>
@@ -154,7 +161,15 @@ export default class ProjectionsList extends Component {
   render() {
     const { projections, error, movies } = this.props;
 
-    if (!projections || projections.length === 0 || error) {
+    if (!projections && !error) {
+      return (
+        <Dimmer active inverted>
+          <Loader content="Loading" />
+        </Dimmer>
+      );
+    }
+
+    if (projections.length === 0 || error) {
       return (
         <Message negative size="huge">
           <Message.Header>
