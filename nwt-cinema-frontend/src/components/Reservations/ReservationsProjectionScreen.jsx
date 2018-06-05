@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { ReservationsList }  from "./ReservationsList";
+import { ReservationsProjectionList }  from "./ReservationsProjectionList";
 import { Grid, Divider } from "semantic-ui-react";
 import axios from "axios";
 import { reservationsEndpoint } from "../../endpoints";
 
-export default class ReservationsScreen extends Component {
+export default class ReservationsProjectionScreen extends Component {
   constructor(props) {
     super(props);
     this.state = { reservations: [], error: null };
@@ -12,7 +12,7 @@ export default class ReservationsScreen extends Component {
 
   componentDidMount() {
     axios
-      .get(reservationsEndpoint + "/get-reservations/" + this.props.match.params.id)
+      .get(reservationsEndpoint + "/get-reservations-proj/" + this.props.match.params.id)
       .then(response => {
         const reservations = response.data;
         this.setState({ reservations: reservations });
