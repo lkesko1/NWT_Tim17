@@ -94,14 +94,8 @@ public class MoviesController extends AbstractController<MovieService> {
 
 	@Transactional
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
-	public ResponseEntity delete(@RequestBody final Movie movie, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return ResponseEntity.badRequest().body(
-					JSONConverter.toJSON("Failed to delete movie with url " + movie.getImdbUrl()));
-		}
-		service.delete(movie);
-		return ResponseEntity.ok(
-				JSONConverter.toJSON("Successfully deleted movie with url " + movie.getImdbUrl()));
+	public void delete(@PathVariable("id") Long id) {
+		service.delete(id);
 	}
 
 
