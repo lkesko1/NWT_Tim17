@@ -33,7 +33,6 @@ export default class Login extends Component {
   }
 
   login(event) {
-    console.log(this.state);
     const data = {
       username: this.state.username,
       password: this.state.pass

@@ -1,6 +1,8 @@
 package ba.unsa.etf.nwtcinemamovies.controllers;
 
+import ba.unsa.etf.nwtcinemamovies.dto.MovieReviewDTO;
 import ba.unsa.etf.nwtcinemamovies.models.MovieReview;
+import ba.unsa.etf.nwtcinemamovies.repositories.IMovieRepository;
 import ba.unsa.etf.nwtcinemamovies.repositories.IUserAccountRepository;
 import ba.unsa.etf.nwtcinemamovies.services.MovieReviewService;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
@@ -23,15 +25,22 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 	@Autowired
 	private IUserAccountRepository userAccountRepository;
 
+	@Autowired
+	private IMovieRepository movieRepository;
+
 	@Transactional
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public ResponseEntity create(@RequestBody final MovieReview movieReview, BindingResult bindingResult, Principal principal) {
+	public ResponseEntity create(@RequestBody final MovieReviewDTO movieReviewDTO, BindingResult bindingResult, Principal principal) {
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(
-					JSONConverter.toJSON("Failed to create movie review for movie "
-							+ movieReview.getMovie().getImdbUrl()));
+					JSONConverter.toJSON("Failed to create movie review for movie ID "
+							+ movieReviewDTO.getMovieId()));
 		}
-		movieReview.setUserAccount(userAccountRepository.findUserAccountByUsername(principal.getName()));
+		MovieReview movieReview = new MovieReview(
+				userAccountRepository.findUserAccountByUsername(principal.getName()),
+				movieReviewDTO.getComment(),
+				movieRepository.findById(movieReviewDTO.getMovieId()).get()
+		);
 		return ResponseEntity.ok(service.add(movieReview));
 	}
 
@@ -59,13 +68,8 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 	}
 
 	@Transactional
-	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
-	public ResponseEntity delete(@RequestBody final MovieReview movieReview, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return ResponseEntity.badRequest()
-					.body("Failed to delete movie review for movie " + movieReview.getMovie().getImdbUrl());
-		}
-		service.delete(movieReview);
-		return ResponseEntity.ok("Successfully deleted movie review with url " + movieReview.getMovie().getImdbUrl());
+	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+	public void delete(@PathVariable("id") final Long id ) {
+		service.delete(id);
 	}
 }

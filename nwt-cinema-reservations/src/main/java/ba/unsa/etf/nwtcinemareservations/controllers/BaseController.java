@@ -40,12 +40,9 @@ public abstract class BaseController<M extends AbstractModel, S extends BaseServ
     }
 
     @Transactional
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public void delete(@RequestBody @Valid @ModelAttribute("M") final M model, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return;
-        }
-        service.delete(model);
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") Long id) {
+        service.delete(id);
     }
 
 }

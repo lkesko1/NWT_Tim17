@@ -33,7 +33,7 @@ class App extends Component {
     if (token) {
       axios.defaults.headers['Authorization'] = token;
     }
-    console.log('axios defaults', axios.defaults)
+    // console.log('axios defaults', axios.defaults)
   }
 
   render() {

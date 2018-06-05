@@ -9,36 +9,10 @@ import {
 } from "semantic-ui-react";
 import _ from "lodash";
 import axios from "axios";
-import { projectionsEndpoint } from "../../endpoints";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export class ProjectionModal extends Component {
-  saveProjection() {
-    const {
-      selectedMovieId,
-      hideProjectionModal,
-      selectedDate,
-      numberOfTickets,
-    } = this.props;
-
-    axios
-      .post(projectionsEndpoint + "/create", {
-        movieID: selectedMovieId,
-        createdBy: 1,
-        date: selectedDate,
-        actualTickets: numberOfTickets,
-        maxTickets: numberOfTickets
-      })
-      .then(response => {
-        console.log(response);
-        hideProjectionModal();
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
   render() {
     const {
       projectionModalVisible,
@@ -47,10 +21,10 @@ export class ProjectionModal extends Component {
       updateForm,
       selectedMovieId,
       selectedDate,
-      handleChange
+      handleChange,
+      saveProjection
     } = this.props;
 
-    console.log(this.props)
 
     const movieNames = _.map(movies, movie => {
       return {
@@ -95,9 +69,9 @@ export class ProjectionModal extends Component {
                   type="number"
                   min={1}
                   max={1000}
-                  defaultValue={100}
+                  defaultValue={this.props.numberOfTickets}
                   onChange={e => {
-                    updateForm(e, "tickets", e.target.value);
+                    updateForm(e, "numberOfTickets", e.target.value);
                   }}
                 />
               </Form.Field>
@@ -116,7 +90,7 @@ export class ProjectionModal extends Component {
               icon="checkmark"
               labelPosition="right"
               content="Send"
-              onClick={this.saveProjection.bind(this)}
+              onClick={saveProjection}
             />
           </Modal.Actions>
         </Modal>
