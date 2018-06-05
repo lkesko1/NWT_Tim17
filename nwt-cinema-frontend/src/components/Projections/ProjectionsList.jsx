@@ -7,7 +7,7 @@ import {
   List,
   Message,
   Label,
-  Dimmer, 
+  Dimmer,
   Loader
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
@@ -15,81 +15,17 @@ import { Link } from "react-router-dom";
 import { NewReservationModal } from "../Reservations/NewReservationModal";
 import { ProjectionModal } from "./ProjectionModal";
 import moment from "moment";
+import { projectionsEndpoint } from "../../endpoints";
+import axios from "axios";
 
 export default class ProjectionsList extends Component {
-  componentDidMount() {
-    this.setState({
-      reservationModalVisible: false,
-      tickets: 1,
-      projectionModalVisible: false,
-      selectedDate: moment()
-    });
-  }
-
   showReservationModal(id) {
-    if (localStorage.getItem("token")) {
-      this.setState({
-        reservationModalVisible: true,
-        selectedProjectionId: id,
-        error: null
-      });
-    } else {
-      this.props.redirect();
-    }
-  }
-
-  hideReservationModal() {
-    this.setState({
-      reservationModalVisible: false,
-      selectedProjectionId: null,
-      error: null
-    });
-  }
-
-  updateForm(e, key, value) {
-    console.log("key:", key, "value: ", value);
-
-    if (key == "projection") {
-      this.setState({ ...this.state, selectedProjectionId: value });
-    } else if (key == "tickets") {
-      this.setState({ ...this.state, tickets: value });
-    } else if (key === "movie") {
-      this.setState({ ...this.state, selectedMovieId: value });
-    } else if (key === "numberOfTickets") {
-      this.setState({ ...this.state, numberOfTickets: value });
-    }
-  }
-
-  handleChange(date) {
-    this.setState({
-      ...this.state,
-      selectedDate: date
-    });
-  }
-
-  hideProjectionModal() {
-    this.setState({
-      ...this.state,
-      projectionModalVisible: false,
-      error: null,
-      selectedMovieId: null,
-      numberOfTickets: 0
-    });
-  }
-
-  showProjectionModal() {
-    this.setState({
-      ...this.state,
-      projectionModalVisible: true,
-      selectedMovieId: this.props.movies[0].id,
-      numberOfTickets: 100
-    });
+    this.props.showReservationModal(id);
   }
 
   getContent() {
     const { projections } = this.props;
     let projectionsList = [];
-
     for (let currentProjection of projections) {
       const content = (
         <Segment key={currentProjection.projectionID} color="yellow">
@@ -186,22 +122,23 @@ export default class ProjectionsList extends Component {
     return (
       <div>
         <NewReservationModal
-          reservationModalVisible={this.state.reservationModalVisible}
-          hideReservationModal={this.hideReservationModal.bind(this)}
+          reservationModalVisible={this.props.reservationModalVisible}
+          hideReservationModal={this.props.hideReservationModal}
           projections={projections}
-          selectedProjectionId={this.state.selectedProjectionId}
-          updateForm={this.updateForm.bind(this)}
-          tickets={this.state.tickets}
+          selectedProjectionId={this.props.selectedProjectionId}
+          updateForm={this.props.updateForm}
+          tickets={this.props.tickets}
         />
         <ProjectionModal
-          projectionModalVisible={this.state.projectionModalVisible}
-          hideProjectionModal={this.hideProjectionModal.bind(this)}
+          projectionModalVisible={this.props.projectionModalVisible}
+          hideProjectionModal={this.props.hideProjectionModal}
           movies={movies}
-          selectedDate={this.state.selectedDate}
-          updateForm={this.updateForm.bind(this)}
-          numberOfTickets={this.state.numberOfTickets}
-          handleChange={this.handleChange.bind(this)}
-          selectedMovieId={this.state.selectedMovieId}
+          selectedDate={this.props.selectedDate}
+          updateForm={this.props.updateForm}
+          numberOfTickets={this.props.numberOfTickets}
+          handleChange={this.props.handleChange}
+          selectedMovieId={this.props.selectedMovieId}
+          saveProjection={this.props.saveProjection}
         />
         {isAdmin && (
           <Button
@@ -209,7 +146,7 @@ export default class ProjectionsList extends Component {
             labelPosition="right"
             icon="add"
             content="Add new projection"
-            onClick={this.showProjectionModal.bind(this)}
+            onClick={this.props.showProjectionModal}
           />
         )}
         {this.getContent()}
