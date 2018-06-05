@@ -3,7 +3,7 @@ import ProjectionsList from "./ProjectionsList";
 import { Grid, Segment } from "semantic-ui-react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { projectionsEndpoint, movieEndpoint } from "../../endpoints";
+import { projectionsEndpoint, movieEndpoint, reservationsEndpoint } from "../../endpoints";
 import moment from "moment";
 
 export default class ProjectionsScreen extends Component {

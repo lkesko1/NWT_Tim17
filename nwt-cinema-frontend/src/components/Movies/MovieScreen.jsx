@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import Movie from "./Movie";
 import { Grid } from "semantic-ui-react";
 import axios from "axios";
-import { movieEndpoint } from "../../endpoints";
+import { movieEndpoint, reviewEndpoint } from "../../endpoints";
 
 export default class MovieScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = { movie: null, error: null };
+    this.state = { movie: null, error: null, movieReviewText: "" };
   }
 
   updateForm(e, key, value) {
@@ -17,11 +17,15 @@ export default class MovieScreen extends Component {
   }
 
   componentDidMount() {
+    this.getMovie();
+  }
+
+  getMovie() {
     axios
       .get(movieEndpoint + "/" + this.props.match.params.id)
       .then(response => {
         const movie = response.data;
-        this.setState({ ...this.state, movie: movie });
+        this.setState({ ...this.state, movie: movie, movieReviewText: "" });
       })
       .catch(error => {
         this.setState({ ...this.state, error: error });
@@ -29,21 +33,25 @@ export default class MovieScreen extends Component {
   }
 
   addReview() {
-    // axios
-    //   .post(movieEndpoint + "/review/create", {
-    //     userId: localStorage.getItem("user"),
-    //     comment: this.state.movieReviewText,
-    //     movie: this.state.movie
-    //   })
-    //   .then(response => {
-    //     console.log(response);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    axios
+      .post(reviewEndpoint + "/create", {
+        comment: this.state.movieReviewText,
+        movieId: this.state.movie.id
+      })
+      .then(response => {
+        this.getMovie();
+        this.setState({...this.state, movieReviewText: ""});
+        console.log(this.state.movieReviewText);
+        
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({ ...this.state, error: error });
+      });
   }
 
   render() {
+    
     return (
       <div>
         <Grid>
@@ -55,7 +63,7 @@ export default class MovieScreen extends Component {
                 error={this.state.error}
                 updateForm={this.updateForm.bind(this)}
                 addReview={this.addReview.bind(this)}
-                movieReviewText={this.props.movieReviewText}
+                movieReviewText={this.state.movieReviewText}
               />
             </Grid.Column>
             <Grid.Column width={3} />

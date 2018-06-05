@@ -16,8 +16,8 @@ export default class MoviesList extends Component {
   getContent() {
     const { movies } = this.props;
     let moviesList = [];
-    console.log(movies);
 
+    console.log(movies);
     for (let currentMovie of movies) {
       const content = (
         <Segment color="yellow" key={currentMovie.id}>
@@ -35,7 +35,7 @@ export default class MoviesList extends Component {
                 </List>
               </Item.Description>
               <Item.Extra>
-                <Icon color="green" name="check" />  Reviews
+                <Icon color="green" name="check" /> {currentMovie.movieReviews.length}  Reviews
                 <Link to={`/movies/${currentMovie.id}`}>
 
                 <Button primary floated="right">
