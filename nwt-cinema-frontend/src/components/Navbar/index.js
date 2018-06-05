@@ -18,6 +18,7 @@ export default class Navbar extends Component {
       activeItem: "logout",
       redirect: true
     });
+    this.props.logged(false);
   }
 
   render() {

@@ -27,6 +27,7 @@ export default class ProjectionsList extends Component {
     const { projections } = this.props;
     let projectionsList = [];
     for (let currentProjection of projections) {
+      const availableTickets = currentProjection.maxTickets - currentProjection.actualTickets;
       const content = (
         <Segment key={currentProjection.projectionID} color="yellow">
           <Item.Group divided>
@@ -43,8 +44,7 @@ export default class ProjectionsList extends Component {
                     </List.Item>
                     <List.Item>
                       {" "}
-                      <b> Available tickets: </b>{" "}
-                      {currentProjection.actualTickets}{" "}
+                      <b> Available tickets: </b> {availableTickets}{" "}
                     </List.Item>
                     <List.Item>
                       {" "}
@@ -53,21 +53,35 @@ export default class ProjectionsList extends Component {
                   </List>
                 </Item.Description>
                 <Item.Extra>
-                  <Link to="/projections">
-                    <Button
-                      key={currentProjection.projectionID}
-                      className="positive ui button"
-                      primary
-                      floated="right"
-                      onClick={this.showReservationModal.bind(
-                        this,
-                        currentProjection.projectionID
-                      )}
-                    >
-                      Make a reservation
-                      <Icon name="right chevron" />
-                    </Button>
-                  </Link>
+                  {availableTickets > 0 ? (
+                    <Link to="/projections">
+                      <Button
+                        key={currentProjection.projectionID}
+                        className="positive ui button"
+                        primary
+                        floated="right"
+                        onClick={this.showReservationModal.bind(
+                          this,
+                          currentProjection.projectionID
+                        )}
+                      >
+                        Make a reservation
+                        <Icon name="right chevron" />
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link to="/projections">
+                      <Button
+                        key={currentProjection.projectionID}
+                        color="red"
+                        floated="right"
+                      >
+                        <Icon name="info" />
+                      
+                        No availableTickets
+                      </Button>
+                    </Link>
+                  )}
                   <Link to={"/projections/" + currentProjection.projectionID}>
                     <Button primary floated="right">
                       View more

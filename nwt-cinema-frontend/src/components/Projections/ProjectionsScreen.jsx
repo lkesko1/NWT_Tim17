@@ -64,7 +64,7 @@ export default class ProjectionsScreen extends Component {
         error: null
       });
     } else {
-      this.props.redirect();
+      this.redirect();
     }
   }
 
@@ -113,7 +113,6 @@ export default class ProjectionsScreen extends Component {
       });
   }
 
-  getMovies() {}
 
   componentDidMount() {
     this.setState({
