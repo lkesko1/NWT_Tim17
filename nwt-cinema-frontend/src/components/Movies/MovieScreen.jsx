@@ -39,10 +39,10 @@ export default class MovieScreen extends Component {
       .get(movieEndpoint + "/1")
       .then(response => {
         const movie = response.data;
-        this.setState({ movie: movie });
+        this.setState({ ...this.state, movie: movie });
       })
       .catch(error => {
-        this.setState({ error: error });
+        this.setState({ ...this.state, error: error });
       });
   }
 

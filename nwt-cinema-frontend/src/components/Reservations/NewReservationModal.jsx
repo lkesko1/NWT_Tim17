@@ -20,7 +20,6 @@ import moment from "moment";
 export class NewReservationModal extends Component {
   saveReservation() {
     const { selectedProjectionId, tickets, hideReservationModal } = this.props;
-
     axios
       .post(reservationsEndpoint + "/create", {
         numberOfTickets: tickets,

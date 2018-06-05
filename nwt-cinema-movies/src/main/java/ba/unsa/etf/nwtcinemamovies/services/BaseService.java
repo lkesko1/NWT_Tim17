@@ -23,5 +23,5 @@ public abstract class BaseService<M extends AbstractModel, R extends JpaReposito
 	public M update(M m) {
 		return repository.save(m);
 	}
-	public void delete(M m) { repository.delete(m); }
+	public void delete(Long id) { repository.deleteById(id); }
 }

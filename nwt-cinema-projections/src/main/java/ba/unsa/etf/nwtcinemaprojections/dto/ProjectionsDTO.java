@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemaprojections.models;
+package ba.unsa.etf.nwtcinemaprojections.dto;
 
 import java.util.Date;
 
