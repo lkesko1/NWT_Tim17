@@ -49,13 +49,10 @@ public class ReservationService extends BaseService<Reservation, IReservationRep
             }
             reservation.setDateCreated(new Date());
 
-            rabbitTemplate.convertAndSend(
-                    RabbitMQConfiguration.NWT_CINEMA_EXCHANGE,
-                    "reservations.created",
-                    String.format("reservations=%s", reservation.getNumberOfTickets()));
             return super.add(reservation);
         }
         catch (Exception exception) {
+            System.out.println("ADD RESERVATION Exception: ===> " + exception.getMessage());
             return null;
         }
     }

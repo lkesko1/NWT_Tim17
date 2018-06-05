@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
@@ -22,11 +23,7 @@ public abstract class BaseController<M extends AbstractModel, S extends BaseServ
 
     @Transactional
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public M create(@RequestBody final M model) {
-        // for now disable validation, first focus on functionality
-//        if (bindingResult.hasErrors()) {
-//            return model;
-//        }
+    public M create(@RequestBody final M model, Principal principal) {
         return (M)service.add(model);
     }
 

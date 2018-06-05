@@ -1,8 +1,10 @@
 package ba.unsa.etf.nwtcinemamovies.controllers;
 
 import ba.unsa.etf.nwtcinemamovies.models.MovieReview;
+import ba.unsa.etf.nwtcinemamovies.repositories.IUserAccountRepository;
 import ba.unsa.etf.nwtcinemamovies.services.MovieReviewService;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -12,18 +14,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping(value = "movieReviews", produces = "application/json")
 public class MovieReviewsController extends AbstractController<MovieReviewService> {
 
+	@Autowired
+	private IUserAccountRepository userAccountRepository;
+
 	@Transactional
 	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public ResponseEntity create(@RequestBody final MovieReview movieReview, BindingResult bindingResult) {
+	public ResponseEntity create(@RequestBody final MovieReview movieReview, BindingResult bindingResult, Principal principal) {
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(
 					JSONConverter.toJSON("Failed to create movie review for movie "
 							+ movieReview.getMovie().getImdbUrl()));
 		}
+		movieReview.setUserAccount(userAccountRepository.findUserAccountByUsername(principal.getName()));
 		return ResponseEntity.ok(service.add(movieReview));
 	}
 

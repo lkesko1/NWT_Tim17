@@ -1,4 +1,4 @@
-package ba.unsa.etf.nwtcinemamovies.models;
+package ba.unsa.etf.nwtcinemamovies.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

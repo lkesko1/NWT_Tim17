@@ -39,7 +39,6 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
     @Override
     public MovieTimetable add(MovieTimetable movieProjection) {
         try {
-            System.out.println(movieProjection);
             Long movieId = movieProjection.getMovieID();
             System.out.println(movieId);
             MovieDTO movieDTO = moviesClient.getMovie(movieId);
@@ -57,11 +56,6 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
         //            movieProjection.getActualTickets(),
         //            movieProjection.getMaxTickets()
         //    ));
-
-            // rabbitTemplate.convertAndSend(
-            //         RabbitMQConfiguration.NWT_CINEMA_EXCHANGE,
-            //         "movieProjections.created",
-            //         String.format("movieProjections=%s", movieProjection.getMovieID()));
 
             return super.add(movieProjection);
         }

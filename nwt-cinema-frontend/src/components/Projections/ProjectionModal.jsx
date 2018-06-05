@@ -23,7 +23,7 @@ export class ProjectionModal extends Component {
     } = this.props;
 
     axios
-      .post(projectionsEndpoint + "/movietimetable/create", {
+      .post(projectionsEndpoint + "/create", {
         movieID: selectedMovieId,
         createdBy: 1,
         date: selectedDate,
@@ -45,22 +45,22 @@ export class ProjectionModal extends Component {
       hideProjectionModal,
       movies,
       updateForm,
+      selectedMovieId,
       selectedDate,
       handleChange
     } = this.props;
 
-    let index = 0;
+    console.log(this.props)
 
     const movieNames = _.map(movies, movie => {
-      index = index + 1;
       return {
-        key: index,
-        value: index,
-        text: movie.Title
+        key: movie.id,
+        value: movie.id,
+        text: movie.title
       };
     });
 
-    let value = index;
+    const value = movieNames.length > 0 ? movieNames[0].key : 0;
     return (
       <div>
         <Modal
@@ -81,7 +81,7 @@ export class ProjectionModal extends Component {
                   search
                   selection
                   options={movieNames}
-                  value={value}
+                  default={value}
                   onChange={(e, { value }) => {
                     updateForm(e, "movie", value);
                   }}
