@@ -1,12 +1,8 @@
 package ba.unsa.etf.nwtcinemamovies.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.URL;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +25,9 @@ public class Movie extends AbstractModel {
 	private String director;
 	private String actors;
 	private String awards;
+	private String youtubeUrl;
 
-	public Movie( @URL(message = "The URL provided is not valid.") @NotNull(message = "Movie URL must be provided.") String imdbUrl, String title, Integer year, String genre, String director, String actors, String awards) {
+	public Movie(@URL(message = "The URL provided is not valid.") @NotNull(message = "Movie URL must be provided.") String imdbUrl, String title, Integer year, String genre, String director, String actors, String awards, String youtubeUrl) {
 		this.imdbUrl = imdbUrl;
 		this.title = title;
 		this.year = year;
@@ -38,7 +35,7 @@ public class Movie extends AbstractModel {
 		this.director = director;
 		this.actors = actors;
 		this.awards = awards;
-
+		this.youtubeUrl = youtubeUrl;
 	}
 
 	public String getName() {
@@ -101,11 +98,6 @@ public class Movie extends AbstractModel {
 		this.imdbUrl = imdbUrl;
 	}
 
-	public Movie(String imdbUrl, String name) {
-		this.imdbUrl = imdbUrl;
-		this.title = name;
-	}
-
 	public String getImdbUrl() {
 		return imdbUrl;
 	}
@@ -124,4 +116,11 @@ public class Movie extends AbstractModel {
 	}
 
 
+	public String getYoutubeUrl() {
+		return youtubeUrl;
+	}
+
+	public void setYoutubeUrl(String youtubeUrl) {
+		this.youtubeUrl = youtubeUrl;
+	}
 }

@@ -96,7 +96,7 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 		if(newMovie.getYear() == null ||  newMovie.getGenre() ==null || newMovie.getDirector() == null )
 			throw new IOException();
 
-		Movie mymovie = this.repository.save(new Movie( my_url, newMovie.getTitle(), newMovie.getYear(), newMovie.getGenre(), newMovie.getDirector(), newMovie.getActors(), newMovie.getAwards()));
+		Movie mymovie = this.repository.save(new Movie( my_url, newMovie.getTitle(), newMovie.getYear(), newMovie.getGenre(), newMovie.getDirector(), newMovie.getActors(), newMovie.getAwards(), ""));
 
 		return mymovie;
 		//Todo: rijesiti rating?!
