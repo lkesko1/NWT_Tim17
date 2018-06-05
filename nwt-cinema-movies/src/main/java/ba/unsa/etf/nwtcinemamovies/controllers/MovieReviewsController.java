@@ -69,7 +69,7 @@ public class MovieReviewsController extends AbstractController<MovieReviewServic
 
 	@Transactional
 	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity delete(@PathVariable("id") final Long id ) {
+	public void delete(@PathVariable("id") final Long id ) {
 		service.delete(id);
 	}
 }
