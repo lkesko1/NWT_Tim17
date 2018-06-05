@@ -8,14 +8,18 @@ import {
   Divider,
   Label,
   Dimmer,
-  Loader
+  Loader,
+  Button
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 export default class Projection extends Component {
   getMovieContent() {
-    const { movie, projection } = this.props;
+    const role = localStorage.getItem("role");
+    const isAdmin = role && role === "ROLE_ADMIN" ? true : false;
+    const { movie, projection, showRemovalModal } = this.props;
 
     const content = (
       <Segment color="yellow">
@@ -25,6 +29,17 @@ export default class Projection extends Component {
 
             <Item.Content>
               <Item.Header>{movie.title}</Item.Header>
+              {isAdmin && (
+                <Button
+                  circular
+                  size="mini"
+                  floated="right"
+                  color="red"
+                  icon="remove"
+                  content="Remove projection"
+                  onClick={this.props.showRemovalModal}
+                />
+              )}
               <Item.Description>
                 <List>
                   <List.Item>
@@ -50,15 +65,11 @@ export default class Projection extends Component {
               <Item.Extra>
                 <Label color="red">
                   {" "}
-                  Date: {moment(projection.date).format(
-                    "YYYY-MM-DD"
-                  )} 
+                  Date: {moment(projection.date).format("YYYY-MM-DD")}
                 </Label>
 
-                  <Label color="red">
-                  Time: {moment(projection.date).format(
-                    "HH:mm:ss"
-                  )}
+                <Label color="red">
+                  Time: {moment(projection.date).format("HH:mm:ss")}
                 </Label>
               </Item.Extra>
             </Item.Content>
@@ -72,9 +83,9 @@ export default class Projection extends Component {
   }
 
   render() {
-    const { movie, error } = this.props;
+    const { movie, error, projection } = this.props;
 
-    if (!movie && !error) {
+    if (!movie && !projection && !error) {
       return (
         <Dimmer active inverted>
           <Loader content="Loading" />
@@ -82,14 +93,19 @@ export default class Projection extends Component {
       );
     }
 
-    if (!movie || error) {
+    if (!movie || error || !projection) {
       return (
-        <Message negative size="huge">
-          <Message.Header>
-            <Icon name="remove circle" />
-            Sorry, we can't find movie!
-          </Message.Header>
-        </Message>
+        <div>
+          <Link to="/projections">
+            <Button primary icon="video camera" content="View all projections" />
+          </Link>
+          <Message negative size="huge">
+            <Message.Header>
+              <Icon name="remove circle" />
+              Sorry, we can't find movie!
+            </Message.Header>
+          </Message>
+        </div>
       );
     }
     return <div>{this.getMovieContent()}</div>;

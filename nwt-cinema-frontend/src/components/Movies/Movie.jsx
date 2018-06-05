@@ -13,11 +13,13 @@ import {
   Header,
   Form,
   Button,
+  Massage,
   Dimmer, 
   Loader
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import image from "../../images/DMOHA20140112005.jpg";
+import _ from "lodash";
 // import axios from "axios";
 // import {reviewEndpoint} from "../../endpoints";
 
@@ -28,22 +30,37 @@ export default class Movie extends Component {
     const { movie, updateForm, addReview } = this.props;
     // const reviews = [];
 
-    const ReviewContent = (
+    let reviews = [];
+    if (movie.movieReviews && movie.movieReviews.length > 0) {
+      for (let review of movie.movieReviews) {
+        reviews.push(
+          <Comment key="review.id">
+            <Comment.Avatar
+              src={require("../../images/user-avatar-grey.png")}
+            />
+            <Comment.Content>
+              <Comment.Author as="a">Matt</Comment.Author>
+              <Comment.Metadata>
+                <div>review.comment </div>
+                {/* TODO: dodati brisanje */}
+              </Comment.Metadata>
+              <Comment.Text>review.comment </Comment.Text>
+            </Comment.Content>
+          </Comment>
+        );
+      }
+    } else {
+      reviews.push(
+        <Message key="message-1" icon="write square" info content="Movie has no reviews" />
+      );
+    }
+
+    let ReviewContent = (
       <Comment.Group>
-        <Header as="h3" dividing>
+        <Header as="h4" dividing>
           Movie Reviews
         </Header>
-
-        <Comment>
-          <Comment.Avatar src={require("../../images/user-avatar-grey.png")} />
-          <Comment.Content>
-            <Comment.Author as="a">Matt</Comment.Author>
-            <Comment.Metadata>
-              <div>Today at 5:42PM</div>
-            </Comment.Metadata>
-            <Comment.Text>How artistic!</Comment.Text>
-          </Comment.Content>
-        </Comment>
+        {reviews}
 
         {localStorage.getItem("role") === "ROLE_USER" && (
           <Form reply>
@@ -54,6 +71,7 @@ export default class Movie extends Component {
             />
 
             <Button
+              positive
               content="Add review"
               labelPosition="left"
               icon="edit"
@@ -68,7 +86,7 @@ export default class Movie extends Component {
     const panels = [
       {
         title: {
-          content: <Label color="blue" content="Show movie reviews" />,
+          content: <Label color="blue" content="Movie reviews" />,
           key: "content-title"
         },
         content: {
@@ -78,6 +96,9 @@ export default class Movie extends Component {
       }
     ];
 
+    const youtubeId = _.split(movie.youtubeUrl,'?v=')[1];
+
+    
     const content = (
       <Segment color="yellow">
         <Item.Group divided>
@@ -114,7 +135,7 @@ export default class Movie extends Component {
         <Accordion size="large" panels={panels} />
         <Divider />
 
-        <Embed id="do9zep1n8cU" placeholder={image} source="youtube" />
+        <Embed id={youtubeId} placeholder={image} source="youtube" />
       </Segment>
     );
 

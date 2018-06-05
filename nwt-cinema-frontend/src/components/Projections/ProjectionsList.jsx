@@ -24,10 +24,23 @@ export default class ProjectionsList extends Component {
   }
 
   getContent() {
-    const { projections } = this.props;
+    const { projections,error } = this.props;
+
+    if (projections.length === 0 || error) {
+      return (
+          <Message negative size="huge">
+            <Message.Header>
+              <Icon name="remove circle" />
+              We're sorry we can't find projections in database!
+            </Message.Header>
+          </Message>
+      );
+    }
+
     let projectionsList = [];
     for (let currentProjection of projections) {
-      const availableTickets = currentProjection.maxTickets - currentProjection.actualTickets;
+      const availableTickets =
+        currentProjection.maxTickets - currentProjection.actualTickets;
       const content = (
         <Segment key={currentProjection.projectionID} color="yellow">
           <Item.Group divided>
@@ -77,7 +90,6 @@ export default class ProjectionsList extends Component {
                         floated="right"
                       >
                         <Icon name="info" />
-                      
                         No availableTickets
                       </Button>
                     </Link>
@@ -111,6 +123,9 @@ export default class ProjectionsList extends Component {
   render() {
     const { projections, error, movies } = this.props;
 
+    const role = localStorage.getItem("role");
+    const isAdmin = role && role === "ROLE_ADMIN" ? true : false;
+
     if (!projections && !error) {
       return (
         <Dimmer active inverted>
@@ -118,21 +133,7 @@ export default class ProjectionsList extends Component {
         </Dimmer>
       );
     }
-
-    if (projections.length === 0 || error) {
-      return (
-        <Message negative size="huge">
-          <Message.Header>
-            <Icon name="remove circle" />
-            We're sorry we can't find projections in database!
-          </Message.Header>
-        </Message>
-      );
-    }
-
-    const role = localStorage.getItem("role");
-    const isAdmin = role && role === "ROLE_ADMIN" ? true : false;
-
+  
     return (
       <div>
         <NewReservationModal
