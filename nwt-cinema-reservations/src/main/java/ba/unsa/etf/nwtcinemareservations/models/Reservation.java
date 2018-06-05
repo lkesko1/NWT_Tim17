@@ -1,18 +1,17 @@
 package ba.unsa.etf.nwtcinemareservations.models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import java.util.Date;
 
 @Entity
 public class Reservation extends AbstractModel{
 
-	@NotNull
-	@Min(1)
-	private Long userId;
+	@ManyToOne(targetEntity = UserAccount.class)
+	private UserAccount userAccount;
 
 	@NotNull
 	@Min(1)
@@ -25,14 +24,6 @@ public class Reservation extends AbstractModel{
 
 	@NotNull
 	private Date dateCreated;
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
 
 	public Long getMovieProjectionId() {
 		return movieProjectionId;
@@ -61,10 +52,18 @@ public class Reservation extends AbstractModel{
 	public Reservation() {
 	}
 
-	public Reservation(Long userId, Long movieProjectionId, Integer numberOfTickets, Date dateCreated) {
-		this.userId = userId;
+	public Reservation(UserAccount userAccount, Long movieProjectionId, Integer numberOfTickets, Date dateCreated) {
+		this.userAccount = userAccount;
 		this.movieProjectionId = movieProjectionId;
 		this.numberOfTickets = numberOfTickets;
 		this.dateCreated = dateCreated;
+	}
+
+	public UserAccount getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
 	}
 }

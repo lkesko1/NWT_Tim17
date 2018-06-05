@@ -1,8 +1,8 @@
 package ba.unsa.etf.nwtcinemamovies.services;
 
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
-import ba.unsa.etf.nwtcinemamovies.models.MovieDTO;
-import ba.unsa.etf.nwtcinemamovies.models.MovieListDTO;
+import ba.unsa.etf.nwtcinemamovies.dto.MovieDTO;
+import ba.unsa.etf.nwtcinemamovies.dto.MovieListDTO;
 import ba.unsa.etf.nwtcinemamovies.repositories.IMovieRepository;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
 import org.apache.http.HttpResponse;
