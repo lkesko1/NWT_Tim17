@@ -50,8 +50,8 @@ public class MoviesController extends AbstractController<MovieService> {
 	public ResponseEntity findById(@PathVariable("movieId") final Long movieId) {
 		try {
 			JSONConverter.configure();
-			return ResponseEntity.ok(service.fetchMovie(movieId));
-		} catch (java.io.IOException e) {
+			return ResponseEntity.ok(service.findById(movieId));
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(
 					JSONConverter.toJSON("Failed to fetch movie with given id " + movieId));
 		}
@@ -86,8 +86,8 @@ public class MoviesController extends AbstractController<MovieService> {
 	public ResponseEntity findAll() {
 		try {
 			JSONConverter.configure();
-			return ResponseEntity.ok(service.fetchAll());
-		} catch (ExecutionException | InterruptedException e) {
+			return ResponseEntity.ok(service.findAll());
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(JSONConverter.toJSON("Failed to fetch movies"));
 		}
 	}
