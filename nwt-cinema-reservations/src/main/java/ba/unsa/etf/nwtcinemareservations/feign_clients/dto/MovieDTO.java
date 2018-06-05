@@ -4,20 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import org.hibernate.validator.constraints.URL;
-
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieDTO {
 
@@ -27,32 +13,32 @@ public class MovieDTO {
         this.id = id;
     }
 
-    @JsonProperty("Title")
+    @JsonProperty("title")
     private String title;
 
-    @JsonProperty("Year")
+    @JsonProperty("year")
     private Integer year;
 
-    @JsonProperty("Genre")
+    @JsonProperty("genre")
     private String genre;
 
-    @JsonProperty("Director")
+    @JsonProperty("director")
     private String director;
 
-    @JsonProperty("Actors")
+    @JsonProperty("actors")
     private String actors;
 
-    @JsonProperty("Awards")
+    @JsonProperty("awards")
     private String awards;
 
 
-    public MovieDTO(String Title, Integer Year, String Genre, String Director, String Actors, String Awards) {
-        this.title = Title;
-        this.year = Year;
-        this.genre = Genre;
-        this.director = Director;
-        this.actors = Actors;
-        this.awards = Awards;
+    public MovieDTO(String title, Integer year, String genre, String director, String actors, String awards) {
+        this.title = title;
+        this.year = year;
+        this.genre = genre;
+        this.director = director;
+        this.actors = actors;
+        this.awards = awards;
     }
 
     public MovieDTO() {
@@ -115,5 +101,10 @@ public class MovieDTO {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return id + " " + title;
     }
 }

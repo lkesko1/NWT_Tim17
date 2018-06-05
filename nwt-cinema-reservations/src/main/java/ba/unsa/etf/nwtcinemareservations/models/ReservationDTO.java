@@ -13,7 +13,7 @@ public class ReservationDTO {
 
     private Long userId;
 
-    private String MovieName;
+    private String movieName;
 
     private Integer numberOfTickets;
 
@@ -28,7 +28,7 @@ public class ReservationDTO {
         this.projectionId = projectionId;
         this.movieId = movieId;
         this.userId = userId;
-        MovieName = movieName;
+        this.movieName = movieName;
         this.numberOfTickets = numberOfTickets;
         this.dateCreated = dateCreated;
     }
@@ -66,11 +66,11 @@ public class ReservationDTO {
     }
 
     public String getMovieName() {
-        return MovieName;
+        return movieName;
     }
 
     public void setMovieName(String movieName) {
-        MovieName = movieName;
+        this.movieName = movieName;
     }
 
     public Integer getNumberOfTickets() {

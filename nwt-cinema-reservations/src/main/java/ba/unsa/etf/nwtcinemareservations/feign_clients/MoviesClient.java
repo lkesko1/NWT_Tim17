@@ -11,6 +11,6 @@ import ba.unsa.etf.nwtcinemareservations.feign_clients.dto.MovieDTO;
 @FeignClient("nwt-cinema-movies")
 public interface MoviesClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "movies/movies/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "movies/{id}")
     MovieDTO getMovieDetails(@PathVariable("id") Long id);
 }

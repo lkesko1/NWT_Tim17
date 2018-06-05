@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import javax.transaction.Transactional;
 import java.security.Principal;
 
 @RestController
@@ -38,7 +36,7 @@ public class ReservationController extends BaseController<Reservation, Reservati
             return ResponseEntity.ok(service.getReservationsByUserIDwDetails(userID));
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
         }
     }
 }

@@ -1,6 +1,5 @@
 package ba.unsa.etf.nwtcinemareservations.services;
 
-import ba.unsa.etf.nwtcinemareservations.configuration.RabbitMQConfiguration;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.MovieProjectionsClient;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.MoviesClient;
 import ba.unsa.etf.nwtcinemareservations.feign_clients.dto.MovieDTO;
@@ -78,7 +77,7 @@ public class ReservationService extends BaseService<Reservation, IReservationRep
         List<Reservation> returnReservations = new ArrayList<>();
 
         for(Reservation res : all){
-            if(res.getUserId() == userID)
+            if(res.getUserAccount().getId().equals(userID))
                 returnReservations.add(res);
 
         }
@@ -91,14 +90,18 @@ public class ReservationService extends BaseService<Reservation, IReservationRep
 
         for(Reservation res : reservations) {
             MovieProjectionDTO movieProjectionDTO = movieProjectionsClient.getMovieProjection(res.getMovieProjectionId());
+            System.out.println(movieProjectionDTO.toString());
             MovieDTO movieDTO = moviesClient.getMovieDetails(movieProjectionDTO.getMovieID());
-            ReservationDTO reservation
-             = new ReservationDTO(res.getId(), res.getMovieProjectionId(),
-                    movieDTO.getId(),
-                    res.getUserId(), movieDTO.getTitle(), res.getNumberOfTickets(),res.getDateCreated());
-            usersReservation.add(reservation);
+            if (movieDTO != null) {
+                System.out.println(movieDTO.toString());
+                ReservationDTO reservation = new ReservationDTO(res.getId(), res.getMovieProjectionId(),
+                        movieDTO.getId(),
+                        res.getUserAccount().getId(), movieDTO.getTitle(), res.getNumberOfTickets(), res.getDateCreated());
 
+                usersReservation.add(reservation);
+            }
         }
+
         return usersReservation;
     }
 }

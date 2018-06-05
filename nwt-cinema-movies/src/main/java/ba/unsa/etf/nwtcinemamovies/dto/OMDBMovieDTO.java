@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MovieDTO {
+public class OMDBMovieDTO {
 
 
 	private Long id;
@@ -34,7 +34,7 @@ public class MovieDTO {
 	private String awards;
 
 
-	public MovieDTO(String title, Integer year, String genre, String director, String actors, String awards)
+	public OMDBMovieDTO(String title, Integer year, String genre, String director, String actors, String awards)
 	{
 		this.title = title;
 		this.year = year;
@@ -44,7 +44,7 @@ public class MovieDTO {
 		this.awards = awards;
 	}
 
-	public MovieDTO() {
+	public OMDBMovieDTO() {
 		//Default public CTOR
 	}
 
