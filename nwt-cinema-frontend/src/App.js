@@ -18,6 +18,7 @@ import SignUp from "./components/SignUp/SignUp";
 import axios from "axios";
 import createBrowserHistory from 'history/createBrowserHistory'
 import ReservationsScreen from "./components/Reservations/ReservationsScreen";
+import ReservationsProjectionScreen from "./components/Reservations/ReservationsProjectionScreen";
 
 const history = createBrowserHistory()
 export let currentUser;
@@ -54,6 +55,7 @@ class App extends Component {
               <Route exact path={"/login"} component={Login}/>
               <Route exact path={"/sign-up"} component={SignUp}/>
               <Route exact path={"/user-reservations/:id"} component={ReservationsScreen}/>
+              <Route exact path={"/projection-reservations/:id"} component={ReservationsProjectionScreen}/>
           </Content>
         </div>
       </Router>
