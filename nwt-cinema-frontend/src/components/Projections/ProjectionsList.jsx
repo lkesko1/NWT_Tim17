@@ -121,7 +121,7 @@ export default class ProjectionsList extends Component {
                       <Icon name="right chevron" />
                     </Button>
                   </Link>
-                  <Link to={"/projections/" + currentProjection.id}>
+                  <Link to={"/projections/" + currentProjection.projectionID}>
                     <Button primary floated="right">
                       View more
                       <Icon name="right chevron" />
