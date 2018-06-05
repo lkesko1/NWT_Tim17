@@ -1,5 +1,7 @@
 package ba.unsa.etf.nwtcinemamovies.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -21,6 +23,7 @@ public class MovieReview extends AbstractModel {
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Movie.class)
 	@NotNull
+	@JsonIgnore
 	private Movie movie;
 
 	public Integer getRate() {

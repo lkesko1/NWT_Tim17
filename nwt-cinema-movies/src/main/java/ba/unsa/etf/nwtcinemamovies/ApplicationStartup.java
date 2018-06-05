@@ -1,7 +1,6 @@
 package ba.unsa.etf.nwtcinemamovies;
 
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
-import ba.unsa.etf.nwtcinemamovies.models.MovieReview;
 import ba.unsa.etf.nwtcinemamovies.models.Role;
 import ba.unsa.etf.nwtcinemamovies.models.UserAccount;
 import ba.unsa.etf.nwtcinemamovies.repositories.IMovieRepository;
@@ -86,9 +85,9 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 //		movieService.add(new Movie("http://www.imdb.com/title/tt2250912/", "Spider-Man Homecoming"));
 
 
-		movieRepository.save(new Movie("http://www.imdb.com/title/tt2527336/", "Star Wars", 2017, "Action, Adventure, Fantasy", "Rian Johnson", "Mark Hamill, Carrie Fisher, Adam Driver, Daisy Ridley", "Nominated for 4 Oscars. Another 12 wins & 71 nominations."));
-		movieRepository.save(new Movie("http://www.omdbapi.com/?i=tt3501632&apikey=2d5ee0b5", "Thor: Ragnarok", 2017, "Action, Adventure, Comedy", "Taika Waititi" , "Chris Hemsworth, Tom Hiddleston, Cate Blanchett, Idris Elba", "5 wins & 30 nominations."));
-		movieRepository.save(new Movie("http://www.omdbapi.com/?i=tt2250912&apikey=2d5ee0b5","Spider-Man: Homecoming", 2017, "Action, Adventure, Sci-Fi", "Jon Watts", "Tom Holland, Michael Keaton, Robert Downey Jr., Marisa Tomei", "4 wins & 9 nominations." ));
+		movieRepository.save(new Movie("http://www.imdb.com/title/tt2527336/", "Star Wars", 2017, "Action, Adventure, Fantasy", "Rian Johnson", "Mark Hamill, Carrie Fisher, Adam Driver, Daisy Ridley", "Nominated for 4 Oscars. Another 12 wins & 71 nominations.", "https://www.youtube.com/watch?v=jPEYpryMp2s"));
+		movieRepository.save(new Movie("http://www.omdbapi.com/?i=tt3501632&apikey=2d5ee0b5", "Thor: Ragnarok", 2017, "Action, Adventure, Comedy", "Taika Waititi" , "Chris Hemsworth, Tom Hiddleston, Cate Blanchett, Idris Elba", "5 wins & 30 nominations.", "https://www.youtube.com/watch?v=ue80QwXMRHg"));
+		movieRepository.save(new Movie("http://www.omdbapi.com/?i=tt2250912&apikey=2d5ee0b5","Spider-Man: Homecoming", 2017, "Action, Adventure, Sci-Fi", "Jon Watts", "Tom Holland, Michael Keaton, Robert Downey Jr., Marisa Tomei", "4 wins & 9 nominations.", "https://www.youtube.com/watch?v=V7h01x1oiQs"));
 
 	}
 }
