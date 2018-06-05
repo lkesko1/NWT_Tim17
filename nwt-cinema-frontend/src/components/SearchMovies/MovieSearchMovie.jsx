@@ -7,7 +7,9 @@ import {
     Message,
     Embed,
     Divider,
-    Button
+    Button,
+    Dimmer,
+    Loader
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import image from "../../images/DMOHA20140112005.jpg"
@@ -74,7 +76,15 @@ export default class MovieSearchMovie extends Component {
     }
 
     render() {
-        const { movie } = this.props;
+        const { movie, error } = this.props;
+
+        if (!movie && !error){
+            return (
+                <Dimmer active inverted>
+                  <Loader content="Loading" />
+                </Dimmer>
+              );
+        }
 
         if (!movie) {
             return (

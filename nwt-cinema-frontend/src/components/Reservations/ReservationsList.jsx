@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import {
   Item,
   Icon,
-  Button,
   Segment,
   List,
   Message
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
-import { Link } from "react-router-dom";
 
 export class ReservationsList extends Component {
   getContent() {

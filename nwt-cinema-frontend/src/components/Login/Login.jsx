@@ -5,7 +5,9 @@ import {
   Grid,
   Header,
   Message,
-  Segment
+  Segment,
+  Loader,
+  Dimmer
 } from "semantic-ui-react";
 import axios from "axios";
 import { authEndpoint } from "../../endpoints";
@@ -32,6 +34,11 @@ export default class Login extends Component {
     });
   }
 
+  log(event) {
+    this.setState({ ...this.state, loading: true });
+    this.login(event);
+  }
+
   login(event) {
     const data = {
       username: this.state.username,
@@ -45,22 +52,30 @@ export default class Login extends Component {
         localStorage.setItem("role", response.headers["role"]);
         // localStorage.setItem("user", response.headers["user"]);
 
-        console.log(response);
         axios.defaults.headers["Authorization"] =
           response.headers["authorization"];
         this.setState({ authenticated: true });
         console.log("Logged in");
         this.setState({
           ...this.state,
-          loggedin: true
+          loggedin: true,
+          loading: false
         });
       })
       .catch(function(error) {
         console.log(error);
+        this.setState({ ...this.state, loading: false, error: error });
       });
   }
 
   render() {
+    if (this.state.loading) {
+      return (
+        <Dimmer active inverted>
+          <Loader content="Loading" />
+        </Dimmer>
+      );
+    }
     if (this.state.loggedin) {
       return <Redirect to="/" />;
     }
@@ -109,7 +124,7 @@ export default class Login extends Component {
                   color="green"
                   fluid
                   size="large"
-                  onClick={event => this.login(event)}
+                  onClick={event => this.log(event)}
                 >
                   Login
                 </Button>

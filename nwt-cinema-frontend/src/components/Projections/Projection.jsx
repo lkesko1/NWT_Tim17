@@ -85,7 +85,7 @@ export default class Projection extends Component {
   render() {
     const { movie, error, projection } = this.props;
 
-    if (!movie && !projection && !error) {
+    if (!projection && !error) {
       return (
         <Dimmer active inverted>
           <Loader content="Loading" />

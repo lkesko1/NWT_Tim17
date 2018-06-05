@@ -4,7 +4,6 @@ import axios from "axios";
 import { projectionsEndpoint } from "../../endpoints";
 import Projection from "./Projection";
 import { RemovalModal } from "./RemovalModal";
-import moment from "moment";
 
 export default class ProjectionScreen extends Component {
   constructor(props) {

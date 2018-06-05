@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { ReservationsList }  from "./ReservationsList";
-import { Grid, Button, Divider } from "semantic-ui-react";
+import { Grid, Divider } from "semantic-ui-react";
 import axios from "axios";
 import { reservationsEndpoint } from "../../endpoints";
-import { Link } from "react-router-dom";
 
 export default class ReservationsScreen extends Component {
   constructor(props) {
