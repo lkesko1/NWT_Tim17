@@ -16,7 +16,6 @@ public class Movie extends AbstractModel {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", targetEntity = MovieReview.class,
 			cascade = CascadeType.ALL, orphanRemoval = true)
-
 	@JsonIgnore
 	private List<MovieReview> movieReviews = new ArrayList<>();
 
