@@ -1,5 +1,6 @@
 package ba.unsa.etf.nwtcinemamovies.services;
 
+import ba.unsa.etf.nwtcinemamovies.dto.OMDBMovieDTO;
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
 import ba.unsa.etf.nwtcinemamovies.dto.MovieDTO;
 import ba.unsa.etf.nwtcinemamovies.dto.MovieListDTO;
@@ -94,7 +95,7 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 	public Movie addNewMovie(String imdbID) throws IOException{
 		String my_url = "http://www.omdbapi.com/?i="+imdbID+"&apikey=2d5ee0b5";
 		HttpResponse response = client.execute((new HttpGet(my_url)));
-		MovieDTO newMovie = readResponse(response);
+		OMDBMovieDTO newMovie = readOMDBResponse(response);
 		if(newMovie.getYear() == null ||  newMovie.getGenre() ==null || newMovie.getDirector() == null )
 			throw new IOException();
 
@@ -104,13 +105,16 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 		//Todo: rijesiti rating?!
 	}
 
-	public MovieDTO fetchMovieByIMDBId(String imdbID) throws IOException{
+	public OMDBMovieDTO fetchMovieByIMDBId(String imdbID) throws IOException{
 		String my_url = "http://www.omdbapi.com/?i="+imdbID+"&apikey=2d5ee0b5";
 		HttpResponse response = client.execute((new HttpGet(my_url)));
-		MovieDTO newMovie = readResponse(response);
+		OMDBMovieDTO omdbMovieDTO = readOMDBResponse(response);
+		omdbMovieDTO.setImdbID(imdbID);
+		return omdbMovieDTO;
 
-		return newMovie;
 	}
+
+
 
 	/**
 	 * Fetches multiple movies asynchronously via futures
@@ -151,6 +155,13 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 	private MovieDTO readResponse(HttpResponse response) throws IOException {
 		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 			return JSONConverter.fromJSON(response.getEntity().getContent(), MovieDTO.class);
+		}
+		return null;
+	}
+
+	private OMDBMovieDTO readOMDBResponse(HttpResponse response) throws IOException {
+		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+			return JSONConverter.fromJSON(response.getEntity().getContent(), OMDBMovieDTO.class);
 		}
 		return null;
 	}

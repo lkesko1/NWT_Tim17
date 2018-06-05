@@ -62,7 +62,7 @@ public class ReservationService extends BaseService<Reservation, IReservationRep
         List<Reservation> returnReservations = new ArrayList<>();
 
         for(Reservation res : all){
-            if(res.getMovieProjectionId() == movieProjectionID)
+            if(res.getMovieProjectionId().equals(movieProjectionID))
                 returnReservations.add(res);
 
         }

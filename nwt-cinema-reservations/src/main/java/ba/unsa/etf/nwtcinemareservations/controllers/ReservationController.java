@@ -31,9 +31,20 @@ public class ReservationController extends BaseController<Reservation, Reservati
     }
     @Transactional(readOnly = true)
     @RequestMapping(value = "/get-reservations/{userID}", method = RequestMethod.GET)
-    public ResponseEntity fetchByName(@PathVariable("userID") final Long userID) {
+    public ResponseEntity fetchByUser(@PathVariable("userID") final Long userID) {
         try {
             return ResponseEntity.ok(service.getReservationsByUserIDwDetails(userID));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
+        }
+    }
+
+    @Transactional(readOnly = true)
+    @RequestMapping(value = "/get-reservations-proj/{projID}", method = RequestMethod.GET)
+    public ResponseEntity fetchByProjection(@PathVariable("projID") final Long projID) {
+        try {
+            return ResponseEntity.ok(service.getReservationsByProjectionID(projID));
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());

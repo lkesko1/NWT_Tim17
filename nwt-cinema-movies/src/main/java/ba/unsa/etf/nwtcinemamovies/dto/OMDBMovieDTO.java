@@ -15,33 +15,35 @@ public class OMDBMovieDTO {
 
 	private List<MovieReview> reviews;
 
-	@JsonProperty("title")
+	@JsonProperty("Title")
 	private String title;
 
-	@JsonProperty("year")
+	@JsonProperty("Year")
 	private Integer year;
 
-	@JsonProperty("genre")
+	@JsonProperty("Genre")
 	private String genre;
 
-	@JsonProperty("director")
+	@JsonProperty("Director")
 	private String director;
 
-	@JsonProperty("actors")
+	@JsonProperty("Actors")
 	private String actors;
 
-	@JsonProperty("awards")
+	@JsonProperty("Awards")
 	private String awards;
 
+	private String imdbID;
 
-	public OMDBMovieDTO(String title, Integer year, String genre, String director, String actors, String awards)
+
+	public OMDBMovieDTO(String Title, Integer Year, String Genre, String Director, String Actors, String Awards)
 	{
-		this.title = title;
-		this.year = year;
-		this.genre = genre;
-		this.director = director;
-		this.actors = actors;
-		this.awards = awards;
+		this.title = Title;
+		this.year = Year;
+		this.genre = Genre;
+		this.director = Director;
+		this.actors = Actors;
+		this.awards = Awards;
 	}
 
 	public OMDBMovieDTO() {
@@ -122,5 +124,13 @@ public class OMDBMovieDTO {
 	@Override
 	public String toString() {
 		return id + " " + title;
+	}
+
+	public String getImdbID() {
+		return imdbID;
+	}
+
+	public void setImdbID(String imdbID) {
+		this.imdbID = imdbID;
 	}
 }
