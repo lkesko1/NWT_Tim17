@@ -1,8 +1,8 @@
 package ba.unsa.etf.nwtcinemamovies.services;
 
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
-import ba.unsa.etf.nwtcinemamovies.models.MovieDTO;
-import ba.unsa.etf.nwtcinemamovies.models.MovieListDTO;
+import ba.unsa.etf.nwtcinemamovies.dto.MovieDTO;
+import ba.unsa.etf.nwtcinemamovies.dto.MovieListDTO;
 import ba.unsa.etf.nwtcinemamovies.repositories.IMovieRepository;
 import ba.unsa.etf.nwtcinemamovies.utils.JSONConverter;
 import org.apache.http.HttpResponse;
@@ -96,7 +96,7 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 		if(newMovie.getYear() == null ||  newMovie.getGenre() ==null || newMovie.getDirector() == null )
 			throw new IOException();
 
-		Movie mymovie = this.repository.save(new Movie( my_url, newMovie.getTitle(), newMovie.getYear(), newMovie.getGenre(), newMovie.getDirector(), newMovie.getActors(), newMovie.getAwards()));
+		Movie mymovie = this.repository.save(new Movie( my_url, newMovie.getTitle(), newMovie.getYear(), newMovie.getGenre(), newMovie.getDirector(), newMovie.getActors(), newMovie.getAwards(), ""));
 
 		return mymovie;
 		//Todo: rijesiti rating?!

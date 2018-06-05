@@ -5,7 +5,9 @@ import {
   Button,
   Segment,
   List,
-  Message
+  Message,
+  Dimmer,
+  Loader
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import { Link } from "react-router-dom";
@@ -24,17 +26,18 @@ export default class MoviesList extends Component {
             <Item.Image  style={{marginTop: 20}} size="small" src={logo} />
 
             <Item.Content>
-              <Item.Header >{currentMovie.Title}</Item.Header>
+              <Item.Header >{currentMovie.title}</Item.Header>
               <Item.Description>
                 <List>
-                  <List.Item> <b> Year: </b> {currentMovie.Year} </List.Item>
-                  <List.Item> <b> Genre: </b> {currentMovie.Genre} </List.Item>
-                  <List.Item> <b> Actors: </b>{currentMovie.Actors} </List.Item>
+                  <List.Item> <b> Year: </b> {currentMovie.year} </List.Item>
+                  <List.Item> <b> Genre: </b> {currentMovie.genre} </List.Item>
+                  <List.Item> <b> Actors: </b>{currentMovie.actors} </List.Item>
                 </List>
               </Item.Description>
               <Item.Extra>
-                <Icon color="green" name="check" /> {currentMovie.Ratings.length} Reviews
+                <Icon color="green" name="check" />  Reviews
                 <Link to={`/movies/${currentMovie.id}`}>
+
                 <Button primary floated="right">
                   View more
                   <Icon name="right chevron" />
@@ -55,6 +58,14 @@ export default class MoviesList extends Component {
 
   render() {
     const { movies, error } = this.props;
+
+    if (!movies && !error) {
+      return (
+        <Dimmer active inverted>
+          <Loader content="Loading" />
+        </Dimmer>
+      );
+    }
 
     if (!movies || movies.length === 0 || error) {
       return (

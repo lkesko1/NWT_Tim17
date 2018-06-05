@@ -16,38 +16,34 @@ export default class MovieScreen extends Component {
     }
   }
 
-  addReview() {}
-
-  componentWillMount() {
+  componentDidMount() {
     axios
       .get(movieEndpoint + "/" + this.props.match.params.id)
       .then(response => {
         const movie = response.data;
-        this.setState({ movie: movie });
+        this.setState({ ...this.state, movie: movie });
       })
       .catch(error => {
-        this.setState({ error: error });
+        this.setState({ ...this.state, error: error });
       });
   }
 
   addReview() {
-    axios
-      .post(movieEndpoint + "/review/create", {
-        userId: localStorage.getItem("user"),
-        comment: this.state.movieReviewText,
-        movie: this.state.movie
-      })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // axios
+    //   .post(movieEndpoint + "/review/create", {
+    //     userId: localStorage.getItem("user"),
+    //     comment: this.state.movieReviewText,
+    //     movie: this.state.movie
+    //   })
+    //   .then(response => {
+    //     console.log(response);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   }
 
   render() {
-    console.log(this.state.movie);
-
     return (
       <div>
         <Grid>

@@ -6,11 +6,10 @@ import ba.unsa.etf.nwtcinemaprojections.dto.OMDBMovie;
 import ba.unsa.etf.nwtcinemaprojections.feign_clients.MoviesClient;
 import ba.unsa.etf.nwtcinemaprojections.feign_clients.dto.MovieDTO;
 import ba.unsa.etf.nwtcinemaprojections.models.MovieTimetable;
-import ba.unsa.etf.nwtcinemaprojections.models.ProjectionsDTO;
+import ba.unsa.etf.nwtcinemaprojections.dto.ProjectionsDTO;
 import ba.unsa.etf.nwtcinemaprojections.repositories.IMovieTimetableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.expression.spel.ast.Projection;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,7 +38,6 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
     @Override
     public MovieTimetable add(MovieTimetable movieProjection) {
         try {
-            System.out.println(movieProjection);
             Long movieId = movieProjection.getMovieID();
             System.out.println(movieId);
             MovieDTO movieDTO = moviesClient.getMovie(movieId);
@@ -57,11 +55,6 @@ public class MovieTimetableService extends BaseService<MovieTimetable, IMovieTim
         //            movieProjection.getActualTickets(),
         //            movieProjection.getMaxTickets()
         //    ));
-
-            // rabbitTemplate.convertAndSend(
-            //         RabbitMQConfiguration.NWT_CINEMA_EXCHANGE,
-            //         "movieProjections.created",
-            //         String.format("movieProjections=%s", movieProjection.getMovieID()));
 
             return super.add(movieProjection);
         }

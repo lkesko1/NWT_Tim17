@@ -8,32 +8,31 @@ import { Link } from "react-router-dom";
 export default class MoviesScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = { movies: [], error: null };
+    this.state = { movies: null, error: null };
   }
 
-  componentDidMount() {
-
+  componentWillMount() {
     axios
       .get(movieEndpoint + "/findAll")
       .then(response => {
         const movies = response.data;
-        this.setState({ movies: movies });
+        this.setState({ ...this.state, movies: movies });
       })
       .catch(error => {
-        this.setState({ error: error });
+        this.setState({ ...this.state, error: error, movies: []});
       });
   }
 
   render() {
-    const role = localStorage.getItem("role")
+    const role = localStorage.getItem("role");
     const { movies, error } = this.state;
-
     return (
       <div>
         <Grid>
           <Grid.Row>
             <Grid.Column width={3} />
             <Grid.Column width={10}>
+              <h3> Cinema movies </h3>
               {role === "ROLE_ADMIN" && (
                 <div>
                   <Link to="/search">

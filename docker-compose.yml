@@ -35,7 +35,7 @@ services:
     networks:
       - app
 
-  auth:
+  nwt-cinema-auth:
     build: ./nwt-cinema-auth
     container_name: auth_container
     environment:
@@ -49,7 +49,7 @@ services:
     networks:
       - app
 
-  movies:
+  nwt-cinema-movies:
     build: ./nwt-cinema-movies
     container_name: movies_container
     environment:
@@ -58,13 +58,13 @@ services:
       - database
       - eureka-server
       - rabbitmq
-      - auth
+      - nwt-cinema-auth
     ports:
       - 8030:8030
     networks:
       - app
 
-  projections:
+  nwt-cinema-projections:
     build: ./nwt-cinema-projections
     container_name: projections_container
     environment:
@@ -73,13 +73,13 @@ services:
       - database
       - eureka-server
       - rabbitmq
-      - auth
+      - nwt-cinema-auth
     ports:
       - 8040:8040
     networks:
       - app
 
-  reservations:
+  nwt-cinema-reservations:
     build: ./nwt-cinema-reservations
     container_name: reservations_container
     environment:
@@ -88,7 +88,7 @@ services:
       - database
       - eureka-server
       - rabbitmq
-      - auth
+      - nwt-cinema-auth
     ports:
       - 8050:8050
     networks:
@@ -100,10 +100,10 @@ services:
     container_name: api_gateway_container
     depends_on:
       - eureka-server
-      - projections
-      - movies
-      - reservations
-      - auth
+      - nwt-cinema-projections
+      - nwt-cinema-movies
+      - nwt-cinema-reservations
+      - nwt-cinema-auth
     ports:
       - 8080:8080
     networks:

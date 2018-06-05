@@ -1,12 +1,8 @@
 package ba.unsa.etf.nwtcinemamovies.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.URL;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +12,6 @@ public class Movie extends AbstractModel {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", targetEntity = MovieReview.class,
 			cascade = CascadeType.ALL, orphanRemoval = true)
-
-	@JsonIgnore
 	private List<MovieReview> movieReviews = new ArrayList<>();
 
 	@URL(message = "The URL provided is not valid.")
@@ -31,9 +25,9 @@ public class Movie extends AbstractModel {
 	private String director;
 	private String actors;
 	private String awards;
-	//private List<Rating> ratings;
+	private String youtubeUrl;
 
-	public Movie( @URL(message = "The URL provided is not valid.") @NotNull(message = "Movie URL must be provided.") String imdbUrl, String title, Integer year, String genre, String director, String actors, String awards) {
+	public Movie(@URL(message = "The URL provided is not valid.") @NotNull(message = "Movie URL must be provided.") String imdbUrl, String title, Integer year, String genre, String director, String actors, String awards, String youtubeUrl) {
 		this.imdbUrl = imdbUrl;
 		this.title = title;
 		this.year = year;
@@ -41,7 +35,7 @@ public class Movie extends AbstractModel {
 		this.director = director;
 		this.actors = actors;
 		this.awards = awards;
-
+		this.youtubeUrl = youtubeUrl;
 	}
 
 	public String getName() {
@@ -92,14 +86,6 @@ public class Movie extends AbstractModel {
 		this.awards = awards;
 	}
 
-//	public List<Rating> getRatings() {
-//		return ratings;
-//	}
-//
-//	public void setRatings(List<Rating> ratings) {
-//		this.ratings = ratings;
-//	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -108,20 +94,8 @@ public class Movie extends AbstractModel {
 		this.title = title;
 	}
 
-
-	private class Rating {
-		private String source;
-		private String value;
-	}
-
-
 	public Movie(String imdbUrl) {
 		this.imdbUrl = imdbUrl;
-	}
-
-	public Movie(String imdbUrl, String name) {
-		this.imdbUrl = imdbUrl;
-		this.title = name;
 	}
 
 	public String getImdbUrl() {
@@ -142,4 +116,11 @@ public class Movie extends AbstractModel {
 	}
 
 
+	public String getYoutubeUrl() {
+		return youtubeUrl;
+	}
+
+	public void setYoutubeUrl(String youtubeUrl) {
+		this.youtubeUrl = youtubeUrl;
+	}
 }

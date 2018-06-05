@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Optional;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
@@ -18,15 +19,11 @@ public abstract class BaseController<M extends AbstractModel, S extends BaseServ
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private S service;
+    protected S service;
 
     @Transactional
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public M create(@RequestBody final M model) {
-        // for now disable validation, first focus on functionality
-//        if (bindingResult.hasErrors()) {
-//            return model;
-//        }
+    public M create(@RequestBody final M model, Principal principal) {
         return (M)service.add(model);
     }
 
@@ -43,12 +40,9 @@ public abstract class BaseController<M extends AbstractModel, S extends BaseServ
     }
 
     @Transactional
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public void delete(@RequestBody @Valid @ModelAttribute("M") final M model, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return;
-        }
-        service.delete(model);
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") Long id) {
+        service.delete(id);
     }
 
 }

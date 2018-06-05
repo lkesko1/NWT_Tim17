@@ -31,23 +31,20 @@ public class ReservationService extends BaseService<Reservation, IReservationRep
             movieProjectionDTO = movieProjectionsClient.getMovieProjection(reservation.getMovieProjectionId());
 
             if (movieProjectionDTO.getActualTickets() + reservation.getNumberOfTickets() > movieProjectionDTO.getMaxTickets()) {
-                throw new Exception("There is no enough seats available!");
+                throw new Exception("There is no enough seats available!1");
             }
             ResponseEntity response = movieProjectionsClient.reserveTickets(new TicketReservationDTO(
                 movieProjectionDTO.getId(), reservation.getNumberOfTickets()
             ));
             if (response.getStatusCode() != HttpStatus.CREATED) {
-                throw new Exception("There is no enough seats available!");
+                throw new Exception("There is no enough seats available!2");
             }
             reservation.setDateCreated(new Date());
 
-            rabbitTemplate.convertAndSend(
-                    RabbitMQConfiguration.NWT_CINEMA_EXCHANGE,
-                    "reservations.created",
-                    String.format("reservations=%s", reservation.getNumberOfTickets()));
             return super.add(reservation);
         }
         catch (Exception exception) {
+            System.out.println("ADD RESERVATION Exception: ===> " + exception.getMessage());
             return null;
         }
     }

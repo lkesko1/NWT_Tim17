@@ -4,6 +4,7 @@ import axios from "axios";
 import { projectionsEndpoint } from "../../endpoints";
 import Projection from "./Projection";
 import { RemovalModal } from "./RemovalModal";
+import moment from "moment";
 
 export default class ProjectionScreen extends Component {
   constructor(props) {
@@ -30,24 +31,60 @@ export default class ProjectionScreen extends Component {
   }
 
   removeMovie() {
-    this.hideRemovalModal();
-    console.log("delete movie");
-  }
-
-  componentWillMount() {
     axios
-      .get(projectionsEndpoint + "/get-details/" + this.props.match.params.id)
+      .delete(projectionsEndpoint + "/delete/" + this.props.match.params.id)
       .then(response => {
-        const movie = response.data;
-        this.setState({ movie: movie });
+        this.hideRemovalModal();
+        this.setState({ ...this.state, projection: null });
       })
       .catch(error => {
-        this.setState({ error: error });
+        this.setState({ ...this.state, error: error });
+      });
+  }
+
+  // componentWillMount() {
+  //   axios
+  //     .get(projectionsEndpoint + "/get-details/" + this.props.match.params.id)
+  //     .then(response => {
+  //       const movie = response.data;
+  //       this.setState({ movie: movie });
+  //     })
+  //     .catch(error => {
+  //       this.setState({ error: error });
+  //     });
+  // }
+
+  componentDidMount() {
+    this.getProjection();
+  }
+
+  getProjection() {
+    axios
+      .get(projectionsEndpoint + "/" + this.props.match.params.id)
+      .then(response => {
+        const projection = response.data;
+        this.setState({ ...this.state, projection: projection });
+        axios
+          .get(
+            projectionsEndpoint +
+              "/get-details/" +
+              this.state.projection.movieID
+          )
+          .then(response => {
+            let movie = response.data;
+            this.setState({ ...this.state, movie: movie });
+          })
+          .catch(error => {
+            this.setState({ ...this.state, error: error });
+          });
+      })
+      .catch(error => {
+        this.setState({ ...this.state, error: error });
       });
   }
 
   render() {
-    const { movie, error } = this.state;
+    const { movie, error, projection } = this.state;
 
     return (
       <div>
@@ -56,6 +93,7 @@ export default class ProjectionScreen extends Component {
           hideRemovalModal={this.hideRemovalModal.bind(this)}
           removeMovie={this.removeMovie.bind(this)}
         />
+
         <Grid>
           <Grid.Row>
             <Grid.Column width={3} />
@@ -63,6 +101,7 @@ export default class ProjectionScreen extends Component {
               <Projection
                 movie={movie}
                 error={error}
+                projection={projection}
                 showRemovalModal={this.showRemovalModal.bind(this)}
               />
             </Grid.Column>

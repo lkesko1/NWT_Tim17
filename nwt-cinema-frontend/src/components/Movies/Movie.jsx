@@ -13,21 +13,26 @@ import {
   Header,
   Form,
   Button,
-  Massage
+  Massage,
+  Dimmer, 
+  Loader
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import image from "../../images/DMOHA20140112005.jpg";
+import _ from "lodash";
 // import axios from "axios";
 // import {reviewEndpoint} from "../../endpoints";
 
 export default class Movie extends Component {
+
+
   getMovieContent() {
     const { movie, updateForm, addReview } = this.props;
     // const reviews = [];
 
     let reviews = [];
-    if (movie.reviews) {
-      for (let review of movie.reviews) {
+    if (movie.movieReviews && movie.movieReviews.length > 0) {
+      for (let review of movie.movieReviews) {
         reviews.push(
           <Comment key="review.id">
             <Comment.Avatar
@@ -39,7 +44,7 @@ export default class Movie extends Component {
                 <div>review.comment </div>
                 {/* TODO: dodati brisanje */}
               </Comment.Metadata>
-              <Comment.Text>How artistic!</Comment.Text>
+              <Comment.Text>review.comment </Comment.Text>
             </Comment.Content>
           </Comment>
         );
@@ -71,7 +76,7 @@ export default class Movie extends Component {
               labelPosition="left"
               icon="edit"
               primary
-              onClick={addReview}
+              onClick={this.props.addReview}
             />
           </Form>
         )}
@@ -91,6 +96,9 @@ export default class Movie extends Component {
       }
     ];
 
+    const youtubeId = _.split(movie.youtubeUrl,'?v=')[1];
+
+    
     const content = (
       <Segment color="yellow">
         <Item.Group divided>
@@ -98,26 +106,26 @@ export default class Movie extends Component {
             <Item.Image style={{ marginTop: 20 }} size="small" src={logo} />
 
             <Item.Content>
-              <Item.Header>{movie.Title}</Item.Header>
+              <Item.Header>{movie.title}</Item.Header>
               <Item.Description>
                 <List>
                   <List.Item>
-                    <b> Year: </b> {movie.Year}
+                    <b> Year: </b> {movie.year}
                   </List.Item>
                   <List.Item>
-                    <b> Genre: </b> {movie.Genre}
+                    <b> Genre: </b> {movie.genre}
                   </List.Item>
                   <List.Item>
                     <b> Actors: </b>
-                    {movie.Actors}
+                    {movie.actors}
                   </List.Item>
                   <List.Item>
                     <b> Director: </b>
-                    {movie.Director}
+                    {movie.director}
                   </List.Item>
                   <List.Item>
                     <b> Awards: </b>
-                    {movie.Awards}
+                    {movie.awards}
                   </List.Item>
                 </List>
               </Item.Description>
@@ -127,7 +135,7 @@ export default class Movie extends Component {
         <Accordion size="large" panels={panels} />
         <Divider />
 
-        <Embed id="do9zep1n8cU" placeholder={image} source="youtube" />
+        <Embed id={youtubeId} placeholder={image} source="youtube" />
       </Segment>
     );
 
@@ -135,9 +143,17 @@ export default class Movie extends Component {
   }
 
   render() {
-    const { movie } = this.props;
+    const { movie, error } = this.props;
 
-    if (!movie) {
+    if (!movie && !error) {
+      return (
+        <Dimmer active inverted>
+          <Loader content="Loading" />
+        </Dimmer>
+      );
+    }
+
+    if (!movie || error) {
       return (
         <Message negative size="huge">
           <Message.Header>

@@ -1,9 +1,9 @@
 package ba.unsa.etf.nwtcinemamovies;
 
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
-import ba.unsa.etf.nwtcinemamovies.models.MovieReview;
 import ba.unsa.etf.nwtcinemamovies.models.Role;
 import ba.unsa.etf.nwtcinemamovies.models.UserAccount;
+import ba.unsa.etf.nwtcinemamovies.repositories.IMovieRepository;
 import ba.unsa.etf.nwtcinemamovies.repositories.IRoleRepository;
 import ba.unsa.etf.nwtcinemamovies.repositories.IUserAccountRepository;
 import ba.unsa.etf.nwtcinemamovies.services.MovieReviewService;
@@ -30,6 +30,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 	private MovieService movieService;
 	private IUserAccountRepository userAccountRepository;
 	private MovieReviewService movieReviewService;
+	private IMovieRepository movieRepository;
 
 	@Autowired
 	private IRoleRepository roleRepository;
@@ -42,6 +43,11 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 	@Autowired
 	public void setUserAccountService(IUserAccountRepository userAccountRepository) {
 		this.userAccountRepository = userAccountRepository;
+	}
+
+	@Autowired
+	public void setMovieRepository(IMovieRepository movieRepository) {
+		this.movieRepository = movieRepository;
 	}
 
 	@Autowired
@@ -70,11 +76,18 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 
 		this.seedUsers();
 
-		final Movie movie = movieService.add(new Movie(IMDB_URL, "Gladiator"));
-		movieReviewService.add(new MovieReview(DUMMY_UID, RATE, MOVIE_COMMENT, movie));
-		//seed some more movies for testing purposes
-		movieService.add(new Movie("http://www.imdb.com/title/tt2527336/", "Star Wars: The Last Jedi"));
-		movieService.add(new Movie("http://www.imdb.com/title/tt3501632/", "Thor: Ragnarok"));
-		movieService.add(new Movie("http://www.imdb.com/title/tt2250912/", "Spider-Man Homecoming"));
+//		final Movie movie = movieService.add(new Movie(IMDB_URL, "Gladiator"));
+//		movieReviewService.add(new MovieReview(DUMMY_UID, RATE, MOVIE_COMMENT, movie));
+//		//seed some more movies for testing purposes
+//
+//		movieService.add(new Movie("http://www.imdb.com/title/tt2527336/", "Star Wars: The Last Jedi"));
+//		movieService.add(new Movie("http://www.imdb.com/title/tt3501632/", "Thor: Ragnarok"));
+//		movieService.add(new Movie("http://www.imdb.com/title/tt2250912/", "Spider-Man Homecoming"));
+
+
+		movieRepository.save(new Movie("http://www.imdb.com/title/tt2527336/", "Star Wars", 2017, "Action, Adventure, Fantasy", "Rian Johnson", "Mark Hamill, Carrie Fisher, Adam Driver, Daisy Ridley", "Nominated for 4 Oscars. Another 12 wins & 71 nominations.", "https://www.youtube.com/watch?v=jPEYpryMp2s"));
+		movieRepository.save(new Movie("http://www.omdbapi.com/?i=tt3501632&apikey=2d5ee0b5", "Thor: Ragnarok", 2017, "Action, Adventure, Comedy", "Taika Waititi" , "Chris Hemsworth, Tom Hiddleston, Cate Blanchett, Idris Elba", "5 wins & 30 nominations.", "https://www.youtube.com/watch?v=ue80QwXMRHg"));
+		movieRepository.save(new Movie("http://www.omdbapi.com/?i=tt2250912&apikey=2d5ee0b5","Spider-Man: Homecoming", 2017, "Action, Adventure, Sci-Fi", "Jon Watts", "Tom Holland, Michael Keaton, Robert Downey Jr., Marisa Tomei", "4 wins & 9 nominations.", "https://www.youtube.com/watch?v=V7h01x1oiQs"));
+
 	}
 }
