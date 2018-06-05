@@ -24,7 +24,6 @@ export class NewReservationModal extends Component {
     axios
       .post(reservationsEndpoint + "/create", {
         numberOfTickets: tickets,
-        userId: 1,
         movieProjectionId: selectedProjectionId
       })
       .then(response => {
