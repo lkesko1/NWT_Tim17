@@ -12,7 +12,8 @@ import {
   Label,
   Header,
   Form,
-  Button
+  Button,
+  Massage
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import image from "../../images/DMOHA20140112005.jpg";
@@ -20,45 +21,41 @@ import image from "../../images/DMOHA20140112005.jpg";
 // import {reviewEndpoint} from "../../endpoints";
 
 export default class Movie extends Component {
-  addReview() {
-    console.log(this.props.movieReviewText);
-    // axios
-    //   .post(reviewEndpoint + "/create", {
-    //     userId: currentUser,
-    //     rate: currentRate,
-    //     comment: this.state.movieReviewText,
-    //     movie: this.props.movie
-    //   })
-    //   .then(response => {
-    //     console.log(response);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-  }
-
   getMovieContent() {
     const { movie, updateForm, addReview } = this.props;
     // const reviews = [];
 
-    for (let review of movie.Ratings) {
+    let reviews = [];
+    if (movie.reviews) {
+      for (let review of movie.reviews) {
+        reviews.push(
+          <Comment key="review.id">
+            <Comment.Avatar
+              src={require("../../images/user-avatar-grey.png")}
+            />
+            <Comment.Content>
+              <Comment.Author as="a">Matt</Comment.Author>
+              <Comment.Metadata>
+                <div>review.comment </div>
+                {/* TODO: dodati brisanje */}
+              </Comment.Metadata>
+              <Comment.Text>How artistic!</Comment.Text>
+            </Comment.Content>
+          </Comment>
+        );
+      }
+    } else {
+      reviews.push(
+        <Message key="message-1" icon="write square" info content="Movie has no reviews" />
+      );
     }
-    const ReviewContent = (
+
+    let ReviewContent = (
       <Comment.Group>
-        <Header as="h3" dividing>
+        <Header as="h4" dividing>
           Movie Reviews
         </Header>
-
-        <Comment>
-          <Comment.Avatar src={require("../../images/user-avatar-grey.png")} />
-          <Comment.Content>
-            <Comment.Author as="a">Matt</Comment.Author>
-            <Comment.Metadata>
-              <div>Today at 5:42PM</div>
-            </Comment.Metadata>
-            <Comment.Text>How artistic!</Comment.Text>
-          </Comment.Content>
-        </Comment>
+        {reviews}
 
         {localStorage.getItem("role") === "ROLE_USER" && (
           <Form reply>
@@ -69,11 +66,12 @@ export default class Movie extends Component {
             />
 
             <Button
+              positive
               content="Add review"
               labelPosition="left"
               icon="edit"
               primary
-              onClick={this.addReview.bind(this)}
+              onClick={addReview}
             />
           </Form>
         )}
@@ -83,7 +81,7 @@ export default class Movie extends Component {
     const panels = [
       {
         title: {
-          content: <Label color="blue" content="Show movie reviews" />,
+          content: <Label color="blue" content="Movie reviews" />,
           key: "content-title"
         },
         content: {

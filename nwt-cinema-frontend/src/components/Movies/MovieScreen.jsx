@@ -16,9 +16,7 @@ export default class MovieScreen extends Component {
     }
   }
 
-  addReview(){
-    
-  }
+  addReview() {}
 
   componentWillMount() {
     axios
@@ -26,15 +24,29 @@ export default class MovieScreen extends Component {
       .then(response => {
         const movie = response.data;
         this.setState({ movie: movie });
-
       })
       .catch(error => {
         this.setState({ error: error });
       });
   }
 
+  addReview() {
+    axios
+      .post(movieEndpoint + "/review/create", {
+        userId: localStorage.getItem("user"),
+        comment: this.state.movieReviewText,
+        movie: this.state.movie
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   render() {
-        console.log(this.state.movie);
+    console.log(this.state.movie);
 
     return (
       <div>
