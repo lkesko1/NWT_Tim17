@@ -26,16 +26,16 @@ export default class MoviesList extends Component {
             <Item.Image  style={{marginTop: 20}} size="small" src={logo} />
 
             <Item.Content>
-              <Item.Header >{currentMovie.Title}</Item.Header>
+              <Item.Header >{currentMovie.title}</Item.Header>
               <Item.Description>
                 <List>
-                  <List.Item> <b> Year: </b> {currentMovie.Year} </List.Item>
-                  <List.Item> <b> Genre: </b> {currentMovie.Genre} </List.Item>
-                  <List.Item> <b> Actors: </b>{currentMovie.Actors} </List.Item>
+                  <List.Item> <b> Year: </b> {currentMovie.year} </List.Item>
+                  <List.Item> <b> Genre: </b> {currentMovie.genre} </List.Item>
+                  <List.Item> <b> Actors: </b>{currentMovie.actors} </List.Item>
                 </List>
               </Item.Description>
               <Item.Extra>
-                <Icon color="green" name="check" /> {currentMovie.Ratings.length} Reviews
+                <Icon color="green" name="check" />  Reviews
                 <Link to="/movies/1">
 
                 <Button primary floated="right">

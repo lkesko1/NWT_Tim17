@@ -14,7 +14,7 @@ import {
 } from "semantic-ui-react";
 import _ from "lodash";
 import axios from "axios";
-import { projectionsEndpoint } from "../../endpoints";
+import { reservationsEndpoint } from "../../endpoints";
 import moment from "moment";
 
 export class NewReservationModal extends Component {
@@ -22,7 +22,7 @@ export class NewReservationModal extends Component {
     const { selectedProjectionId, tickets, hideReservationModal } = this.props;
 
     axios
-      .post(projectionsEndpoint + "/reservations/create", {
+      .post(reservationsEndpoint + "/create", {
         numberOfTickets: tickets,
         userId: 1,
         movieProjectionId: selectedProjectionId

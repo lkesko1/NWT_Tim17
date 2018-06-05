@@ -34,6 +34,7 @@ export default class MoviesScreen extends Component {
           <Grid.Row>
             <Grid.Column width={3} />
             <Grid.Column width={10}>
+            <h3> Cinema movies </h3>
               {role === "ROLE_ADMIN" && (
                 <div>
                   <Link to="/search">

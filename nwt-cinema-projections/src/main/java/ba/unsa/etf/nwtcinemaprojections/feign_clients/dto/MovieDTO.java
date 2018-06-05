@@ -63,36 +63,36 @@ public class MovieDTO {
         }
     }
 
-    @JsonProperty("Title")
+    @JsonProperty("title")
     private String title;
 
-    @JsonProperty("Year")
+    @JsonProperty("year")
     private Integer year;
 
-    @JsonProperty("Genre")
+    @JsonProperty("genre")
     private String genre;
 
-    @JsonProperty("Director")
+    @JsonProperty("director")
     private String director;
 
-    @JsonProperty("Actors")
+    @JsonProperty("actors")
     private String actors;
 
-    @JsonProperty("Awards")
+    @JsonProperty("awards")
     private String awards;
 
-    @JsonProperty("Ratings")
+    @JsonProperty("ratings")
     private List<Rating> ratings;
 
-    public MovieDTO(String Title, Integer Year, String Genre, String Director, String Actors, String Awards,
-                    List<Rating> Ratings) {
-        this.title = Title;
-        this.year = Year;
-        this.genre = Genre;
-        this.director = Director;
-        this.actors = Actors;
-        this.awards = Awards;
-        this.ratings = Ratings;
+    public MovieDTO(String title, Integer year, String genre, String director, String actors, String awards,
+                    List<Rating> ratings) {
+        this.title = title;
+        this.year = year;
+        this.genre = genre;
+        this.director = director;
+        this.actors = actors;
+        this.awards = awards;
+        this.ratings = ratings;
     }
 
     public MovieDTO() {

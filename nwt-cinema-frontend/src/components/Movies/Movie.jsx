@@ -20,29 +20,12 @@ import image from "../../images/DMOHA20140112005.jpg";
 // import {reviewEndpoint} from "../../endpoints";
 
 export default class Movie extends Component {
-  addReview() {
-    console.log(this.props.movieReviewText);
-    // axios
-    //   .post(reviewEndpoint + "/create", {
-    //     userId: currentUser,
-    //     rate: currentRate,
-    //     comment: this.state.movieReviewText,
-    //     movie: this.props.movie
-    //   })
-    //   .then(response => {
-    //     console.log(response);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-  }
+
 
   getMovieContent() {
     const { movie, updateForm, addReview } = this.props;
     // const reviews = [];
 
-    for (let review of movie.Ratings) {
-    }
     const ReviewContent = (
       <Comment.Group>
         <Header as="h3" dividing>
@@ -73,7 +56,7 @@ export default class Movie extends Component {
               labelPosition="left"
               icon="edit"
               primary
-              onClick={this.addReview.bind(this)}
+              onClick={this.props.addReview}
             />
           </Form>
         )}
@@ -100,26 +83,26 @@ export default class Movie extends Component {
             <Item.Image style={{ marginTop: 20 }} size="small" src={logo} />
 
             <Item.Content>
-              <Item.Header>{movie.Title}</Item.Header>
+              <Item.Header>{movie.title}</Item.Header>
               <Item.Description>
                 <List>
                   <List.Item>
-                    <b> Year: </b> {movie.Year}
+                    <b> Year: </b> {movie.year}
                   </List.Item>
                   <List.Item>
-                    <b> Genre: </b> {movie.Genre}
+                    <b> Genre: </b> {movie.genre}
                   </List.Item>
                   <List.Item>
                     <b> Actors: </b>
-                    {movie.Actors}
+                    {movie.actors}
                   </List.Item>
                   <List.Item>
                     <b> Director: </b>
-                    {movie.Director}
+                    {movie.director}
                   </List.Item>
                   <List.Item>
                     <b> Awards: </b>
-                    {movie.Awards}
+                    {movie.awards}
                   </List.Item>
                 </List>
               </Item.Description>
