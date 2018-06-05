@@ -11,7 +11,7 @@ import java.util.Optional;
 public abstract class BaseService<M extends AbstractModel, R extends JpaRepository<M, Long>> {
 
     @Autowired
-    private R repository;
+    protected R repository;
 
     public Iterable<M> findAll() {
         return repository.findAll();
