@@ -11,7 +11,10 @@ export default class SearchMovieScreen extends Component {
     }
 
     componentWillMount() {
-        axios.get("http://www.omdbapi.com/?i=" + this.props.match.params.id + "&apikey=2d5ee0b5")
+        axios.get(
+            // "http://www.omdbapi.com/?i=" + this.props.match.params.id + "&apikey=2d5ee0b5")
+            movieEndpoint + "/omdb/" + this.props.match.params.id 
+          )
             .then(response => {
                 const movie = response.data;
                 this.setState({movie: movie})

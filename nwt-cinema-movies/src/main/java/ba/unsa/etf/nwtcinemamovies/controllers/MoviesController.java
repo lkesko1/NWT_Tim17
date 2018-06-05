@@ -58,6 +58,18 @@ public class MoviesController extends AbstractController<MovieService> {
 	}
 
 	@Transactional(readOnly = true)
+	@RequestMapping(value = "/omdb/{movieId}", method = RequestMethod.GET)
+	public ResponseEntity fetchMovieByiMDBId(@PathVariable("movieId") final String movieId) {
+		try {
+			JSONConverter.configure();
+			return ResponseEntity.ok(service.fetchMovieByIMDBId(movieId));
+		} catch (java.io.IOException e) {
+			return ResponseEntity.badRequest().body(
+					JSONConverter.toJSON("Failed to fetch movie with given id " + movieId));
+		}
+	}
+
+	@Transactional(readOnly = true)
 	@RequestMapping(value = "/get-movies/{name}", method = RequestMethod.GET)
 	public ResponseEntity fetchByName(@PathVariable("name") final String name) {
 		try {
@@ -82,15 +94,11 @@ public class MoviesController extends AbstractController<MovieService> {
 
 	@Transactional
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
-	public ResponseEntity delete(@RequestBody final Movie movie, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return ResponseEntity.badRequest().body(
-					JSONConverter.toJSON("Failed to delete movie with url " + movie.getImdbUrl()));
-		}
-		service.delete(movie);
-		return ResponseEntity.ok(
-				JSONConverter.toJSON("Successfully deleted movie with url " + movie.getImdbUrl()));
+	public void delete(@PathVariable("id") Long id) {
+		service.delete(id);
 	}
+
+
 
 //	@RequestMapping(value = "search", method = RequestMethod.GET)
 //	public ResponseEntity search(@RequestParam String title) {

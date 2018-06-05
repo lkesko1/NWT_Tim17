@@ -15,24 +15,12 @@ public class MovieReview extends AbstractModel {
 	@ManyToOne(targetEntity = UserAccount.class)
 	private UserAccount userAccount;
 
-	@Min(value = 1, message = "Minimum movie rate is 1.")
-	@Max(value = 10, message = "Maximum movie rate is 10.")
-	private Integer rate;
-
 	private String comment;
 
 	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Movie.class)
 	@NotNull
 	@JsonIgnore
 	private Movie movie;
-
-	public Integer getRate() {
-		return rate;
-	}
-
-	public void setRate(Integer rate) {
-		this.rate = rate;
-	}
 
 	public String getComment() {
 		return comment;
@@ -50,9 +38,8 @@ public class MovieReview extends AbstractModel {
 		this.movie = movie;
 	}
 
-	public MovieReview(UserAccount userAccount, Integer rate, String comment, Movie movie) {
+	public MovieReview(UserAccount userAccount, String comment, Movie movie) {
 		this.userAccount = userAccount;
-		this.rate = rate;
 		this.comment = comment;
 		this.movie = movie;
 	}

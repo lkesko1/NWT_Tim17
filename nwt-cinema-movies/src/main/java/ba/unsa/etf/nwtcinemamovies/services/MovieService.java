@@ -1,5 +1,6 @@
 package ba.unsa.etf.nwtcinemamovies.services;
 
+import ba.unsa.etf.nwtcinemamovies.dto.OMDBMovieDTO;
 import ba.unsa.etf.nwtcinemamovies.models.Movie;
 import ba.unsa.etf.nwtcinemamovies.dto.MovieDTO;
 import ba.unsa.etf.nwtcinemamovies.dto.MovieListDTO;
@@ -37,10 +38,12 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 	 * @return {@link MovieDTO} the movie data transfer object
 	 * @throws IOException in case reading of the stream fails
 	 */
-	public MovieDTO fetchMovie(Long movieId) throws IOException {
-		Optional<Movie> movie = findById(movieId);
+	public Optional<Movie> fetchMovie(Long movieId) throws IOException {
+		Optional<Movie> movie = repository.findById(movieId);
 		if (movie.isPresent()) {
-			return fetch(formUrl(movie.get()));
+//			return fetch(formUrl(movie.get()));
+			return movie;
+
 		}
 		return null;
 	}
@@ -92,7 +95,7 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 	public Movie addNewMovie(String imdbID) throws IOException{
 		String my_url = "http://www.omdbapi.com/?i="+imdbID+"&apikey=2d5ee0b5";
 		HttpResponse response = client.execute((new HttpGet(my_url)));
-		MovieDTO newMovie = readResponse(response);
+		OMDBMovieDTO newMovie = readOMDBResponse(response);
 		if(newMovie.getYear() == null ||  newMovie.getGenre() ==null || newMovie.getDirector() == null )
 			throw new IOException();
 
@@ -101,6 +104,17 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 		return mymovie;
 		//Todo: rijesiti rating?!
 	}
+
+	public OMDBMovieDTO fetchMovieByIMDBId(String imdbID) throws IOException{
+		String my_url = "http://www.omdbapi.com/?i="+imdbID+"&apikey=2d5ee0b5";
+		HttpResponse response = client.execute((new HttpGet(my_url)));
+		OMDBMovieDTO omdbMovieDTO = readOMDBResponse(response);
+		omdbMovieDTO.setImdbID(imdbID);
+		return omdbMovieDTO;
+
+	}
+
+
 
 	/**
 	 * Fetches multiple movies asynchronously via futures
@@ -141,6 +155,13 @@ public class MovieService extends BaseService<Movie, IMovieRepository> {
 	private MovieDTO readResponse(HttpResponse response) throws IOException {
 		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 			return JSONConverter.fromJSON(response.getEntity().getContent(), MovieDTO.class);
+		}
+		return null;
+	}
+
+	private OMDBMovieDTO readOMDBResponse(HttpResponse response) throws IOException {
+		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+			return JSONConverter.fromJSON(response.getEntity().getContent(), OMDBMovieDTO.class);
 		}
 		return null;
 	}
