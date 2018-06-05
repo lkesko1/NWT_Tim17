@@ -48,8 +48,8 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 
         this.seedUsers();
 
-        iReservationRepository.save(new Reservation(2L, userAccount, 1L, 3, new Date(2018, 2,3)));
-        iReservationRepository.save(new Reservation(3L, userAccount, 2L, 2, new Date(2018, 2,3)));
-        iReservationRepository.save(new Reservation(4L, userAccount, 2L, 2, new Date(2018, 4, 3)));
+        iReservationRepository.save(new Reservation(userAccountRepository.findUserAccountByUsername("adnan"), 1L, 3, new Date(2018, 2,3)));
+        iReservationRepository.save(new Reservation(userAccountRepository.findUserAccountByUsername("anisa"), 2L, 2, new Date(2018, 2,3)));
+        iReservationRepository.save(new Reservation(userAccountRepository.findUserAccountByUsername("edin"), 2L, 2, new Date(2018, 4, 3)));
     }
 }
