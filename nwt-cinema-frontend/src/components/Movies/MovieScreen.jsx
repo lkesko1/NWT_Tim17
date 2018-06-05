@@ -10,6 +10,23 @@ export default class MovieScreen extends Component {
     this.state = { movie: null, error: null };
   }
 
+  addReview() {
+    console.log(this.props.movieReviewText);
+    // axios
+    //   .post(reviewEndpoint + "/create", {
+    //     userId: currentUser,
+    //     rate: currentRate,
+    //     comment: this.state.movieReviewText,
+    //     movie: this.props.movie
+    //   })
+    //   .then(response => {
+    //     console.log(response);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+  }
+
   updateForm(e, key, value) {
     if (key == "review") {
       this.setState({ ...this.state, movieReviewText: value });

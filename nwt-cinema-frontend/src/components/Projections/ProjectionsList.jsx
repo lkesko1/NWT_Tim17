@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Item, Icon, Button, Segment, List, Message } from "semantic-ui-react";
+import { Item, Icon, Button, Segment, List, Message, Label} from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import { Link } from "react-router-dom";
 import { NewReservationModal } from "../Reservations/NewReservationModal";
@@ -12,16 +12,20 @@ export default class ProjectionsList extends Component {
       reservationModalVisible: false,
       tickets: 1,
       projectionModalVisible: false,
-      selectedDate: moment()
+      selectedDate: moment(),
     });
   }
 
   showReservationModal(id) {
-    this.setState({
-      reservationModalVisible: true,
-      selectedProjectionId: id,
-      error: null
-    });
+    if (localStorage.getItem("token")) {
+      this.setState({
+        reservationModalVisible: true,
+        selectedProjectionId: id,
+        error: null
+      });
+    } else {
+      this.props.redirect();
+    }
   }
 
   hideReservationModal() {
@@ -56,14 +60,18 @@ export default class ProjectionsList extends Component {
     this.setState({
       ...this.state,
       projectionModalVisible: false,
-      error: null
+      error: null,
+      selectedMovieId: null,
+      numberOfTickets: 0
     });
   }
 
   showProjectionModal() {
     this.setState({
       ...this.state,
-      projectionModalVisible: true
+      projectionModalVisible: true,
+      selectedMovieId: this.props.movies[0].id,
+      numberOfTickets: 100
     });
   }
 
@@ -113,12 +121,24 @@ export default class ProjectionsList extends Component {
                       <Icon name="right chevron" />
                     </Button>
                   </Link>
-                  <Link to={"/projections/" + currentProjection.movieID}>
+                  <Link to={"/projections/" + currentProjection.id}>
                     <Button primary floated="right">
                       View more
                       <Icon name="right chevron" />
                     </Button>
                   </Link>
+                  <Label color="red">
+                  {" "}
+                  Date: {moment(currentProjection.date).format(
+                    "YYYY-MM-DD"
+                  )} 
+                </Label>
+
+                  <Label color="red">
+                  Time: {moment(currentProjection.date).format(
+                    "HH:mm:ss"
+                  )}
+                </Label>
                 </Item.Extra>
               </Item.Content>
             </Item>
@@ -145,6 +165,9 @@ export default class ProjectionsList extends Component {
       );
     }
 
+    const role = localStorage.getItem("role");
+    const isAdmin = role && role === "ROLE_ADMIN" ? true : false;
+
     return (
       <div>
         <NewReservationModal
@@ -161,17 +184,19 @@ export default class ProjectionsList extends Component {
           movies={movies}
           selectedDate={this.state.selectedDate}
           updateForm={this.updateForm.bind(this)}
-          numberOfTickets={this.state.tickets}
+          numberOfTickets={this.state.numberOfTickets}
           handleChange={this.handleChange.bind(this)}
           selectedMovieId={this.state.selectedMovieId}
         />
-        <Button
-          positive
-          labelPosition="right"
-          icon="add"
-          content="Add new projection"
-          onClick={this.showProjectionModal.bind(this)}
-        />
+        {isAdmin && (
+          <Button
+            positive
+            labelPosition="right"
+            icon="add"
+            content="Add new projection"
+            onClick={this.showProjectionModal.bind(this)}
+          />
+        )}
         {this.getContent()}
       </div>
     );
