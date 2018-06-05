@@ -1,5 +1,7 @@
 package ba.unsa.etf.nwtcinemareservations.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;

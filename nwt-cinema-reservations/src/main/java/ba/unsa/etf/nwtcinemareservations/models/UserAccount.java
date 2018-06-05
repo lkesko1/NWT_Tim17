@@ -1,5 +1,7 @@
 package ba.unsa.etf.nwtcinemareservations.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -10,6 +12,8 @@ import java.util.List;
 @Entity
 public class UserAccount extends AbstractModel {
 
+
+	@JsonIgnore
 	@ManyToOne(targetEntity = Role.class)
 	private Role role;
 
@@ -17,6 +21,7 @@ public class UserAccount extends AbstractModel {
 	@Column(unique = true)
 	private String username;
 
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userAccount", targetEntity = Reservation.class,
 			cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Reservation> reservations = new ArrayList<>();
