@@ -176,6 +176,9 @@ export default class ProjectionsList extends Component {
           selectedProjectionId={this.props.selectedProjectionId}
           updateForm={this.props.updateForm}
           tickets={this.props.tickets}
+          confirm={this.props.confirm}
+          success={this.props.success}
+          fail={this.props.fail}
         />
         <ProjectionModal
           projectionModalVisible={this.props.projectionModalVisible}

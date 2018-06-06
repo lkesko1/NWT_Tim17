@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import ProjectionsList from "./ProjectionsList";
-import { Grid, Segment } from "semantic-ui-react";
+import { Grid, Segment, Confirm, Dimmer, Loader } from "semantic-ui-react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { projectionsEndpoint, movieEndpoint, reservationsEndpoint } from "../../endpoints";
+import {
+  projectionsEndpoint,
+  movieEndpoint,
+  reservationsEndpoint
+} from "../../endpoints";
 import moment from "moment";
 
 export default class ProjectionsScreen extends Component {
@@ -19,6 +23,7 @@ export default class ProjectionsScreen extends Component {
 
   saveProjection() {
     const { selectedMovieId, selectedDate, numberOfTickets } = this.state;
+    this.confirm();
 
     axios
       .post(projectionsEndpoint + "/create", {
@@ -30,10 +35,12 @@ export default class ProjectionsScreen extends Component {
       })
       .then(response => {
         this.hideProjectionModal();
+        this.success();
         this.getProjections();
       })
       .catch(error => {
         console.log(error);
+        this.fail();
       });
   }
 
@@ -77,7 +84,6 @@ export default class ProjectionsScreen extends Component {
   }
 
   updateForm(e, key, value) {
-
     if (key == "projection") {
       this.setState({ ...this.state, selectedProjectionId: value });
     } else if (key == "tickets") {
@@ -113,14 +119,27 @@ export default class ProjectionsScreen extends Component {
       });
   }
 
-
+  close() {
+    this.setState({ ...this.state, open: false, openFail: false });
+  }
+  confirm() {
+    this.setState({ ...this.state, loading: true });
+  }
+  success(){
+    this.setState({ ...this.state, loading: false, open: true });
+    
+  }
+  fail(){
+    this.setState({ ...this.state, loading: false, openFail: true });
+  }
   componentDidMount() {
     this.setState({
       ...this.state,
       reservationModalVisible: false,
       tickets: 1,
       projectionModalVisible: false,
-      selectedDate: moment()
+      selectedDate: moment(),
+      open: false
     });
 
     this.setState({ ...this.state, redirect: false });
@@ -141,6 +160,13 @@ export default class ProjectionsScreen extends Component {
 
     const role = localStorage.getItem("role");
 
+    if (this.state.loading) {
+      return (
+        <Dimmer active inverted>
+          <Loader content="Loading" />
+        </Dimmer>
+      )
+    }
     if (this.state.redirect) {
       return <Redirect to="/login" />;
     }
@@ -152,6 +178,20 @@ export default class ProjectionsScreen extends Component {
             <Grid.Column width={3} />
             <Grid.Column width={10}>
               <h3> Cinema projections </h3>
+              <Confirm
+                open={this.state.open}
+                content="Successfully added!"
+                onCancel={this.close.bind(this)}
+                onConfirm={this.close.bind(this)}
+              />
+
+              <Confirm
+                open={this.state.openFail}
+                content="Something went wrong!"
+                onCancel={this.close.bind(this)}
+                onConfirm={this.close.bind(this)}
+              />
+
               <ProjectionsList
                 redirect={this.redirect.bind(this)}
                 projections={projections}
@@ -172,6 +212,9 @@ export default class ProjectionsScreen extends Component {
                 reservationModalVisible={this.state.reservationModalVisible}
                 projectionModalVisible={this.state.projectionModalVisible}
                 role={role}
+                confirm={this.confirm.bind(this)}
+                success={this.success.bind(this)}
+                fail={this.fail.bind(this)}
               />
             </Grid.Column>
             <Grid.Column width={3} />

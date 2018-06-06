@@ -7,7 +7,9 @@ import {
   Message,
   Segment,
   Loader,
-  Dimmer
+  Dimmer,
+  Label, 
+  Icon
 } from "semantic-ui-react";
 import axios from "axios";
 import { authEndpoint } from "../../endpoints";
@@ -16,16 +18,28 @@ import { Redirect } from "react-router-dom";
 const API_ROUTE = authEndpoint + "/login";
 
 export default class Login extends Component {
+  state = {};
   constructor(props) {
     super(props);
 
     this.state = {
       username: "",
       pass: "",
-      authenticated: false
+      authenticated: false,
+      error: false,
+      loading: false
     };
 
     this.updateState = this.updateState.bind(this);
+  }
+  componentWillMount() {
+    this.setState({
+      username: "",
+      pass: "",
+      authenticated: false,
+      error: false,
+      loading: false
+    });
   }
 
   updateState(event) {
@@ -45,11 +59,14 @@ export default class Login extends Component {
       password: this.state.pass
     };
 
+    console.log(this.state);
     axios
       .post(API_ROUTE, data)
       .then(response => {
         localStorage.setItem("token", response.headers["authorization"]);
         localStorage.setItem("role", response.headers["role"]);
+        localStorage.setItem("username", this.state.username);
+
         // localStorage.setItem("user", response.headers["user"]);
 
         axios.defaults.headers["Authorization"] =
@@ -62,9 +79,12 @@ export default class Login extends Component {
           loading: false
         });
       })
-      .catch(function(error) {
-        console.log(error);
-        this.setState({ ...this.state, loading: false, error: error });
+      .catch(err => {
+        this.setState({
+          ...this.state,
+          loading: false,
+          error: true
+        });
       });
   }
 
@@ -100,6 +120,12 @@ export default class Login extends Component {
             </Header>
             <Form size="large">
               <Segment stacked>
+                {this.state.error && (
+                  <Label size="large" color="red">
+                    <Icon name="warning" />
+                    Wrong username or password{" "}
+                  </Label>
+                )}
                 <Form.Input
                   fluid
                   icon="user"

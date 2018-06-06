@@ -19,6 +19,7 @@ import moment from "moment";
 
 export class NewReservationModal extends Component {
   saveReservation() {
+    this.props.confirm();
     const { selectedProjectionId, tickets, hideReservationModal } = this.props;
     axios
       .post(reservationsEndpoint + "/create", {
@@ -27,9 +28,12 @@ export class NewReservationModal extends Component {
       })
       .then(response => {
         console.log(response);
+        this.props.success();
       })
       .catch(error => {
         console.log(error);
+        this.props.fail();
+        
       });
 
     hideReservationModal();

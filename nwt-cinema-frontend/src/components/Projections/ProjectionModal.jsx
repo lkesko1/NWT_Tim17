@@ -38,7 +38,7 @@ export class ProjectionModal extends Component {
     return (
       <div>
         <Modal
-          size="small"
+          size="large"
           open={projectionModalVisible}
           onClose={hideProjectionModal}
         >

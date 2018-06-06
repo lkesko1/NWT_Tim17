@@ -36,12 +36,13 @@ export default class Movie extends Component {
     });
   }
 
-  delete(id){
+  delete(id) {
     this.props.deleteComment(id);
   }
 
   getMovieContent() {
     const { movie, updateForm, addReview, deleteComment } = this.props;
+    const username = localStorage.getItem("username");
 
     let reviews = [];
     if (movie.movieReviews && movie.movieReviews.length > 0) {
@@ -58,9 +59,11 @@ export default class Movie extends Component {
               </Comment.Author>
               <Comment.Text>{review.comment}</Comment.Text>
               <Comment.Actions>
-                <Comment.Action onClick={this.delete.bind(this, review.id)}>
-                  Delete review
-                </Comment.Action>
+                {username === review.userAccount.username && (
+                  <Comment.Action onClick={this.delete.bind(this, review.id)}>
+                    Delete review
+                  </Comment.Action>
+                )}
               </Comment.Actions>
             </Comment.Content>
           </Comment>
