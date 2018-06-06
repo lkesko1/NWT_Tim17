@@ -139,6 +139,8 @@ export default class ProjectionsScreen extends Component {
   render() {
     const { projections, error, movies } = this.state;
 
+    const role = localStorage.getItem("role");
+
     if (this.state.redirect) {
       return <Redirect to="/login" />;
     }
@@ -169,6 +171,7 @@ export default class ProjectionsScreen extends Component {
                 selectedProjectionId={this.state.selectedProjectionId}
                 reservationModalVisible={this.state.reservationModalVisible}
                 projectionModalVisible={this.state.projectionModalVisible}
+                role={role}
               />
             </Grid.Column>
             <Grid.Column width={3} />

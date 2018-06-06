@@ -24,23 +24,83 @@ export default class ProjectionsList extends Component {
   }
 
   getContent() {
-    const { projections,error } = this.props;
+    const { projections, error, role } = this.props;
 
     if (projections.length === 0 || error) {
       return (
-          <Message negative size="huge">
-            <Message.Header>
-              <Icon name="remove circle" />
-              We're sorry we can't find projections in database!
-            </Message.Header>
-          </Message>
+        <Message negative size="huge">
+          <Message.Header>
+            <Icon name="remove circle" />
+            We're sorry we can't find projections in database!
+          </Message.Header>
+        </Message>
       );
     }
+
+    const isAdmin = role && role === "ROLE_ADMIN" ? true : false;
+    const isUser = role && role === "ROLE_USER" ? true : false;
 
     let projectionsList = [];
     for (let currentProjection of projections) {
       const availableTickets =
         currentProjection.maxTickets - currentProjection.actualTickets;
+      let reservationButton;
+
+      if (isAdmin) {
+        reservationButton = (
+          <Link
+            to={`/projection-reservations/${currentProjection.projectionID}`}
+          >
+            <Button
+              key={currentProjection.projectionID}
+              className="positive ui button"
+              primary
+              floated="right"
+            >
+              View reservations
+              <Icon name="right chevron" />
+            </Button>
+          </Link>
+        );
+      } else {
+        if (availableTickets > 0) {
+          reservationButton = (
+            <Link to="/projections">
+              <Button
+                key={currentProjection.projectionID}
+                className="positive ui button"
+                primary
+                floated="right"
+                onClick={this.showReservationModal.bind(
+                  this,
+                  currentProjection.projectionID
+                )}
+              >
+                Make a reservation
+                <Icon name="right chevron" />
+              </Button>
+            </Link>
+          );
+        } else {
+          reservationButton = (
+            <Link to="/projections">
+              <Button
+                key={currentProjection.projectionID}
+                className="positive ui button"
+                primary
+                floated="right"
+                onClick={this.showReservationModal.bind(
+                  this,
+                  currentProjection.projectionID
+                )}
+              >
+                Make a reservation
+                <Icon name="right chevron" />
+              </Button>
+            </Link>
+          );
+        }
+      }
       const content = (
         <Segment key={currentProjection.projectionID} color="yellow">
           <Item.Group divided>
@@ -66,34 +126,7 @@ export default class ProjectionsList extends Component {
                   </List>
                 </Item.Description>
                 <Item.Extra>
-                  {availableTickets > 0 ? (
-                    <Link to="/projections">
-                      <Button
-                        key={currentProjection.projectionID}
-                        className="positive ui button"
-                        primary
-                        floated="right"
-                        onClick={this.showReservationModal.bind(
-                          this,
-                          currentProjection.projectionID
-                        )}
-                      >
-                        Make a reservation
-                        <Icon name="right chevron" />
-                      </Button>
-                    </Link>
-                  ) : (
-                    <Link to="/projections">
-                      <Button
-                        key={currentProjection.projectionID}
-                        color="red"
-                        floated="right"
-                      >
-                        <Icon name="info" />
-                        No availableTickets
-                      </Button>
-                    </Link>
-                  )}
+                  {reservationButton}
                   <Link to={"/projections/" + currentProjection.projectionID}>
                     <Button primary floated="right">
                       View more
@@ -121,10 +154,10 @@ export default class ProjectionsList extends Component {
   }
 
   render() {
-    const { projections, error, movies } = this.props;
+    const { projections, error, movies, role } = this.props;
 
-    const role = localStorage.getItem("role");
     const isAdmin = role && role === "ROLE_ADMIN" ? true : false;
+    const isUser = role && role === "ROLE_USER" ? true : false;
 
     if (!projections && !error) {
       return (
@@ -133,7 +166,7 @@ export default class ProjectionsList extends Component {
         </Dimmer>
       );
     }
-  
+
     return (
       <div>
         <NewReservationModal

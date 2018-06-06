@@ -1,40 +1,58 @@
 import React, { Component } from "react";
 import {
+  Dimmer,
+  Loader,
   Item,
   Icon,
   Segment,
+  Grid,
   List,
   Message
 } from "semantic-ui-react";
-import logo from "../../images/cinema (1).png";
+import logo from "../../images/ticket.png";
+import moment from "moment";
 
 export class ReservationsList extends Component {
   getContent() {
     const { reservations } = this.props;
     let reservationsList = [];
-    let index = 0;
 
     for (let currentReservation of reservations) {
-      index += 1;
+      console.log(currentReservation);
       const content = (
-        <Segment color="yellow" key={index}>
-        <Item.Group divided>
-          <Item>
-            <Item.Image  style={{marginTop: 20}} size="small" src={logo} />
+        <Grid.Column key={currentReservation.id}>
+        <div >
+        
+        <Segment color="yellow" >
+          <Item.Group >
+            <Item>
+              <Item.Image style={{ marginTop: 20 }} size="tiny" src={logo} />
 
-            <Item.Content>
-              <Item.Header >{currentReservation.MovieName}</Item.Header>
-              <Item.Description>
-                <List>
-                  <List.Item> <b> Number of tickets: </b> {currentReservation.numberOfTickets} </List.Item>
-                  <List.Item> <b> Date created: </b> {currentReservation.dateCreated} </List.Item>
-                </List>
-              </Item.Description>
-             
-            </Item.Content>
-          </Item>
-        </Item.Group>
+              <Item.Content>
+                <Item.Header />
+                <Item.Description>
+                  <List>
+                    <List.Item>
+                      <b> Number of tickets: </b>{" "}
+                      {currentReservation.numberOfTickets}{" "}
+                    </List.Item>
+                    <List.Item>
+                      <b> Date created: </b>{" "}
+                      {moment(currentReservation.dateCreated).format(
+                        "DD-MM-YYYY"
+                      )}
+                    </List.Item>
+                    <List.Item>
+                      <b> User: </b> {currentReservation.userAccount.username}{" "}
+                    </List.Item>
+                  </List>
+                </Item.Description>
+              </Item.Content>
+            </Item>
+          </Item.Group>
         </Segment>
+        </div>
+        </Grid.Column>
       );
 
       reservationsList.push(content);
@@ -43,7 +61,15 @@ export class ReservationsList extends Component {
   }
 
   render() {
-    const { reservations, error } = this.props;
+    const { reservations, error, movie, projection } = this.props;
+
+    if (!reservations && !error) {
+      return (
+        <Dimmer active inverted>
+          <Loader content="Loading reservations" />
+        </Dimmer>
+      );
+    }
 
     if (!reservations || reservations.length === 0 || error) {
       return (
@@ -55,8 +81,13 @@ export class ReservationsList extends Component {
         </Message>
       );
     }
-    return <div>
-       {this.getContent()} </div>;
+    console.log(movie);
+    return (
+        <Grid columns={2} divided>
+          <Grid.Row centered>
+            {this.getContent()}
+          </Grid.Row>
+        </Grid>
+    );
   }
 }
-
