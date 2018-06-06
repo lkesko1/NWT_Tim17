@@ -10,7 +10,8 @@ import {
   Segment
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import {movieEndpoint } from "../../endpoints";
+import { movieEndpoint } from "../../endpoints";
+import {Redirect} from "react-router-dom";
 
 export default class Search extends Component {
   constructor(props) {
@@ -80,7 +81,7 @@ export default class Search extends Component {
     }
     return (
       <Grid>
-        <Grid.Column width={8} >
+        <Grid.Column width={8}>
           <Message icon compact warning size="large">
             <Icon name="search" />
             <Message.Content>
@@ -94,6 +95,10 @@ export default class Search extends Component {
   }
 
   render() {
+    if (localStorage.getItem("role") != "ROLE_ADMIN") {
+      return <Redirect to="/login" />;
+    }
+
     return (
       <Grid>
         <Grid.Row>
@@ -105,7 +110,7 @@ export default class Search extends Component {
                   <Input
                     fluid
                     icon={<Icon name="search" inverted circular link />}
-                      placeholder="Type here..."
+                    placeholder="Type here..."
                     onChange={this.myFunction.bind(this)}
                   />
                 </Grid.Column>

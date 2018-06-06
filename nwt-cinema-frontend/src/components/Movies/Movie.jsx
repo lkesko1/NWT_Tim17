@@ -14,29 +14,34 @@ import {
   Form,
   Button,
   Massage,
-  Dimmer, 
+  Dimmer,
   Loader
 } from "semantic-ui-react";
 import logo from "../../images/cinema (1).png";
 import image from "../../images/DMOHA20140112005.jpg";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 export default class Movie extends Component {
-
   componentDidMount() {
     this.setState({
-      ...this.state, text: ""
-    })
+      ...this.state,
+      text: ""
+    });
   }
-  getText(value){
+  getText(value) {
     this.setState({
       ...this.state,
       text: value
-    })
+    });
+  }
+
+  delete(id){
+    this.props.deleteComment(id);
   }
 
   getMovieContent() {
-    const { movie, updateForm, addReview} = this.props;
+    const { movie, updateForm, addReview, deleteComment } = this.props;
 
     let reviews = [];
     if (movie.movieReviews && movie.movieReviews.length > 0) {
@@ -46,23 +51,38 @@ export default class Movie extends Component {
             <Comment.Avatar
               src={require("../../images/user-avatar-grey.png")}
             />
+
             <Comment.Content>
-              <Comment.Author as="a">{review.userAccount.username}</Comment.Author>
-              <Comment.Metadata>
-               
-              </Comment.Metadata>
+              <Comment.Author as="a">
+                {review.userAccount.username}
+              </Comment.Author>
               <Comment.Text>{review.comment}</Comment.Text>
+              <Comment.Actions>
+                <Comment.Action onClick={this.delete.bind(this, review.id)}>
+                  Delete review
+                </Comment.Action>
+              </Comment.Actions>
             </Comment.Content>
           </Comment>
         );
       }
     } else {
       reviews.push(
-        <Message key="message-1" icon="write square" info content="Movie has no reviews" />
+        <Message
+          key="message-1"
+          icon="write square"
+          info
+          content="Movie has no reviews"
+        />
       );
     }
 
-    const disabled = this.state.text && this.state.text.length > 1 ? false : true;
+    const disabled =
+      this.state.text &&
+      this.state.text.length > 1 &&
+      this.props.movieReviewText != ""
+        ? false
+        : true;
 
     let ReviewContent = (
       <Comment.Group>
@@ -109,9 +129,8 @@ export default class Movie extends Component {
       }
     ];
 
-    const youtubeId = _.split(movie.youtubeUrl,'?v=')[1];
+    const youtubeId = _.split(movie.youtubeUrl, "?v=")[1];
 
-    
     const content = (
       <Segment color="yellow">
         <Item.Group divided>

@@ -81,7 +81,7 @@ export class ReservationsList extends Component {
         </Message>
       );
     }
-    console.log(movie);
+
     return (
         <Grid columns={2} divided>
           <Grid.Row centered>

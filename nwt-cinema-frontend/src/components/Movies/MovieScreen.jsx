@@ -41,13 +41,25 @@ export default class MovieScreen extends Component {
       .then(response => {
         this.getMovie();
         this.setState({...this.state, movieReviewText: ""});
-        console.log(this.state.movieReviewText);
         
       })
       .catch(error => {
         console.log(error);
         this.setState({ ...this.state, error: error });
       });
+  }
+
+  deleteComment(id) {
+    axios
+    .delete(reviewEndpoint + "/delete/" + id)
+    .then(response => {
+      this.getMovie();
+      this.setState({...this.state, movieReviewText: ""});
+    })
+    .catch(error => {
+      console.log(error);
+      this.setState({ ...this.state, error: error });
+    });
   }
 
   render() {
@@ -64,6 +76,7 @@ export default class MovieScreen extends Component {
                 updateForm={this.updateForm.bind(this)}
                 addReview={this.addReview.bind(this)}
                 movieReviewText={this.state.movieReviewText}
+                deleteComment={this.deleteComment.bind(this)}
               />
             </Grid.Column>
             <Grid.Column width={3} />

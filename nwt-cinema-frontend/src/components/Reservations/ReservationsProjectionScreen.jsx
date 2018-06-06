@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { ReservationsProjectionList } from "./ReservationsProjectionList";
-import {Header,  Grid, Divider, Label } from "semantic-ui-react";
+import { Header, Grid, Divider, Label } from "semantic-ui-react";
 import axios from "axios";
 import { reservationsEndpoint, projectionsEndpoint } from "../../endpoints";
 import { ReservationsList } from "./ReservationsList";
 import moment from "moment";
+import { Redirect } from "react-router-dom";
 
 export default class ReservationsProjectionScreen extends Component {
   constructor(props) {
@@ -57,7 +58,9 @@ export default class ReservationsProjectionScreen extends Component {
 
   render() {
     const { reservations, error, projection, movie } = this.state;
-
+    if (localStorage.getItem("role") != "ROLE_ADMIN") {
+      return <Redirect to="/login" />;
+    }
     return (
       <div>
         <Grid>
@@ -67,14 +70,17 @@ export default class ReservationsProjectionScreen extends Component {
               {movie &&
                 projection && (
                   <div>
-                    <Header as="h3" color="red"> Projection: {movie.title} </Header>
-                    <b> Date:  </b>
+                    <Header as="h3" color="red">
+                      {" "}
+                      Projection: {movie.title}{" "}
+                    </Header>
+                    <b> Date: </b>
                     <Label color="red">
                       {moment(projection.date).format("DD-MM-YYYY")}{" "}
                     </Label>
                   </div>
                 )}
-              <Divider hidden />
+              <Divider />
               <ReservationsList
                 reservations={reservations}
                 error={error}
@@ -89,4 +95,4 @@ export default class ReservationsProjectionScreen extends Component {
     );
   }
 }
-3
+3;

@@ -10,7 +10,6 @@ export default class Navbar extends Component {
     this.setState({ ...this.state, activeItem: "hom" });
   };
 
-
   logout() {
     localStorage.removeItem("role");
     localStorage.removeItem("token");
@@ -84,6 +83,19 @@ export default class Navbar extends Component {
           >
             <Icon name="phone" /> Contact{" "}
           </Menu.Item>
+          {userAuthenticated &&
+            localStorage.getItem("role") === "ROLE_USER" && (
+              <Menu.Item
+                name="reservations"
+                active={activeItem === "reservations"}
+                as={Link} 
+                to={`/user-reservations/${2}`}
+                onClick={this.handleItemClick}
+                color="yellow"
+              >
+                <Icon name="ticket" color="yellow" /> My reservations
+              </Menu.Item>
+            )}
 
           <Menu.Item position="right">
             {!userAuthenticated ? (
@@ -102,9 +114,19 @@ export default class Navbar extends Component {
                 </Button>
               </div>
             ) : (
-              <Button as={Link} to="/login" inverted onClick={this.logout.bind(this)}>
-                Log out
-              </Button>
+              <div>
+                <Link to="/">
+                  <Icon name="user" size="large" inverted />
+                </Link>
+                <Button
+                  as={Link}
+                  to="/login"
+                  inverted
+                  onClick={this.logout.bind(this)}
+                >
+                  Log out
+                </Button>
+              </div>
             )}
           </Menu.Item>
         </Menu>

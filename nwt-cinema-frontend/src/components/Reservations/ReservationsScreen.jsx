@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { ReservationsList }  from "./ReservationsList";
-import { Grid, Divider } from "semantic-ui-react";
+import { UserReservations } from "./UserReservations";
+import { Grid, Divider, Header, Icon } from "semantic-ui-react";
 import axios from "axios";
 import { reservationsEndpoint } from "../../endpoints";
+import { Redirect } from "react-router-dom";
 
 export default class ReservationsScreen extends Component {
   constructor(props) {
@@ -12,7 +13,9 @@ export default class ReservationsScreen extends Component {
 
   componentDidMount() {
     axios
-      .get(reservationsEndpoint + "/get-reservations/" + this.props.match.params.id)
+      .get(
+        reservationsEndpoint + "/get-reservations/" + this.props.match.params.id
+      )
       .then(response => {
         const reservations = response.data;
         this.setState({ reservations: reservations });
@@ -24,15 +27,21 @@ export default class ReservationsScreen extends Component {
 
   render() {
     const { reservations, error } = this.state;
-
+    // if (localStorage.getItem("role") != "ROLE_ADMIN") {
+    //   return <Redirect to="/login" />;
+    // }
     return (
       <div>
         <Grid>
           <Grid.Row>
             <Grid.Column width={3} />
             <Grid.Column width={10}>
-              <Divider hidden />
-              <ReservationsList reservations={reservations} error={error} />
+              <Header as="h3" color="red">
+                <Icon name="ticket" />
+                My reservations
+              </Header>
+              <Divider />
+              <UserReservations reservations={reservations} error={error} />
             </Grid.Column>
             <Grid.Column width={3} />
           </Grid.Row>
