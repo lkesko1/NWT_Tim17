@@ -28,7 +28,6 @@ export default class ProjectionsScreen extends Component {
     axios
       .post(projectionsEndpoint + "/create", {
         movieID: selectedMovieId,
-        createdBy: 1,
         date: selectedDate,
         actualTickets: 0,
         maxTickets: numberOfTickets
