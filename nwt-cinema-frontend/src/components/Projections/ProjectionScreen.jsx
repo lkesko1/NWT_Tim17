@@ -34,10 +34,11 @@ export default class ProjectionScreen extends Component {
       .delete(projectionsEndpoint + "/delete/" + this.props.match.params.id)
       .then(response => {
         this.hideRemovalModal();
-        this.setState({ ...this.state, projection: null });
+        this.setState({ ...this.state, projection: null, loading: false });
+        this.getProjection();
       })
       .catch(error => {
-        this.setState({ ...this.state, error: error });
+        this.setState({ ...this.state, error: error, });
       });
   }
 

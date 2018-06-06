@@ -108,6 +108,20 @@ services:
       - 8080:8080
     networks:
       - app
+  
+  frontend:
+    build: ./nwt-cinema-frontend
+    container_name: frontend_container
+    ports:
+      - 3000:3000
+    depends_on:
+      - gateway
+    volumes:
+      - ./nwt-cinema-frontend/src:/usr/src/app/src
+      - ./nwt-cinema-frontend/public:/usr/src/app/public 
+    networks:
+      - app 
+
 
 networks:
   app:
