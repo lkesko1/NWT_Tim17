@@ -127,6 +127,7 @@ export default class ProjectionsScreen extends Component {
   }
   success(){
     this.setState({ ...this.state, loading: false, open: true });
+    this.getProjections();
     
   }
   fail(){

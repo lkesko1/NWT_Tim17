@@ -33,9 +33,7 @@ export class NewReservationModal extends Component {
       .catch(error => {
         console.log(error);
         this.props.fail();
-        
       });
-
     hideReservationModal();
   }
 
