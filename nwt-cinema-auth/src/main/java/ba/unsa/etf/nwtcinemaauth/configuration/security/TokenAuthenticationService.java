@@ -35,5 +35,6 @@ public class TokenAuthenticationService {
                 .compact();
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
         res.addHeader("Role", accountRepository.findUserByUsername(username).getRole().getRoleTitle());
+        res.addHeader("User", String.valueOf(accountRepository.findUserByUsername(username).getId()));
     }
 }

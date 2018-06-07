@@ -3,15 +3,62 @@ import { Grid } from "semantic-ui-react";
 import axios from "axios";
 import { projectionsEndpoint } from "../../endpoints";
 import Projection from "./Projection";
+import { RemovalModal } from "./RemovalModal";
 import moment from "moment";
 
 export default class ProjectionScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = { projection: null, movie: null, error: null };
+    this.state = {
+      movie: null,
+      error: null,
+      removalModalVisible: false
+    };
   }
 
-  componentWillMount() {
+  showRemovalModal() {
+    this.setState({
+      ...this.state,
+      removalModalVisible: true
+    });
+  }
+
+  hideRemovalModal() {
+    this.setState({
+      ...this.state,
+      removalModalVisible: false
+    });
+  }
+
+  removeMovie() {
+    axios
+      .delete(projectionsEndpoint + "/delete/" + this.props.match.params.id)
+      .then(response => {
+        this.hideRemovalModal();
+        this.setState({ ...this.state, projection: null });
+      })
+      .catch(error => {
+        this.setState({ ...this.state, error: error });
+      });
+  }
+
+  // componentWillMount() {
+  //   axios
+  //     .get(projectionsEndpoint + "/get-details/" + this.props.match.params.id)
+  //     .then(response => {
+  //       const movie = response.data;
+  //       this.setState({ movie: movie });
+  //     })
+  //     .catch(error => {
+  //       this.setState({ error: error });
+  //     });
+  // }
+
+  componentDidMount() {
+    this.getProjection();
+  }
+
+  getProjection() {
     axios
       .get(projectionsEndpoint + "/" + this.props.match.params.id)
       .then(response => {
@@ -41,11 +88,22 @@ export default class ProjectionScreen extends Component {
 
     return (
       <div>
+        <RemovalModal
+          deleteModalVisible={this.state.removalModalVisible}
+          hideRemovalModal={this.hideRemovalModal.bind(this)}
+          removeMovie={this.removeMovie.bind(this)}
+        />
+
         <Grid>
           <Grid.Row>
             <Grid.Column width={3} />
             <Grid.Column width={10}>
-              <Projection movie={movie} error={error} projection={projection} />
+              <Projection
+                movie={movie}
+                error={error}
+                projection={projection}
+                showRemovalModal={this.showRemovalModal.bind(this)}
+              />
             </Grid.Column>
             <Grid.Column width={3} />
           </Grid.Row>

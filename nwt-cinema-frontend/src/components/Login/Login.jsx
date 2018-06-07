@@ -43,7 +43,9 @@ export default class Login extends Component {
       .then(response => {
         localStorage.setItem("token", response.headers["authorization"]);
         localStorage.setItem("role", response.headers["role"]);
+        // localStorage.setItem("user", response.headers["user"]);
 
+        console.log(response);
         axios.defaults.headers["Authorization"] =
           response.headers["authorization"];
         this.setState({ authenticated: true });

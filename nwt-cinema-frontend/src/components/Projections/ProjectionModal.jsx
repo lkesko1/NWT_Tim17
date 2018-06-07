@@ -25,7 +25,7 @@ export class ProjectionModal extends Component {
       saveProjection
     } = this.props;
 
-
+    console.log(projectionModalVisible);
     const movieNames = _.map(movies, movie => {
       return {
         key: movie.id,
